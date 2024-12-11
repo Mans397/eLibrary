@@ -1,7 +1,9 @@
 package main
 
-import "fmt"
+import (
+	sc "github.com/Mans397/eLibrary/serverConnection"
+)
 
 func main() {
-	fmt.Println("Hello World")
+	sc.Connect()
 }
