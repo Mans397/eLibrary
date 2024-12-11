@@ -2,7 +2,7 @@ package serverConnection
 
 import (
 	"encoding/json"
-	"fmt"
+	"errors"
 	"net/http"
 )
 
@@ -14,14 +14,31 @@ var RequestHistory []Request
 
 func PostHandler(w http.ResponseWriter, r *http.Request) {
 	request := Request{}
+
 	err := json.NewDecoder(r.Body).Decode(&request)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
+
 	RequestHistory = append(RequestHistory, request)
-	_, err = fmt.Fprintln(w, RequestHistory)
+
+	err = CheckRequest(w, request)
 	if err != nil {
-		return
+		SendResponse(w, Response{Status: "Fail", Message: err.Error()})
 	}
+}
+
+func CheckRequest(w http.ResponseWriter, request Request) error {
+	switch request.Message {
+	case "Hello!":
+		SendResponse(w, Response{Status: "success", Message: "Data successfully received"})
+		return nil
+	case "Info":
+		SendResponse(w, RequestHistory)
+		return nil
+	default:
+		return errors.New("invalid JSON message: " + request.Message)
+	}
+
 }

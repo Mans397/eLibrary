@@ -7,7 +7,6 @@ import (
 
 func Connect() {
 	http.HandleFunc("/", FirstHandler)
-	http.Handle("/hi", http.FileServer(http.Dir("./FrontEnd")))
 
 	log.Println("Server starting on port 8080")
 	err := http.ListenAndServe(":8080", nil)
