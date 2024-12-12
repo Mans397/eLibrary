@@ -6,7 +6,9 @@ import (
 )
 
 func Connect() {
-	http.HandleFunc("/", FirstHandler)
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
+	http.HandleFunc("/", MainHandler)
+	http.HandleFunc("/json", JsonHandler)
 
 	log.Println("Server starting on port 8080")
 	err := http.ListenAndServe(":8080", nil)
@@ -16,15 +18,24 @@ func Connect() {
 
 }
 
-func FirstHandler(w http.ResponseWriter, r *http.Request) {
-	http.FileServer(http.Dir("./FrontEnd"))
+func MainHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
-		log.Println("GET")
+		log.Println("GET/")
 		GetHandler(w, r)
 	case http.MethodPost:
-		log.Println("POST")
+		log.Println("POST/")
 		PostHandler(w, r)
+	default:
+		http.Error(w, "Wrong type of http method", http.StatusMethodNotAllowed)
+	}
+}
+
+func JsonHandler(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case http.MethodGet:
+		log.Println("GET/json")
+		GetHandlerJson(w)
 	default:
 		http.Error(w, "Wrong type of http method", http.StatusMethodNotAllowed)
 	}
