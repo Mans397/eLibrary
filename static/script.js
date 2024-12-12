@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (message) {
                 try {
                     // Отправляем POST-запрос с данными в формате JSON
-                    const response = await fetch('/your-endpoint', {
+                    const response = await fetch('/', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'

@@ -34,9 +34,6 @@ func CheckRequest(w http.ResponseWriter, request Request) error {
 	case "Hello!":
 		SendResponse(w, Response{Status: "success", Message: "Data successfully received"})
 		return nil
-	case "Info":
-		SendResponse(w, RequestHistory)
-		return nil
 	default:
 		return errors.New("invalid JSON message: " + request.Message)
 	}
