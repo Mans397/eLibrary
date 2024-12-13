@@ -5,13 +5,16 @@ import (
 	"net/http"
 )
 
+const port = ":8080"
+
 func Connect() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
 	http.HandleFunc("/", MainHandler)
-	http.HandleFunc("/json", JsonHandler)
+	http.HandleFunc("/data/json", DataJsonHandler)
+	http.HandleFunc("/post/json", SendJsonHandler)
 
-	log.Println("Server starting on port 8080")
-	err := http.ListenAndServe(":8080", nil)
+	log.Println("Server starting on port", port)
+	err := http.ListenAndServe(port, nil)
 	if err != nil {
 		panic(err)
 	}
@@ -19,24 +22,35 @@ func Connect() {
 }
 
 func MainHandler(w http.ResponseWriter, r *http.Request) {
+	var FilePath string
+
+	switch r.URL.Path {
+	case "/":
+		FilePath = "./FrontEnd/index.html"
+	default:
+		FilePath = "./FrontEnd/error.html"
+	}
+
+	log.Println("Request Path:", r.URL.Path)
+
+	http.ServeFile(w, r, FilePath)
+}
+
+func DataJsonHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
-		log.Println("GET/")
-		GetHandler(w, r)
-	case http.MethodPost:
-		log.Println("POST/")
-		PostHandler(w, r)
+		log.Println("GET/data/json")
+		GetHandlerDataJson(w)
 	default:
 		http.Error(w, "Wrong type of http method", http.StatusMethodNotAllowed)
 	}
 }
 
-func JsonHandler(w http.ResponseWriter, r *http.Request) {
-	switch r.Method {
-	case http.MethodGet:
-		log.Println("GET/json")
-		GetHandlerJson(w)
-	default:
+func SendJsonHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
 		http.Error(w, "Wrong type of http method", http.StatusMethodNotAllowed)
+		return
 	}
+	log.Println("GET/post/json")
+	PostHandler(w, r)
 }

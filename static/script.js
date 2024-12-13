@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', async () => {
             try {
                 // Отправляем GET-запрос на /json
-                const response = await fetch('/json');
+                const response = await fetch('/data/json');
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (message) {
                 try {
                     // Отправляем POST-запрос с данными в формате JSON
-                    const response = await fetch('/', {
+                    const response = await fetch('/post/json', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
