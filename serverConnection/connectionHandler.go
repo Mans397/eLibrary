@@ -7,7 +7,7 @@ import (
 
 const port = ":8080"
 
-func Connect() {
+func ConnectToServer() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
 	http.HandleFunc("/", MainHandler)
 	http.HandleFunc("/data/json", DataJsonHandler)
