@@ -1,6 +1,8 @@
 package serverConnection
 
 import (
+	"encoding/json"
+	"github.com/Mans397/eLibrary/Database"
 	"log"
 	"net/http"
 )
@@ -12,6 +14,7 @@ func ConnectToServer() {
 	http.HandleFunc("/", MainHandler)
 	http.HandleFunc("/data/json", DataJsonHandler)
 	http.HandleFunc("/post/json", SendJsonHandler)
+	http.HandleFunc("/db/createUser", CreateUserHandler)
 
 	log.Println("Server starting on port", port)
 	err := http.ListenAndServe(port, nil)
@@ -27,6 +30,8 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.URL.Path {
 	case "/":
 		FilePath = "./FrontEnd/index.html"
+	case "/login":
+		FilePath = "./FrontEnd/login.html"
 	default:
 		FilePath = "./FrontEnd/error.html"
 	}
@@ -34,6 +39,24 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("Request Path:", r.URL.Path)
 
 	http.ServeFile(w, r, FilePath)
+}
+
+func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodPost {
+		var user Database.User
+		err := json.NewDecoder(r.Body).Decode(&user)
+		if err != nil {
+			SendResponse(w, Response{Status: "fail", Message: "Error: " + err.Error()})
+			return
+		}
+		err = Database.CreateUser(user)
+		if err != nil {
+			SendResponse(w, Response{Status: "fail", Message: "Error: " + err.Error()})
+			return
+		}
+		SendResponse(w, Response{Status: "success", Message: "User created successfully"})
+	}
+
 }
 
 func DataJsonHandler(w http.ResponseWriter, r *http.Request) {
