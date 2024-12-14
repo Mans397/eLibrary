@@ -24,7 +24,8 @@ func Init() {
 	var err error
 	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatal(err)
+		log.Println("!!!CHECK IF DOCKER CONTAINER IS STARTED!!!")
+		log.Fatal("Fatal error of database init func")
 	}
 
 	fmt.Println("Successfully connected!")
