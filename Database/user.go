@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"gorm.io/gorm"
+	"log"
 	"strings"
 )
 
@@ -28,7 +29,9 @@ func CreateUser(user User) error {
 
 }
 
-func ReadUser(email string, user *User) error {
+func (u *User) ReadUser(email string) error {
+	var user User
+	log.Println("Reading user", email)
 	isExist := IsUserExist(email)
 	if !isExist {
 		return errors.New("User not found")
@@ -36,10 +39,17 @@ func ReadUser(email string, user *User) error {
 
 	result := DB.Select("name, email").Where("email = ?", email).First(&user)
 	fmt.Println(user)
+	u.CopyUser(user)
 	if result.Error != nil {
 		return errors.New(result.Error.Error())
 	}
 	return nil
+}
+
+func (u *User) CopyUser(user User) {
+	u.ID = user.ID
+	u.Email = user.Email
+	u.Name = user.Name
 }
 
 func IsValidEmail(email string) bool {

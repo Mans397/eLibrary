@@ -2,7 +2,6 @@ package serverConnection
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/Mans397/eLibrary/Database"
 	"log"
 	"net/http"
@@ -67,13 +66,15 @@ func ReadUserHandler(w http.ResponseWriter, r *http.Request) {
 		if email == "" {
 			SendResponse(w, Response{Status: "fail", Message: "Email is empty"})
 		}
-		var user *Database.User
-		err := Database.ReadUser(email, user)
+
+		user := Database.User{}
+
+		err := user.ReadUser(email)
 		if err != nil {
 			SendResponse(w, Response{Status: "fail", Message: "Error: " + err.Error()})
 			return
 		}
-		SendResponse(w, Response{Status: "success", Message: fmt.Sprint(user)})
+		SendResponse(w, user)
 	}
 }
 
