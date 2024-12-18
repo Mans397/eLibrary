@@ -23,3 +23,42 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     });
 })
+
+
+document.addEventListener('DOMContentLoaded', () => {
+document.getElementById("DB-Read").addEventListener("click", function () {
+    // Получаем значение email из текстового поля
+    const email = document.getElementById("emailInput").value;
+
+    if (!email) {
+        alert("Введите email!");
+        return;
+    }
+
+    // Формируем URL с параметром email
+    const url = `/db/readUser?email=${encodeURIComponent(email)}`;
+
+    // Отправляем GET-запрос
+    fetch(url, {
+        method: "GET",
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`Ошибка: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then((data) => {
+            // Выводим полученные данные
+            const output = document.getElementById("output");
+            output.innerHTML = `
+                <p>User Name: ${data.name}</p>
+                <p>User Email: ${data.email}</p>
+            `;
+        })
+        .catch((error) => {
+            // Обработка ошибок
+            const output = document.getElementById("output");
+            output.innerHTML = `<p style="color: red;">${error.message}</p>`;
+        });
+});})

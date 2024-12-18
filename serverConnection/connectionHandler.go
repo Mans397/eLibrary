@@ -2,6 +2,7 @@ package serverConnection
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/Mans397/eLibrary/Database"
 	"log"
 	"net/http"
@@ -15,6 +16,7 @@ func ConnectToServer() {
 	http.HandleFunc("/data/json", DataJsonHandler)
 	http.HandleFunc("/post/json", SendJsonHandler)
 	http.HandleFunc("/db/createUser", CreateUserHandler)
+	http.HandleFunc("/db/readUser", ReadUserHandler)
 
 	log.Println("Server starting on port", port)
 	err := http.ListenAndServe(port, nil)
@@ -57,6 +59,22 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 		SendResponse(w, Response{Status: "success", Message: "User created successfully"})
 	}
 
+}
+
+func ReadUserHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodGet {
+		email := r.URL.Query().Get("email")
+		if email == "" {
+			SendResponse(w, Response{Status: "fail", Message: "Email is empty"})
+		}
+		var user *Database.User
+		err := Database.ReadUser(email, user)
+		if err != nil {
+			SendResponse(w, Response{Status: "fail", Message: "Error: " + err.Error()})
+			return
+		}
+		SendResponse(w, Response{Status: "success", Message: fmt.Sprint(user)})
+	}
 }
 
 func DataJsonHandler(w http.ResponseWriter, r *http.Request) {

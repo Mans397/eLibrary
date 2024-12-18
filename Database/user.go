@@ -28,6 +28,20 @@ func CreateUser(user User) error {
 
 }
 
+func ReadUser(email string, user *User) error {
+	isExist := IsUserExist(email)
+	if !isExist {
+		return errors.New("User not found")
+	}
+
+	result := DB.Select("name, email").Where("email = ?", email).First(&user)
+	fmt.Println(user)
+	if result.Error != nil {
+		return errors.New(result.Error.Error())
+	}
+	return nil
+}
+
 func IsValidEmail(email string) bool {
 	chars := "@gmail.com"
 	if strings.Contains(email, chars) {
@@ -49,4 +63,8 @@ func IsUserExist(email string) bool {
 		return true
 	}
 	return false
+}
+
+func (u User) Stringer() string {
+	return fmt.Sprintf("Name: %s Email: %s", u.Name, u.Email)
 }
