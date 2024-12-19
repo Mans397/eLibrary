@@ -24,21 +24,18 @@ The Library Management System is designed to manage user data and facilitate CRU
 ### Step-by-Step Instructions
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/library-management-system.git
+   git clone https://github.com/Mans397/eLibrary.git or any other IDE
    cd library-management-system
    ```
 2. **Set up the database:**
    - Create a PostgreSQL database and user.
    - Update the `Database/connection.go` file with your database credentials.
-3. **Run migrations:**
-   ```bash
-   go run migrate.go
-   ```
-4. **Start the server:**
+
+3. **Start the server:**
    ```bash
    go run main.go
    ```
-5. **Open the frontend:**
+4. **Open the frontend:**
    - Open your browser and go to `http://localhost:8080/`.
 
 ### API Endpoints
