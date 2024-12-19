@@ -9,4 +9,5 @@ func main() {
 	db.Init()
 
 	sc.ConnectToServer()
+
 }

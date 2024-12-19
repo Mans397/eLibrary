@@ -20,6 +20,7 @@ func ConnectToServer() {
 	http.HandleFunc("/db/deleteUser", DeleteUserHandler)
 
 	log.Println("Server starting on port", port)
+	log.Printf("http://localhost%s\n", port)
 	err := http.ListenAndServe(port, nil)
 	if err != nil {
 		panic(err)
