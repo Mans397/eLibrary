@@ -61,3 +61,58 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('DB-Update').addEventListener('click', function () {
+        const name = document.getElementById('nameInput').value.trim();
+        const email = document.getElementById('emailInput').value.trim();
+
+        if (!name || !email) {
+            alert('Введите имя и email!');
+            return;
+        }
+
+        console.log('Кнопка "Update User" нажата');
+
+        fetch('/db/updateUser', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: email, name: name }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('output').innerText = data.message || 'User updated successfully';
+            })
+            .catch(error => {
+                document.getElementById('output').innerText = 'Error: ' + error.message;
+            });
+    });
+
+    document.getElementById('DB-Delete').addEventListener('click', function () {
+        const email = document.getElementById('emailInput').value.trim();
+
+        if (!email) {
+            alert('Введите email!');
+            return;
+        }
+
+        console.log('Кнопка "Delete User" нажата');
+
+        fetch('/db/deleteUser', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: email }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('output').innerText = data.message || 'User deleted successfully';
+            })
+            .catch(error => {
+                document.getElementById('output').innerText = 'Error: ' + error.message;
+            });
+    });
+});

@@ -52,6 +52,47 @@ func (u *User) CopyUser(user User) {
 	u.Name = user.Name
 }
 
+func UpdateUser(email, newName string) error {
+	var user User
+	log.Println("Updating user:", email)
+
+	result := DB.First(&user, "email = ?", email)
+	if result.Error != nil {
+		if result.Error == gorm.ErrRecordNotFound {
+			return errors.New("user not found")
+		}
+		return result.Error
+	}
+
+	user.Name = newName
+	if err := DB.Save(&user).Error; err != nil {
+		return err
+	}
+
+	log.Println("User updated successfully:", user)
+	return nil
+}
+
+func DeleteUser(email string) error {
+	var user User
+	log.Println("Deleting user:", email)
+
+	result := DB.First(&user, "email = ?", email)
+	if result.Error != nil {
+		if result.Error == gorm.ErrRecordNotFound {
+			return errors.New("user not found")
+		}
+		return result.Error
+	}
+
+	if err := DB.Delete(&user).Error; err != nil {
+		return err
+	}
+
+	log.Println("User deleted successfully:", user)
+	return nil
+}
+
 func IsValidEmail(email string) bool {
 	chars := "@gmail.com"
 	if strings.Contains(email, chars) {
