@@ -98,13 +98,15 @@ func UpdateUserHandler(w http.ResponseWriter, r *http.Request) {
 
 func DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodDelete {
-		email := r.URL.Query().Get("email")
-		if email == "" {
+		var user Database.User
+		err := json.NewDecoder(r.Body).Decode(&user)
+
+		if user.Email == "" {
 			SendResponse(w, Response{Status: "fail", Message: "Email is empty"})
 			return
 		}
 
-		err := Database.DeleteUser(email)
+		err = Database.DeleteUser(user.Email)
 		if err != nil {
 			SendResponse(w, Response{Status: "fail", Message: "Error: " + err.Error()})
 			return

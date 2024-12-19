@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ name: name, email: email }),
+            body: JSON.stringify({name: name, email: email}),
         })
             .then(response => response.json())
             .then(data => {
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const url = `/db/readUser?email=${encodeURIComponent(email)}`;
 
-        fetch(url, { method: 'GET' })
+        fetch(url, {method: 'GET'})
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Ошибка: ${response.status}`);
@@ -60,26 +60,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             });
     });
-});
 
-document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('DB-Update').addEventListener('click', function () {
         const name = document.getElementById('nameInput').value.trim();
         const email = document.getElementById('emailInput').value.trim();
+
+        console.log('Кнопка "Update User" нажата');
 
         if (!name || !email) {
             alert('Введите имя и email!');
             return;
         }
 
-        console.log('Кнопка "Update User" нажата');
+
 
         fetch('/db/updateUser', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email: email, name: name }),
+            body: JSON.stringify({email: email, name: name}),
         })
             .then(response => response.json())
             .then(data => {
@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email: email }),
+            body: JSON.stringify({email: email}),
         })
             .then(response => response.json())
             .then(data => {
@@ -115,4 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('output').innerText = 'Error: ' + error.message;
             });
     });
+
+
 });
+
