@@ -25,7 +25,7 @@ The Library Management System is designed to manage user data and facilitate CRU
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/Mans397/eLibrary.git (or any other IDE)
-   cd library-management-system
+   cd eLibrary
    ```
 2. **Set up the database:**
    - Create a PostgreSQL database and user.
