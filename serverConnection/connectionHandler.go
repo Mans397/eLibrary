@@ -16,13 +16,14 @@ func ConnectToServer() {
 	http.HandleFunc("/post/json", SendJsonHandler)
 	http.HandleFunc("/db/createUser", CreateUserHandler)
 	http.HandleFunc("/db/readUser", ReadUserHandler)
+	http.HandleFunc("/db/updateUser", UpdateUserHandler)
+	http.HandleFunc("/db/deleteUser", DeleteUserHandler)
 
 	log.Println("Server starting on port", port)
 	err := http.ListenAndServe(port, nil)
 	if err != nil {
 		panic(err)
 	}
-
 }
 
 func MainHandler(w http.ResponseWriter, r *http.Request) {
@@ -57,7 +58,6 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		SendResponse(w, Response{Status: "success", Message: "User created successfully"})
 	}
-
 }
 
 func ReadUserHandler(w http.ResponseWriter, r *http.Request) {
@@ -75,6 +75,43 @@ func ReadUserHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		SendResponse(w, user)
+	}
+}
+
+func UpdateUserHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodPut {
+		var user Database.User
+		err := json.NewDecoder(r.Body).Decode(&user)
+		if err != nil {
+			SendResponse(w, Response{Status: "fail", Message: "Error: " + err.Error()})
+			return
+		}
+
+		err = Database.UpdateUser(user.Email, user.Name)
+		if err != nil {
+			SendResponse(w, Response{Status: "fail", Message: "Error: " + err.Error()})
+			return
+		}
+		SendResponse(w, Response{Status: "success", Message: "User updated successfully"})
+	}
+}
+
+func DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodDelete {
+		var user Database.User
+		err := json.NewDecoder(r.Body).Decode(&user)
+
+		if user.Email == "" {
+			SendResponse(w, Response{Status: "fail", Message: "Email is empty"})
+			return
+		}
+
+		err = Database.DeleteUser(user.Email)
+		if err != nil {
+			SendResponse(w, Response{Status: "fail", Message: "Error: " + err.Error()})
+			return
+		}
+		SendResponse(w, Response{Status: "success", Message: "User deleted successfully"})
 	}
 }
 
