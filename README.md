@@ -65,5 +65,4 @@ The Library Management System is designed to manage user data and facilitate CRU
 ---
 Feel free to contact the team for further assistance or issues.
 
-> **Deadline Reminder:** All tasks must be completed by December 20, 2024, at 21:00.
 
