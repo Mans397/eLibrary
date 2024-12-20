@@ -30,16 +30,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Обработчик для кнопки Read user
     document.getElementById('DB-Read').addEventListener('click', function () {
         const email = document.getElementById('emailInput').value.trim();
+        const name = document.getElementById('nameInput').value.trim();
 
         console.log('Кнопка "Read User" нажата');
-        console.log('Email:', email);
+        console.log('Email:', email, name);
 
-        if (!email) {
-            alert('Введите email!');
-            return;
-        }
 
-        const url = `/db/readUser?email=${encodeURIComponent(email)}`;
+
+        const url = `/db/readUser?email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}`;
+        console.log(url)
 
         fetch(url, {method: 'GET'})
             .then(response => {

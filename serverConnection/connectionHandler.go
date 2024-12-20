@@ -64,18 +64,28 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 func ReadUserHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		email := r.URL.Query().Get("email")
-		if email == "" {
-			SendResponse(w, Response{Status: "fail", Message: "Email is empty"})
-		}
-
+		name := r.URL.Query().Get("name")
 		user := Database.User{}
 
-		err := user.ReadUser(email)
-		if err != nil {
-			SendResponse(w, Response{Status: "fail", Message: "Error: " + err.Error()})
-			return
+		if name != "" {
+			errName := user.ReadUserName(name)
+			if errName != nil {
+				SendResponse(w, Response{Status: "fail", Message: "Error: " + errName.Error()})
+				return
+			}
+			SendResponse(w, user)
+		} else if email != "" {
+			err := user.ReadUserEmail(email)
+			if err != nil {
+				SendResponse(w, Response{Status: "fail", Message: "Error: " + err.Error()})
+				return
+			}
+			SendResponse(w, user)
+		} else {
+			w.WriteHeader(http.StatusBadRequest)
+			SendResponse(w, Response{Status: "Fail", Message: "Email and name is empty"})
 		}
-		SendResponse(w, user)
+
 	}
 }
 
