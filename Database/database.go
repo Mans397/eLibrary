@@ -1,11 +1,13 @@
 package Database
 
 import (
+	"errors"
 	"fmt"
 	_ "github.com/lib/pq"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"log"
+	"time"
 )
 
 const (
@@ -18,16 +20,17 @@ const (
 
 var DB *gorm.DB
 
-func Init() {
+func Init() error {
 
 	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=%s", host, port, user, password, dbname, "disable")
 	var err error
 	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Println("!!!CHECK IF DOCKER CONTAINER IS STARTED!!!")
-		log.Fatal("Fatal error of database init func")
+		time.Sleep(100 * time.Millisecond)
+		return errors.New("Failed to connect to database")
 	}
 
 	fmt.Println("Successfully connected!")
-
+	return nil
 }
