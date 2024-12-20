@@ -7,7 +7,7 @@ import (
 )
 
 type Request struct {
-	Message string `json:"message"`
+	Message *string `json:"message"`
 }
 
 var RequestHistory []Request
@@ -23,14 +23,14 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if request.Message == "" {
+	if request.Message == nil {
 		w.WriteHeader(http.StatusBadRequest)
-		SendResponse(w, Response{Status: "Fail", Message: `"message" field is required`})
+		SendResponse(w, Response{Status: "Fail", Message: `"message" field is not found`})
 		return
 	}
 
 	RequestHistory = append(RequestHistory, request)
 
-	SendResponse(w, Response{Status: "Success", Message: request.Message})
+	SendResponse(w, Response{Status: "Success", Message: *request.Message})
 
 }
