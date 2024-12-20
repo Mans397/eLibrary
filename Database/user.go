@@ -119,9 +119,9 @@ func IsValidEmail(email string) bool {
 	return false
 }
 
-func IsUserExistName(email string) bool {
+func IsUserExistName(name string) bool {
 	var user User
-	result := DB.First(&user, "name = ?", email)
+	result := DB.First(&user, "name = ?", name)
 	if result.Error != nil {
 		if result.Error == gorm.ErrRecordNotFound {
 			return false
