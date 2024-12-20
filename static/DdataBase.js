@@ -49,10 +49,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.json();
             })
             .then(data => {
+                if (!data.name || !data.email) {
+                    document.getElementById('output').innerHTML = `
+                    <p>No User found with this email</p>
+                `;
+                }else{
                 document.getElementById('output').innerHTML = `
                     <p>User Name: ${data.name}</p>
                     <p>User Email: ${data.email}</p>
-                `;
+                `;}
             })
             .catch(error => {
                 document.getElementById('output').innerHTML = `
