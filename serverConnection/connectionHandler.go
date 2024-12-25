@@ -3,6 +3,7 @@ package serverConnection
 import (
 	"encoding/json"
 	"github.com/Mans397/eLibrary/Database"
+	es "github.com/Mans397/eLibrary/emailSender"
 	"log"
 	"net/http"
 )
@@ -18,6 +19,7 @@ func ConnectToServer() {
 	http.HandleFunc("/db/readUser", ReadUserHandler)
 	http.HandleFunc("/db/updateUser", UpdateUserHandler)
 	http.HandleFunc("/db/deleteUser", DeleteUserHandler)
+	http.HandleFunc("/admin/sendEmail", SendEmailHandler)
 
 	log.Println("Server starting on port", port)
 	log.Printf("http://localhost%s\n", port)
@@ -35,6 +37,8 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 		FilePath = "./FrontEnd/index.html"
 	case "/login":
 		FilePath = "./FrontEnd/login.html"
+	case "/admin":
+		FilePath = "./FrontEnd/admin.html"
 	default:
 		FilePath = "./FrontEnd/error.html"
 	}
@@ -143,4 +147,28 @@ func SendJsonHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Println("GET/post/json")
 	PostHandler(w, r)
+}
+
+func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Wrong type of http method", http.StatusMethodNotAllowed)
+		return
+	}
+	log.Println("GET/post/email")
+	request := Request{}
+
+	err := json.NewDecoder(r.Body).Decode(&request)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		SendResponse(w, Response{Status: "Fail", Message: "error in json decode: " + err.Error()})
+		log.Println(err)
+		return
+	}
+
+	err = es.SendEmailAll(request.Message)
+	if err != nil {
+		SendResponse(w, Response{Status: "Fail", Message: err.Error()})
+		log.Println(err)
+	}
+	SendResponse(w, Response{Status: "Success", Message: "Emails sent successfully"})
 }
