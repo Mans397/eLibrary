@@ -48,10 +48,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.json();
             })
             .then(data => {
-                if (!data.name || !data.email) {
-                    document.getElementById('output').innerHTML = `
-                    <p>No User found with this email</p>
-                `;
+                if (Array.isArray(data) && data.length > 0) {
+                    document.getElementById('output').innerHTML = data.map(user => `
+                <p>User Name: ${user.name}</p>
+                <p>User Email: ${user.email}</p>
+                <hr>
+            `).join('');
+
                 }else{
                 document.getElementById('output').innerHTML = `
                     <p>User Name: ${data.name}</p>

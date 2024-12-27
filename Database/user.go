@@ -46,6 +46,19 @@ func (u *User) ReadUserEmail(email string) error {
 	return nil
 }
 
+func ReadUserAll() ([]User, error) {
+	users := make([]User, 10)
+	log.Println("Reading users all")
+
+	result := DB.Select("name, email").Find(&users)
+
+	if result.Error != nil {
+		return nil, errors.New(result.Error.Error())
+	}
+
+	return users, nil
+}
+
 func (u *User) ReadUserName(name string) error {
 	var user User
 	log.Println("Reading user", name)

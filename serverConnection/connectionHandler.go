@@ -2,6 +2,7 @@ package serverConnection
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/Mans397/eLibrary/Database"
 	es "github.com/Mans397/eLibrary/emailSender"
 	"log"
@@ -72,6 +73,7 @@ func ReadUserHandler(w http.ResponseWriter, r *http.Request) {
 		user := Database.User{}
 
 		if name != "" {
+			log.Println("Read User Name:", name)
 			errName := user.ReadUserName(name)
 			if errName != nil {
 				SendResponse(w, Response{Status: "fail", Message: "Error: " + errName.Error()})
@@ -79,6 +81,7 @@ func ReadUserHandler(w http.ResponseWriter, r *http.Request) {
 			}
 			SendResponse(w, user)
 		} else if email != "" {
+			log.Println("Read User Email:", email)
 			err := user.ReadUserEmail(email)
 			if err != nil {
 				SendResponse(w, Response{Status: "fail", Message: "Error: " + err.Error()})
@@ -86,8 +89,15 @@ func ReadUserHandler(w http.ResponseWriter, r *http.Request) {
 			}
 			SendResponse(w, user)
 		} else {
-			w.WriteHeader(http.StatusBadRequest)
-			SendResponse(w, Response{Status: "Fail", Message: "Email and name is empty"})
+			log.Println("Read all users")
+			users := make([]Database.User, 10)
+			var err error
+			users, err = Database.ReadUserAll()
+			fmt.Println(users)
+			if err != nil {
+				SendResponse(w, Response{Status: "fail", Message: "Error: " + err.Error()})
+			}
+			SendResponse(w, users)
 		}
 
 	}
