@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', function (event) {
         event.preventDefault();
         const message = document.getElementById('message').value;
-
+        document.getElementById('response').innerText = "";
         fetch('/admin/sendEmail', {
             method: 'POST',
             headers: {
