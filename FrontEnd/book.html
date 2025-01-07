@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eLibrary - Библиотека книг</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .filters {
+            margin-bottom: 20px;
+        }
+        .filters label {
+            margin-right: 10px;
+        }
+        .book-card {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .book-card .book {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 30%;
+            margin: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        .book-card img {
+            width: 150px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .book-card h3 {
+            color: #333;
+            font-size: 20px;
+            margin-top: 10px;
+        }
+        .book-card p {
+            color: #777;
+            font-size: 14px;
+        }
+        .book-card .price {
+            color: #4CAF50;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .pagination a {
+            margin: 0 5px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .pagination a:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Добро пожаловать в eLibrary</h1>
+</header>
+
+<div class="container">
+
+    <!-- Форма фильтрации и сортировки -->
+    <div class="filters">
+        <form action="/books" method="get">
+            <!-- Фильтрация -->
+            <label for="filter">Фильтр по названию:</label>
+            <input type="text" id="filter" name="filter" value="{{.Filter}}" placeholder="Введите название книги">
+            <br><br>
+
+            <!-- Сортировка -->
+            <label for="sort">Сортировать по:</label>
+            <select id="sort" name="sort">
+                <option value="name" {{if eq .Sort "name"}}selected{{end}}>Название</option>
+                <option value="price" {{if eq .Sort "price"}}selected{{end}}>Цена</option>
+                <option value="date" {{if eq .Sort "date"}}selected{{end}}>Дата выпуска</option>
+            </select>
+            <br><br>
+
+            <!-- Пагинация -->
+            <label for="page">Страница:</label>
+            <input type="number" id="page" name="page" min="1" value="{{.Page}}" placeholder="1">
+            <button type="submit">Применить</button>
+        </form>
+    </div>
+
+    <!-- Книги -->
+    <div class="book-card">
+        {{range .Books}}
+        <div class="book">
+            <img src="{{.ImageURL}}" alt="{{.Title}}">
+            <h3>{{.Title}}</h3>
+            <p>{{.Description}}</p>
+            <p class="price">{{.Price}}</p>
+            <p>{{.Attributes}}</p>
+            <p>Дата выпуска: {{.Date}}</p>
+        </div>
+        {{end}}
+    </div>
+
+    <!-- Пагинация -->
+    <div class="pagination">
+        {{if gt .TotalPages 1}}
+        {{range $i := .PaginationPages}}
+        <a href="/books?page={{$i}}&filter={{.Filter}}&sort={{.Sort}}">{{$i}}</a>
+        {{end}}
+        {{end}}
+    </div>
+</div>
+
+</body>
+</html>
