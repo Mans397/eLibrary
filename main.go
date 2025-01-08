@@ -15,14 +15,29 @@ func main() {
 		return
 	}
 
-	// Миграция для таблицы Book
 	if err := db.MigrateBooks(); err != nil {
 		log.Fatalf("Ошибка миграции: %v", err)
 	}
 
-	// Загрузка и сохранение книг
-	db.FetchAndSaveBooks()
+	FetchQuestion()
 	sc.ConnectToServer()
+}
+
+func FetchQuestion() {
+	fmt.Println("Do you want to fetch all Books?(y/n)")
+	var response string
+	fmt.Scan(&response)
+	if response == "y" {
+		fmt.Println("Working...")
+		db.FetchAndSaveBooks()
+		return
+	} else if response == "n" {
+		fmt.Println("Skipping fetch")
+		return
+	} else {
+		fmt.Println("Wrong answer")
+		return
+	}
 }
 
 func CheckDBConnection(err error) bool {
