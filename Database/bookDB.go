@@ -7,10 +7,9 @@ import (
 	"log"
 )
 
-// Book структура для базы данных
 type Book struct {
 	gorm.Model
-	Title       string `gorm:"unique;not null"` // Название книги должно быть уникальным
+	Title       string `gorm:"unique;not null"`
 	Description string
 	Price       string
 	Attributes  string
@@ -18,9 +17,8 @@ type Book struct {
 	ImageURL    string
 }
 
-// MigrateBooks создаёт таблицу для книг в базе данных
 func MigrateBooks() error {
-	// Автоматическая миграция для создания таблицы Book
+
 	if err := DB.AutoMigrate(&Book{}); err != nil {
 		log.Println("Ошибка при миграции:", err)
 		return fmt.Errorf("ошибка миграции для Book: %v", err)
@@ -28,7 +26,6 @@ func MigrateBooks() error {
 	return nil
 }
 
-// SaveBooks сохраняет список книг в базу данных
 func SaveBooks(books []Api.Book) error {
 	for _, apiBook := range books {
 		// Преобразуем Api.Book в Database.Book
@@ -41,7 +38,6 @@ func SaveBooks(books []Api.Book) error {
 			ImageURL:    apiBook.ImageURL,
 		}
 
-		// Сохраняем книгу, пропуская дубликаты
 		if err := DB.Where("title = ?", book.Title).FirstOrCreate(&book).Error; err != nil {
 			log.Printf("Ошибка сохранения книги '%s': %v\n", book.Title, err)
 		} else {
@@ -52,23 +48,21 @@ func SaveBooks(books []Api.Book) error {
 }
 
 func FetchAndSaveBooks() {
-	// Получаем книги из API
+
 	books, err := Api.FetchBooks()
 	if err != nil {
 		log.Fatalf("Ошибка при получении данных из API: %v", err)
 	}
 
-	// Проходим по каждой книге и сохраняем, если её ещё нет в базе
 	for _, apiBook := range books {
-		// Проверяем, существует ли книга с таким же названием в базе данных
+
 		var count int64
 		if err := DB.Model(&Book{}).Where("title = ?", apiBook.Title).Count(&count).Error; err != nil {
 			log.Fatalf("Ошибка при проверке наличия книги в базе: %v", err)
 		}
 
-		// Если книга уже есть в базе данных, пропускаем её
 		if count == 0 {
-			// Преобразуем Api.Book в Database.Book
+
 			book := Book{
 				Title:       apiBook.Title,
 				Description: apiBook.Description,
@@ -78,7 +72,6 @@ func FetchAndSaveBooks() {
 				ImageURL:    apiBook.ImageURL,
 			}
 
-			// Сохраняем книгу, пропуская дубликаты
 			if err := DB.Where("title = ?", book.Title).FirstOrCreate(&book).Error; err != nil {
 				log.Printf("Ошибка сохранения книги '%s': %v\n", book.Title, err)
 			} else {

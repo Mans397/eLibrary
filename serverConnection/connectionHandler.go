@@ -187,12 +187,11 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func BooksHandler(w http.ResponseWriter, r *http.Request) {
-	// Получаем параметры фильтрации, сортировки и пагинации из URL
+
 	filter := r.URL.Query().Get("filter")
 	sort := r.URL.Query().Get("sort")
 	page := r.URL.Query().Get("page")
 
-	// Устанавливаем значения по умолчанию
 	if page == "" {
 		page = "1"
 	}
@@ -200,27 +199,22 @@ func BooksHandler(w http.ResponseWriter, r *http.Request) {
 		sort = "title"
 	}
 
-	// Количество элементов на странице
 	limit := 10
 	offset := 0
 
-	// Преобразуем строку в целое число
 	pageInt, err := strconv.Atoi(page)
 	if err != nil || pageInt < 1 {
-		pageInt = 1 // Если не удалось преобразовать или значение < 1, устанавливаем значение по умолчанию
+		pageInt = 1
 	}
 
-	// Далее используем pageInt
 	offset = (pageInt - 1) * limit
 
-	// Строим SQL-запрос с учетом фильтрации и сортировки
 	query := "SELECT * FROM books"
 	if filter != "" {
 		query += " WHERE title LIKE '%" + filter + "%'"
 	}
 	validSortFields := []string{"title", "price", "date"}
 
-	// Проверяем параметр сортировки
 	if sort != "" {
 		found := false
 		for _, field := range validSortFields {
@@ -231,21 +225,18 @@ func BooksHandler(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 
-		// Если передано некорректное значение сортировки, сортировка по умолчанию
 		if !found {
-			query += " ORDER BY title" // Сортировка по умолчанию
+			query += " ORDER BY title"
 		}
 	}
 	query += fmt.Sprintf(" LIMIT %d OFFSET %d", limit, offset)
 
-	// Получаем книги из базы данных
 	var books []Database.Book
 	if err := Database.DB.Raw(query).Scan(&books).Error; err != nil {
 		http.Error(w, "Ошибка при получении данных", http.StatusInternalServerError)
 		return
 	}
 
-	// Получаем общее количество книг с учетом фильтрации
 	countQuery := "SELECT COUNT(*) FROM books"
 	if filter != "" {
 		countQuery += " WHERE title LIKE '%" + filter + "%'"
@@ -257,14 +248,12 @@ func BooksHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Вычисляем количество страниц
 	totalPages := (totalCount + limit - 1) / limit
 	paginationPages := []int{}
 	for i := 1; i <= totalPages; i++ {
 		paginationPages = append(paginationPages, i)
 	}
 
-	// Передаем данные в шаблон
 	data := struct {
 		Books           []Database.Book
 		Filter          string
@@ -281,7 +270,6 @@ func BooksHandler(w http.ResponseWriter, r *http.Request) {
 		PaginationPages: paginationPages,
 	}
 
-	// Используем шаблон для рендеринга HTML
 	tmpl, err := template.ParseFiles("FrontEnd/book.html")
 	if err != nil {
 		http.Error(w, "Ошибка при рендеринге шаблона", http.StatusInternalServerError)

@@ -89,15 +89,15 @@
 
 <div class="container">
 
-    <!-- Форма фильтрации и сортировки -->
+
     <div class="filters">
         <form action="/books" method="get">
-            <!-- Фильтрация -->
+
             <label for="filter">Фильтр по названию:</label>
             <input type="text" id="filter" name="filter" value="{{.Filter}}" placeholder="Введите название книги">
             <br><br>
 
-            <!-- Сортировка -->
+
             <label for="sort">Сортировать по:</label>
             <select id="sort" name="sort">
                 <option value="name" {{if eq .Sort "name"}}selected{{end}}>Название</option>
@@ -106,14 +106,14 @@
             </select>
             <br><br>
 
-            <!-- Пагинация -->
+
             <label for="page">Страница:</label>
             <input type="number" id="page" name="page" min="1" value="{{.Page}}" placeholder="1">
             <button type="submit">Применить</button>
         </form>
     </div>
 
-    <!-- Книги -->
+
     <div class="book-card">
         {{range .Books}}
         <div class="book">
@@ -127,7 +127,7 @@
         {{end}}
     </div>
 
-    <!-- Пагинация -->
+
     <div class="pagination">
         {{if gt .TotalPages 1}}
         {{range $i := .PaginationPages}}
