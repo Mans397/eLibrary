@@ -6,8 +6,10 @@ import (
 	"github.com/Mans397/eLibrary/Database"
 	es "github.com/Mans397/eLibrary/emailSender"
 	"html/template"
+	"io"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 )
 
@@ -167,22 +169,48 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Wrong type of http method", http.StatusMethodNotAllowed)
 		return
 	}
-	log.Println("GET/post/email")
-	request := Request{}
 
-	err := json.NewDecoder(r.Body).Decode(&request)
+	err := r.ParseMultipartForm(10 << 20)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		SendResponse(w, Response{Status: "Fail", Message: "error in json decode: " + err.Error()})
+		http.Error(w, "Failed to parse form: "+err.Error(), http.StatusBadRequest)
 		log.Println(err)
 		return
 	}
 
-	err = es.SendEmailAll(request.Message)
+	message := r.FormValue("message")
+	if message == "" {
+		http.Error(w, "Message is required", http.StatusBadRequest)
+		return
+	}
+
+	file, _, err := r.FormFile("attachment")
+	if err != nil {
+		http.Error(w, "Failed to read image: "+err.Error(), http.StatusBadRequest)
+		log.Println(err)
+		return
+	}
+	defer file.Close()
+
+	tempFile, err := os.CreateTemp("", "upload-*.jpg")
+	if err != nil {
+		http.Error(w, "Failed to save image: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer tempFile.Close()
+
+	_, err = io.Copy(tempFile, file)
+	if err != nil {
+		http.Error(w, "Failed to save image: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	err = es.SendEmailAll(&message, tempFile.Name())
 	if err != nil {
 		SendResponse(w, Response{Status: "Fail", Message: err.Error()})
 		log.Println(err)
+		return
 	}
+
 	SendResponse(w, Response{Status: "Success", Message: "Emails sent successfully"})
 }
 

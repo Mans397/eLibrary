@@ -7,7 +7,7 @@ import (
 	"sync"
 )
 
-func SendEmailAll(text *string) error {
+func SendEmailAll(text *string, imagePath string) error {
 	var users []db.User
 	wg := new(sync.WaitGroup)
 
@@ -19,7 +19,7 @@ func SendEmailAll(text *string) error {
 	log.Printf("Starting sending email for %d users", len(users))
 	for _, user := range users {
 		wg.Add(1)
-		go SendEmail(user.Email, text, wg)
+		go SendEmail(user.Email, text, imagePath, wg)
 
 	}
 	wg.Wait()
@@ -28,13 +28,17 @@ func SendEmailAll(text *string) error {
 	return nil
 }
 
-func SendEmail(email string, text *string, wg *sync.WaitGroup) {
+func SendEmail(email string, text *string, imagePath string, wg *sync.WaitGroup) {
 	defer wg.Done()
 	m := gomail.NewMessage()
 	m.SetHeader("From", "elibrarysender@gmail.com")
 	m.SetHeader("To", email)
 	m.SetHeader("Subject", "Notification")
 	m.SetBody("text/plain", *text)
+
+	if imagePath != "" {
+		m.Attach(imagePath)
+	}
 
 	d := gomail.NewDialer("smtp.gmail.com", 587, "elibrarysender@gmail.com", "ocxwblzcockfwcud")
 

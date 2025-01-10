@@ -2,14 +2,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('emailForm');
     form.addEventListener('submit', function (event) {
         event.preventDefault();
+
         const message = document.getElementById('message').value;
+        const attachment = document.getElementById('attachment').files[0];  
+
+        const formData = new FormData();
+        formData.append('message', message);
+        if (attachment) {
+            formData.append('attachment', attachment);  
+        }
+
         document.getElementById('response').innerText = "";
+
         fetch('/admin/sendEmail', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ message }),
+            body: formData,  
         })
             .then((response) => {
                 if (!response.ok) {
