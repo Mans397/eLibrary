@@ -4,19 +4,21 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
 
         const message = document.getElementById('message').value;
-        const attachment = document.getElementById('attachment').files[0];  
+        const attachment = document.getElementById('attachment').files[0];
 
         const formData = new FormData();
         formData.append('message', message);
         if (attachment) {
-            formData.append('attachment', attachment);  
+            formData.append('attachment', attachment);
+
         }
+
 
         document.getElementById('response').innerText = "";
 
         fetch('/admin/sendEmail', {
             method: 'POST',
-            body: formData,  
+            body: formData,
         })
             .then((response) => {
                 if (!response.ok) {

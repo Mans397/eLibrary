@@ -184,27 +184,33 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	file, _, err := r.FormFile("attachment")
-	if err != nil {
+	if err != nil && err.Error() != "http: no such file" {
 		http.Error(w, "Failed to read image: "+err.Error(), http.StatusBadRequest)
 		log.Println(err)
 		return
 	}
-	defer file.Close()
 
-	tempFile, err := os.CreateTemp("", "upload-*.jpg")
-	if err != nil {
-		http.Error(w, "Failed to save image: "+err.Error(), http.StatusInternalServerError)
-		return
+	var imagePath string
+	if file != nil {
+		defer file.Close()
+
+		tempFile, err := os.CreateTemp("", "upload-*.jpg")
+		if err != nil {
+			http.Error(w, "Failed to save image: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
+		defer tempFile.Close()
+
+		_, err = io.Copy(tempFile, file)
+		if err != nil {
+			http.Error(w, "Failed to save image: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		imagePath = tempFile.Name()
 	}
-	defer tempFile.Close()
 
-	_, err = io.Copy(tempFile, file)
-	if err != nil {
-		http.Error(w, "Failed to save image: "+err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	err = es.SendEmailAll(&message, tempFile.Name())
+	err = es.SendEmailAll(&message, imagePath)
 	if err != nil {
 		SendResponse(w, Response{Status: "Fail", Message: err.Error()})
 		log.Println(err)
