@@ -15,7 +15,7 @@ type User struct {
 }
 
 func CreateUser(user User) error {
-	isExist := IsUserExist(user.Email)
+	isExist := IsUserExistName(user.Email)
 	if isExist {
 		return errors.New("User already exists")
 	}
@@ -29,15 +29,46 @@ func CreateUser(user User) error {
 
 }
 
-func (u *User) ReadUser(email string) error {
+func (u *User) ReadUserEmail(email string) error {
 	var user User
 	log.Println("Reading user", email)
-	isExist := IsUserExist(email)
+	isExist := IsUserExistEmail(email)
 	if !isExist {
 		return errors.New("User not found")
 	}
 
 	result := DB.Select("name, email").Where("email = ?", email).First(&user)
+	fmt.Println(user)
+	u.CopyUser(user)
+	if result.Error != nil {
+		return errors.New(result.Error.Error())
+	}
+	return nil
+}
+
+func ReadUserAll() ([]User, error) {
+	users := make([]User, 10)
+	log.Println("Reading users all")
+
+	result := DB.Select("name, email").Find(&users)
+
+	if result.Error != nil {
+		return nil, errors.New(result.Error.Error())
+	}
+
+	return users, nil
+}
+
+func (u *User) ReadUserName(name string) error {
+	var user User
+	log.Println("Reading user", name)
+	isExist := IsUserExistName(name)
+
+	if !isExist {
+		return errors.New("User not found")
+	}
+
+	result := DB.Select("name, email").Where("name = ?", name).First(&user)
 	fmt.Println(user)
 	u.CopyUser(user)
 	if result.Error != nil {
@@ -101,7 +132,22 @@ func IsValidEmail(email string) bool {
 	return false
 }
 
-func IsUserExist(email string) bool {
+func IsUserExistName(name string) bool {
+	var user User
+	result := DB.First(&user, "name = ?", name)
+	if result.Error != nil {
+		if result.Error == gorm.ErrRecordNotFound {
+			return false
+		} else {
+			fmt.Println("Произошла ошибка:", result.Error)
+		}
+	} else {
+		return true
+	}
+	return false
+}
+
+func IsUserExistEmail(email string) bool {
 	var user User
 	result := DB.First(&user, "email = ?", email)
 	if result.Error != nil {

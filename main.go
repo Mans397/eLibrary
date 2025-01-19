@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
+	_ "github.com/Mans397/eLibrary/Api"
 	db "github.com/Mans397/eLibrary/Database"
 	sc "github.com/Mans397/eLibrary/serverConnection"
+	"log"
 	"os"
 )
 
@@ -13,8 +15,29 @@ func main() {
 		return
 	}
 
-	sc.ConnectToServer()
+	if err := db.MigrateBooks(); err != nil {
+		log.Fatalf("Ошибка миграции: %v", err)
+	}
 
+	FetchQuestion()
+	sc.ConnectToServer()
+}
+
+func FetchQuestion() {
+	fmt.Println("Do you want to fetch all Books?(y/n)")
+	var response string
+	fmt.Scan(&response)
+	if response == "y" {
+		fmt.Println("Working...")
+		db.FetchAndSaveBooks()
+		return
+	} else if response == "n" {
+		fmt.Println("Skipping fetch")
+		return
+	} else {
+		fmt.Println("Wrong answer")
+		return
+	}
 }
 
 func CheckDBConnection(err error) bool {
