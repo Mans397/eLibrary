@@ -1,26 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="../static/script.js"></script>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>eLibrary</title>
 </head>
 <body>
-    <h1>Welcome to my server</h1>
-
-    <label for="textInput">Введите текст:</label>
-    <input type="text" id="textInput" name="textInput">
-    <br>
-
-    <button id="fetchDataButton">Get JSON Data(History of POST's)</button>
-    <button id="sendButton">Send POST</button>
-
-    <div id="result"></div>
-
-    <a href="/login">Go to login page</a><br>
-    <a href="/admin">Go to sendEmail page</a><br>
-    <a href="/books">Go to books page</a><br>
-    <a href="/userLogin">Go to auth page</a><br>
-    <a href="/register">Go to register page</a><br>
+<h1>Welcome to eLibrary</h1>
+<p>Please choose an action:</p>
+<button onclick="location.href='/userLogin'">Авторизация</button>
+<button onclick="location.href='/register'">Регистрация</button>
 </body>
 </html>

@@ -19,18 +19,25 @@ const port = ":8080"
 
 func ConnectToServer() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
+
+	// Общие маршруты
 	http.HandleFunc("/", MainHandler)
-	http.HandleFunc("/data/json", DataJsonHandler)
-	http.HandleFunc("/post/json", SendJsonHandler)
-	http.HandleFunc("/db/createUser", CreateUserHandler)
-	http.HandleFunc("/db/readUser", ReadUserHandler)
-	http.HandleFunc("/db/updateUser", UpdateUserHandler)
-	http.HandleFunc("/db/deleteUser", DeleteUserHandler)
-	http.HandleFunc("/admin/sendEmail", SendEmailHandler)
-	http.HandleFunc("/books", BooksHandler)
-	http.HandleFunc("/auth/userLogin", UserLoginHandler)
-	http.HandleFunc("/auth/register", UserRegisterHandler)
-	http.HandleFunc("/admin", AdminPageHandler)
+	http.HandleFunc("/auth/userLogin", UserLoginHandler)   // Логин
+	http.HandleFunc("/auth/register", UserRegisterHandler) // Регистрация
+	http.HandleFunc("/logout", LogoutHandler)              // Выход из системы
+
+	// Админские маршруты (с проверкой доступа)
+	http.HandleFunc("/admin", AdminMiddleware(AdminPageHandler))           // Админская страница
+	http.HandleFunc("/admin/sendEmail", AdminMiddleware(SendEmailHandler)) // Страница отправки email
+
+	// Маршрут для книг (для всех авторизованных)
+	http.HandleFunc("/books", AuthMiddleware(BooksHandler))
+
+	// База данных (используется для админов)
+	http.HandleFunc("/db/createUser", AdminMiddleware(CreateUserHandler))
+	http.HandleFunc("/db/readUser", AdminMiddleware(ReadUserHandler))
+	http.HandleFunc("/db/updateUser", AdminMiddleware(UpdateUserHandler))
+	http.HandleFunc("/db/deleteUser", AdminMiddleware(DeleteUserHandler))
 
 	fmt.Println("Server starting on port", port)
 	fmt.Printf("http://localhost%s\n", port)
@@ -268,23 +275,64 @@ func UserLoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Проверка логина админа
+	if creds.Email == "admin@gmail.com" && creds.Password == "admin2005" {
+		http.SetCookie(w, &http.Cookie{
+			Name:  "session_token",
+			Value: "admin_session",
+			Path:  "/",
+		})
+		json.NewEncoder(w).Encode(map[string]string{
+			"status":   "success",
+			"role":     "admin",
+			"redirect": "/admin",
+		})
+		return
+	}
+
+	// Проверка логина пользователя
 	var user Database.User
 	if err := Database.DB.Where("email = ?", creds.Email).First(&user).Error; err != nil {
 		http.Error(w, "User not found", http.StatusUnauthorized)
 		return
 	}
 
-	// Простая проверка пароля (замените на хэширование в продакшене)
 	if user.Password != creds.Password {
 		http.Error(w, "Invalid password", http.StatusUnauthorized)
 		return
 	}
 
+	http.SetCookie(w, &http.Cookie{
+		Name:  "session_token",
+		Value: "user_session",
+		Path:  "/",
+	})
+	json.NewEncoder(w).Encode(map[string]string{
+		"status":   "success",
+		"role":     "user",
+		"redirect": "/books",
+	})
+}
+
+func LogoutHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Удаляем cookie
+	http.SetCookie(w, &http.Cookie{
+		Name:   "session_token",
+		Value:  "",
+		Path:   "/",
+		MaxAge: -1, // Устанавливаем отрицательный возраст, чтобы удалить cookie
+	})
+
 	// Возвращаем успешный ответ
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]string{
 		"status":  "success",
-		"message": "User logged in successfully",
+		"message": "Logged out successfully",
 	})
 }
 
@@ -329,43 +377,22 @@ func UserRegisterHandler(w http.ResponseWriter, r *http.Request) {
 	})
 }
 func AdminPageHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
+	// Проверяем, что запрос сделан с методом GET
+	if r.Method != http.MethodGet {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
 
-	var creds struct {
-		Email    string `json:"email"`
-		Password string `json:"password"`
-	}
-
-	// Парсим JSON с почтой и паролем
-	if err := json.NewDecoder(r.Body).Decode(&creds); err != nil {
-		http.Error(w, "Invalid request body", http.StatusBadRequest)
+	// Проверяем cookie, чтобы удостовериться, что пользователь — админ
+	cookie, err := r.Cookie("session_token")
+	if err != nil || cookie.Value != "admin_session" {
+		// Если пользователь не авторизован как админ, перенаправляем на страницу логина
+		http.Redirect(w, r, "/auth/userLogin", http.StatusFound)
 		return
 	}
 
-	// Проверяем, является ли пользователь админом
-	if creds.Email == "admin@gmail.com" && creds.Password == "admin2005" {
-		// Сохраняем сессию (опционально: токен или cookie)
-		http.SetCookie(w, &http.Cookie{
-			Name:  "session_token",
-			Value: "admin_session", // Уникальный идентификатор сессии
-			Path:  "/",
-		})
-
-		// Перенаправляем на страницу админа
-		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(map[string]string{
-			"status":   "success",
-			"message":  "Admin logged in successfully",
-			"redirect": "/admin", // Страница админки
-		})
-		return
-	}
-
-	// Если данные некорректны, возвращаем ошибку
-	http.Error(w, "Invalid email or password", http.StatusUnauthorized)
+	// Отображаем страницу админа
+	http.ServeFile(w, r, "./FrontEnd/admin.html")
 }
 
 func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
@@ -423,9 +450,45 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 
 	SendResponse(w, Response{Status: "Success", Message: "Emails sent successfully"})
 }
+func AdminMiddleware(next http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// Проверяем cookie
+		cookie, err := r.Cookie("session_token")
+		if err != nil || cookie.Value != "admin_session" {
+			// Если нет прав доступа, перенаправляем на логин
+			http.Redirect(w, r, "/auth/userLogin", http.StatusFound)
+			return
+		}
+
+		// Если права доступа есть, вызываем следующий обработчик
+		next(w, r)
+	}
+}
+func AuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// Проверяем cookie
+		cookie, err := r.Cookie("session_token")
+		if err != nil || (cookie.Value != "admin_session" && cookie.Value != "user_session") {
+			// Если нет прав доступа, перенаправляем на логин
+			http.Redirect(w, r, "/auth/userLogin", http.StatusFound)
+			return
+		}
+
+		// Если пользователь авторизован, вызываем следующий обработчик
+		next(w, r)
+	}
+}
 
 func BooksHandler(w http.ResponseWriter, r *http.Request) {
+	// Проверяем наличие cookie
+	cookie, err := r.Cookie("session_token")
+	if err != nil || cookie.Value != "user_session" {
+		// Если cookie нет или она не соответствует пользователю, перенаправляем на страницу авторизации для пользователей
+		http.Redirect(w, r, "/userLogin", http.StatusFound)
+		return
+	}
 
+	// Логика отображения книг
 	filter := r.URL.Query().Get("filter")
 	sort := r.URL.Query().Get("sort")
 	page := r.URL.Query().Get("page")

@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>User Login</title>
-    <script src="../static/userAuth.js"></script>
 </head>
 <body>
 <h1>User Login</h1>
@@ -16,7 +15,19 @@
     <br><br>
     <button type="submit">Login</button>
 </form>
+
 <div id="response"></div>
-<a href="/register">Sign in</a><br>
+
+<!-- Кнопки для админа (по умолчанию скрыты) -->
+<div id="adminActions" style="display: none;">
+    <h2>Admin Actions</h2>
+    <button onclick="location.href='/login'">Go to login page</button>
+    <button onclick="location.href='/admin'">Go to sendEmail page</button>
+    <button onclick="location.href='/books'">Go to books page</button>
+</div>
+
+<!-- Ссылка на регистрацию -->
+<a href="/register">Sign up</a><br>
+<script src="../static/userAuth.js"></script>
 </body>
 </html>
