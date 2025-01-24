@@ -5,6 +5,7 @@ import (
 	"github.com/Mans397/eLibrary/Api"
 	"gorm.io/gorm"
 	"log"
+	"time"
 )
 
 type Book struct {
@@ -26,9 +27,22 @@ func MigrateBooks() error {
 	return nil
 }
 
+type EmailConfirmation struct {
+	gorm.Model
+	UserID uint      `gorm:"not null"`        // Связь с пользователем
+	Token  string    `gorm:"unique;not null"` // Токен для подтверждения
+	Expiry time.Time // Срок действия токена
+}
+
+func MigrateEmailConfirmations() error {
+	if err := DB.AutoMigrate(&EmailConfirmation{}); err != nil {
+		log.Println("Ошибка при миграции EmailConfirmation:", err)
+		return fmt.Errorf("ошибка миграции для EmailConfirmation: %v", err)
+	}
+	return nil
+}
 func SaveBooks(books []Api.Book) error {
 	for _, apiBook := range books {
-		// Преобразуем Api.Book в Database.Book
 		book := Book{
 			Title:       apiBook.Title,
 			Description: apiBook.Description,
@@ -48,14 +62,15 @@ func SaveBooks(books []Api.Book) error {
 }
 
 func FetchAndSaveBooks() {
-
+	fmt.Println("start")
 	books, err := Api.FetchBooks()
+	fmt.Println("start2")
 	if err != nil {
 		log.Fatalf("Ошибка при получении данных из API: %v", err)
 	}
-
-	for _, apiBook := range books {
-
+	fmt.Println("start3")
+	for i, apiBook := range books {
+		fmt.Println(i)
 		var count int64
 		if err := DB.Model(&Book{}).Where("title = ?", apiBook.Title).Count(&count).Error; err != nil {
 			log.Fatalf("Ошибка при проверке наличия книги в базе: %v", err)

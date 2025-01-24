@@ -1,0 +1,341 @@
+2025/01/10 12:41:54 !!!CHECK IF DOCKER CONTAINER IS STARTED!!!
+2025/01/10 12:42:01 !!!CHECK IF DOCKER CONTAINER IS STARTED!!!
+2025/01/10 12:52:22 Server starting on port :8080
+2025/01/10 12:52:22 http://localhost:8080
+2025/01/10 12:52:41 Server starting on port :8080
+2025/01/10 12:52:41 http://localhost:8080
+2025/01/10 12:53:30 Книга 'The Good Earth' успешно сохранена.
+2025/01/10 12:53:30 Книга 'Идіотъ' успешно сохранена.
+2025/01/10 12:53:30 Книга 'The Voyage of the Dawn Treader' успешно сохранена.
+2025/01/10 12:53:30 Книга 'Arsène Lupin, gentleman-cambrioleur' успешно сохранена.
+2025/01/10 12:53:30 Книга 'The Story of Philosophy' успешно сохранена.
+2025/01/10 12:53:30 Книга 'Guess How Much I Love You' успешно сохранена.
+2025/01/10 12:53:30 Книга 'The Thirty-Nine Steps' успешно сохранена.
+2025/01/10 12:53:30 Книга 'The Hunger Games' успешно сохранена.
+2025/01/10 12:53:30 Книга 'Three Men in a Boat (to say nothing of the dog)' успешно сохранена.
+2025/01/10 12:53:30 Книга 'Le Comte de Monte Cristo' успешно сохранена.
+2025/01/10 12:53:30 Книга 'Uncle Tom's Cabin' успешно сохранена.
+2025/01/10 12:53:30 Книга 'NASA/DoD aerospace knowledge diffusion research project' успешно сохранена.
+2025/01/10 12:53:30 Книга 'Gulliver's Travels' успешно сохранена.
+2025/01/10 12:53:30 Книга 'Hamlet' успешно сохранена.
+2025/01/10 12:53:30 Книга 'Autobiography of a Yogi' успешно сохранена.
+2025/01/10 12:53:30 Книга 'Principles of Anatomy and Physiology' успешно сохранена.
+2025/01/10 12:53:30 Книга 'The alchemist, 1612' успешно сохранена.
+2025/01/10 12:53:30 Книга 'The Ugly Duckling' успешно сохранена.
+2025/01/10 12:53:30 Книга 'A Midsummer Night's Dream' успешно сохранена.
+2025/01/10 12:53:30 Книга 'Преступление и наказание' успешно сохранена.
+2025/01/10 12:53:30 Книга 'Much Ado About Nothing' успешно сохранена.
+2025/01/10 12:53:30 Книга 'The Lost World' успешно сохранена.
+2025/01/10 12:53:30 Книга 'As You Like It' успешно сохранена.
+2025/01/10 12:53:30 Книга 'The Adventures of Sherlock Holmes [12 stories]' успешно сохранена.
+2025/01/10 12:53:30 Книга 'David Copperfield' успешно сохранена.
+2025/01/10 12:53:30 Книга 'Othello' успешно сохранена.
+2025/01/10 12:53:30 Книга 'Great Expectations' успешно сохранена.
+2025/01/10 12:53:30 Книга 'King Lear' успешно сохранена.
+2025/01/10 12:53:30 Книга 'The Merchant of Venice' успешно сохранена.
+2025/01/10 12:53:30 Книга 'Robinson Crusoe' успешно сохранена.
+2025/01/10 12:53:30 Server starting on port :8080
+2025/01/10 12:53:30 http://localhost:8080
+2025/01/10 12:54:38 Server starting on port :8080
+2025/01/10 12:54:38 http://localhost:8080
+2025/01/10 12:55:35 Server starting on port :8080
+2025/01/10 12:55:35 http://localhost:8080
+2025/01/10 12:55:53 dfsfdfsdf
+2025/01/10 12:55:53 Server starting on port :8080
+2025/01/10 12:55:53 http://localhost:8080
+2025/01/10 12:57:26 dfsfdfsdf
+2025/01/10 12:57:26 Server starting on port :8080
+2025/01/10 12:57:26 http://localhost:8080
+2025/01/10 12:58:25 Server starting on port :8080
+2025/01/10 12:58:25 http://localhost:8080
+2025/01/10 12:58:40 Server starting on port :8080
+2025/01/10 12:58:40 http://localhost:8080
+2025/01/10 12:59:30 Server starting on port :8080
+2025/01/10 12:59:30 http://localhost:8080
+2025/01/10 13:00:22 Server is starting on :8080
+2025/01/10 13:00:56 dfdfsf
+2025/01/10 13:00:56 Server starting on port :8080
+2025/01/10 13:00:56 http://localhost:8080
+2025/01/10 13:01:15 Server starting on port :8080
+2025/01/10 13:01:15 http://localhost:8080
+2025/01/10 13:01:52 Server starting on port :8080
+2025/01/10 13:01:52 http://localhost:8080
+2025/01/10 13:02:01 Server starting on port :8080
+2025/01/10 13:02:01 http://localhost:8080
+2025/01/10 13:02:11 Request Path: /
+2025/01/10 13:02:11 Request Path: /favicon.ico
+2025/01/23 16:28:49 Книга 'The Good Earth' уже существует в базе.
+2025/01/23 16:28:49 Книга 'The Voyage of the Dawn Treader' уже существует в базе.
+2025/01/23 16:28:49 Книга 'Arsène Lupin, gentleman-cambrioleur' уже существует в базе.
+2025/01/23 16:28:49 Книга 'Идіотъ' уже существует в базе.
+2025/01/23 16:28:49 Книга 'The Story of Philosophy' уже существует в базе.
+2025/01/23 16:28:49 Книга 'Guess How Much I Love You' уже существует в базе.
+2025/01/23 16:28:49 Книга 'The Thirty-Nine Steps' уже существует в базе.
+2025/01/23 16:28:49 Книга 'The Hunger Games' уже существует в базе.
+2025/01/23 16:28:49 Книга 'Three Men in a Boat (to say nothing of the dog)' уже существует в базе.
+2025/01/23 16:28:49 Книга 'Le Comte de Monte Cristo' уже существует в базе.
+2025/01/23 16:28:49 Книга 'Uncle Tom's Cabin' уже существует в базе.
+2025/01/23 16:28:49 Книга 'NASA/DoD aerospace knowledge diffusion research project' уже существует в базе.
+2025/01/23 16:28:49 Книга 'Gulliver's Travels' уже существует в базе.
+2025/01/23 16:28:49 Книга 'Hamlet' уже существует в базе.
+2025/01/23 16:28:49 Книга 'Principles of Anatomy and Physiology' уже существует в базе.
+2025/01/23 16:28:49 Книга 'Autobiography of a Yogi' уже существует в базе.
+2025/01/23 16:28:49 Книга 'The Alchemist, 1612' успешно сохранена.
+2025/01/23 16:28:49 Книга 'The Ugly Duckling' уже существует в базе.
+2025/01/23 16:28:49 Книга 'A Midsummer Night's Dream' уже существует в базе.
+2025/01/23 16:28:49 Книга 'Преступление и наказание' уже существует в базе.
+2025/01/23 16:28:49 Книга 'Much Ado About Nothing' уже существует в базе.
+2025/01/23 16:28:49 Книга 'The Lost World' уже существует в базе.
+2025/01/23 16:28:49 Книга 'The Legend of Sleepy Hollow' успешно сохранена.
+2025/01/23 16:28:49 Книга 'As You Like It' уже существует в базе.
+2025/01/23 16:28:49 Книга 'The Adventures of Sherlock Holmes [12 stories]' уже существует в базе.
+2025/01/23 16:28:49 Книга 'David Copperfield' уже существует в базе.
+2025/01/23 16:28:49 Книга 'Othello' уже существует в базе.
+2025/01/23 16:28:49 Книга 'King Lear' уже существует в базе.
+2025/01/23 16:28:49 Книга 'Great Expectations' уже существует в базе.
+2025/01/23 16:28:49 Книга 'The Merchant of Venice' уже существует в базе.
+2025/01/23 16:28:49 Server starting on port :8080
+2025/01/23 16:28:49 http://localhost:8080
+2025/01/23 16:32:39 Книга 'The Good Earth' уже существует в базе.
+2025/01/23 16:32:39 Книга 'The Voyage of the Dawn Treader' уже существует в базе.
+2025/01/23 16:32:39 Книга 'Arsène Lupin, gentleman-cambrioleur' уже существует в базе.
+2025/01/23 16:32:39 Книга 'Идіотъ' уже существует в базе.
+2025/01/23 16:32:39 Книга 'The Story of Philosophy' уже существует в базе.
+2025/01/23 16:32:39 Книга 'Guess How Much I Love You' уже существует в базе.
+2025/01/23 16:32:39 Книга 'The Thirty-Nine Steps' уже существует в базе.
+2025/01/23 16:32:39 Книга 'The Hunger Games' уже существует в базе.
+2025/01/23 16:32:39 Книга 'Three Men in a Boat (to say nothing of the dog)' уже существует в базе.
+2025/01/23 16:32:39 Книга 'Le Comte de Monte Cristo' уже существует в базе.
+2025/01/23 16:32:39 Книга 'Uncle Tom's Cabin' уже существует в базе.
+2025/01/23 16:32:39 Книга 'NASA/DoD aerospace knowledge diffusion research project' уже существует в базе.
+2025/01/23 16:32:39 Книга 'Gulliver's Travels' уже существует в базе.
+2025/01/23 16:32:39 Книга 'Hamlet' уже существует в базе.
+2025/01/23 16:32:39 Книга 'Principles of Anatomy and Physiology' уже существует в базе.
+2025/01/23 16:32:39 Книга 'Autobiography of a Yogi' уже существует в базе.
+2025/01/23 16:32:39 Книга 'The Alchemist, 1612' уже существует в базе.
+2025/01/23 16:32:39 Книга 'The Ugly Duckling' уже существует в базе.
+2025/01/23 16:32:39 Книга 'A Midsummer Night's Dream' уже существует в базе.
+2025/01/23 16:32:39 Книга 'Преступление и наказание' уже существует в базе.
+2025/01/23 16:32:39 Книга 'Much Ado About Nothing' уже существует в базе.
+2025/01/23 16:32:39 Книга 'The Lost World' уже существует в базе.
+2025/01/23 16:32:39 Книга 'The Legend of Sleepy Hollow' уже существует в базе.
+2025/01/23 16:32:39 Книга 'As You Like It' уже существует в базе.
+2025/01/23 16:32:39 Книга 'The Adventures of Sherlock Holmes [12 stories]' уже существует в базе.
+2025/01/23 16:32:39 Книга 'David Copperfield' уже существует в базе.
+2025/01/23 16:32:39 Книга 'Othello' уже существует в базе.
+2025/01/23 16:32:39 Книга 'King Lear' уже существует в базе.
+2025/01/23 16:32:39 Книга 'Great Expectations' уже существует в базе.
+2025/01/23 16:32:39 Книга 'The Merchant of Venice' уже существует в базе.
+2025/01/23 16:32:39 Server starting on port :8080
+2025/01/23 16:32:39 http://localhost:8080
+2025/01/23 16:33:22 Книга 'The Good Earth' уже существует в базе.
+2025/01/23 16:33:22 Книга 'The Voyage of the Dawn Treader' уже существует в базе.
+2025/01/23 16:33:22 Книга 'Arsène Lupin, gentleman-cambrioleur' уже существует в базе.
+2025/01/23 16:33:22 Книга 'Идіотъ' уже существует в базе.
+2025/01/23 16:33:22 Книга 'The Story of Philosophy' уже существует в базе.
+2025/01/23 16:33:22 Книга 'Guess How Much I Love You' уже существует в базе.
+2025/01/23 16:33:22 Книга 'The Thirty-Nine Steps' уже существует в базе.
+2025/01/23 16:33:22 Книга 'The Hunger Games' уже существует в базе.
+2025/01/23 16:33:22 Книга 'Three Men in a Boat (to say nothing of the dog)' уже существует в базе.
+2025/01/23 16:33:22 Книга 'Le Comte de Monte Cristo' уже существует в базе.
+2025/01/23 16:33:22 Книга 'Uncle Tom's Cabin' уже существует в базе.
+2025/01/23 16:33:22 Книга 'NASA/DoD aerospace knowledge diffusion research project' уже существует в базе.
+2025/01/23 16:33:22 Книга 'Gulliver's Travels' уже существует в базе.
+2025/01/23 16:33:22 Книга 'Hamlet' уже существует в базе.
+2025/01/23 16:33:22 Книга 'Principles of Anatomy and Physiology' уже существует в базе.
+2025/01/23 16:33:22 Книга 'Autobiography of a Yogi' уже существует в базе.
+2025/01/23 16:33:22 Книга 'The Alchemist, 1612' уже существует в базе.
+2025/01/23 16:33:22 Книга 'The Ugly Duckling' уже существует в базе.
+2025/01/23 16:33:22 Книга 'A Midsummer Night's Dream' уже существует в базе.
+2025/01/23 16:33:22 Книга 'Преступление и наказание' уже существует в базе.
+2025/01/23 16:33:22 Книга 'Much Ado About Nothing' уже существует в базе.
+2025/01/23 16:33:22 Книга 'The Lost World' уже существует в базе.
+2025/01/23 16:33:22 Книга 'The Legend of Sleepy Hollow' уже существует в базе.
+2025/01/23 16:33:22 Книга 'As You Like It' уже существует в базе.
+2025/01/23 16:33:22 Книга 'The Adventures of Sherlock Holmes [12 stories]' уже существует в базе.
+2025/01/23 16:33:22 Книга 'David Copperfield' уже существует в базе.
+2025/01/23 16:33:22 Книга 'Othello' уже существует в базе.
+2025/01/23 16:33:22 Книга 'King Lear' уже существует в базе.
+2025/01/23 16:33:22 Книга 'Great Expectations' уже существует в базе.
+2025/01/23 16:33:22 Книга 'The Merchant of Venice' уже существует в базе.
+2025/01/23 16:33:22 Server starting on port :8080
+2025/01/23 16:33:22 http://localhost:8080
+2025/01/23 16:34:34 Книга 'The Good Earth' уже существует в базе.
+2025/01/23 16:34:34 Книга 'The Voyage of the Dawn Treader' уже существует в базе.
+2025/01/23 16:34:34 Книга 'Arsène Lupin, gentleman-cambrioleur' уже существует в базе.
+2025/01/23 16:34:34 Книга 'Идіотъ' уже существует в базе.
+2025/01/23 16:34:34 Книга 'The Story of Philosophy' уже существует в базе.
+2025/01/23 16:34:34 Книга 'Guess How Much I Love You' уже существует в базе.
+2025/01/23 16:34:34 Книга 'The Thirty-Nine Steps' уже существует в базе.
+2025/01/23 16:34:34 Книга 'The Hunger Games' уже существует в базе.
+2025/01/23 16:34:34 Книга 'Three Men in a Boat (to say nothing of the dog)' уже существует в базе.
+2025/01/23 16:34:34 Книга 'Le Comte de Monte Cristo' уже существует в базе.
+2025/01/23 16:34:34 Книга 'Uncle Tom's Cabin' уже существует в базе.
+2025/01/23 16:34:34 Книга 'NASA/DoD aerospace knowledge diffusion research project' уже существует в базе.
+2025/01/23 16:34:34 Книга 'Gulliver's Travels' уже существует в базе.
+2025/01/23 16:34:34 Книга 'Hamlet' уже существует в базе.
+2025/01/23 16:34:34 Книга 'Principles of Anatomy and Physiology' уже существует в базе.
+2025/01/23 16:34:34 Книга 'Autobiography of a Yogi' уже существует в базе.
+2025/01/23 16:34:34 Книга 'The Alchemist, 1612' уже существует в базе.
+2025/01/23 16:34:34 Книга 'The Ugly Duckling' уже существует в базе.
+2025/01/23 16:34:34 Книга 'A Midsummer Night's Dream' уже существует в базе.
+2025/01/23 16:34:34 Книга 'Преступление и наказание' уже существует в базе.
+2025/01/23 16:34:34 Книга 'Much Ado About Nothing' уже существует в базе.
+2025/01/23 16:34:34 Книга 'The Lost World' уже существует в базе.
+2025/01/23 16:34:34 Книга 'The Legend of Sleepy Hollow' уже существует в базе.
+2025/01/23 16:34:34 Книга 'As You Like It' уже существует в базе.
+2025/01/23 16:34:34 Книга 'The Adventures of Sherlock Holmes [12 stories]' уже существует в базе.
+2025/01/23 16:34:34 Книга 'David Copperfield' уже существует в базе.
+2025/01/23 16:34:34 Книга 'Othello' уже существует в базе.
+2025/01/23 16:34:34 Книга 'King Lear' уже существует в базе.
+2025/01/23 16:34:34 Книга 'Great Expectations' уже существует в базе.
+2025/01/23 16:34:34 Книга 'The Merchant of Venice' уже существует в базе.
+2025/01/23 16:34:34 Server starting on port :8080
+2025/01/23 16:34:34 http://localhost:8080
+2025/01/23 16:35:58 Книга 'The Good Earth' уже существует в базе.
+2025/01/23 16:35:58 Книга 'The Voyage of the Dawn Treader' уже существует в базе.
+2025/01/23 16:35:58 Книга 'Arsène Lupin, gentleman-cambrioleur' уже существует в базе.
+2025/01/23 16:35:58 Книга 'Идіотъ' уже существует в базе.
+2025/01/23 16:35:58 Книга 'The Story of Philosophy' уже существует в базе.
+2025/01/23 16:35:58 Книга 'Guess How Much I Love You' уже существует в базе.
+2025/01/23 16:35:58 Книга 'The Thirty-Nine Steps' уже существует в базе.
+2025/01/23 16:35:58 Книга 'The Hunger Games' уже существует в базе.
+2025/01/23 16:35:58 Книга 'Three Men in a Boat (to say nothing of the dog)' уже существует в базе.
+2025/01/23 16:35:58 Книга 'Le Comte de Monte Cristo' уже существует в базе.
+2025/01/23 16:35:58 Книга 'Uncle Tom's Cabin' уже существует в базе.
+2025/01/23 16:35:58 Книга 'NASA/DoD aerospace knowledge diffusion research project' уже существует в базе.
+2025/01/23 16:35:58 Книга 'Gulliver's Travels' уже существует в базе.
+2025/01/23 16:35:58 Книга 'Hamlet' уже существует в базе.
+2025/01/23 16:35:58 Книга 'Principles of Anatomy and Physiology' уже существует в базе.
+2025/01/23 16:35:58 Книга 'Autobiography of a Yogi' уже существует в базе.
+2025/01/23 16:35:58 Книга 'The Alchemist, 1612' уже существует в базе.
+2025/01/23 16:35:58 Книга 'The Ugly Duckling' уже существует в базе.
+2025/01/23 16:35:58 Книга 'A Midsummer Night's Dream' уже существует в базе.
+2025/01/23 16:35:58 Книга 'Преступление и наказание' уже существует в базе.
+2025/01/23 16:35:58 Книга 'Much Ado About Nothing' уже существует в базе.
+2025/01/23 16:35:58 Книга 'The Lost World' уже существует в базе.
+2025/01/23 16:35:58 Книга 'The Legend of Sleepy Hollow' уже существует в базе.
+2025/01/23 16:35:58 Книга 'As You Like It' уже существует в базе.
+2025/01/23 16:35:58 Книга 'The Adventures of Sherlock Holmes [12 stories]' уже существует в базе.
+2025/01/23 16:35:58 Книга 'David Copperfield' уже существует в базе.
+2025/01/23 16:35:58 Книга 'Othello' уже существует в базе.
+2025/01/23 16:35:58 Книга 'King Lear' уже существует в базе.
+2025/01/23 16:35:58 Книга 'Great Expectations' уже существует в базе.
+2025/01/23 16:35:58 Книга 'The Merchant of Venice' уже существует в базе.
+2025/01/23 16:35:58 Server starting on port :8080
+2025/01/23 16:35:58 http://localhost:8080
+2025/01/23 16:38:43 Книга 'The Good Earth' уже существует в базе.
+2025/01/23 16:38:43 Книга 'The Voyage of the Dawn Treader' уже существует в базе.
+2025/01/23 16:38:43 Книга 'Arsène Lupin, gentleman-cambrioleur' уже существует в базе.
+2025/01/23 16:38:43 Книга 'Идіотъ' уже существует в базе.
+2025/01/23 16:38:43 Книга 'The Story of Philosophy' уже существует в базе.
+2025/01/23 16:38:43 Книга 'Guess How Much I Love You' уже существует в базе.
+2025/01/23 16:38:43 Книга 'The Thirty-Nine Steps' уже существует в базе.
+2025/01/23 16:38:43 Книга 'The Hunger Games' уже существует в базе.
+2025/01/23 16:38:43 Книга 'Three Men in a Boat (to say nothing of the dog)' уже существует в базе.
+2025/01/23 16:38:43 Книга 'Le Comte de Monte Cristo' уже существует в базе.
+2025/01/23 16:38:43 Книга 'Uncle Tom's Cabin' уже существует в базе.
+2025/01/23 16:38:43 Книга 'NASA/DoD aerospace knowledge diffusion research project' уже существует в базе.
+2025/01/23 16:38:43 Книга 'Gulliver's Travels' уже существует в базе.
+2025/01/23 16:38:43 Книга 'Hamlet' уже существует в базе.
+2025/01/23 16:38:43 Книга 'Principles of Anatomy and Physiology' уже существует в базе.
+2025/01/23 16:38:43 Книга 'Autobiography of a Yogi' уже существует в базе.
+2025/01/23 16:38:43 Книга 'The Alchemist, 1612' уже существует в базе.
+2025/01/23 16:38:43 Книга 'The Ugly Duckling' уже существует в базе.
+2025/01/23 16:38:43 Книга 'A Midsummer Night's Dream' уже существует в базе.
+2025/01/23 16:38:43 Книга 'Преступление и наказание' уже существует в базе.
+2025/01/23 16:38:43 Книга 'Much Ado About Nothing' уже существует в базе.
+2025/01/23 16:38:43 Книга 'The Lost World' уже существует в базе.
+2025/01/23 16:38:43 Книга 'The Legend of Sleepy Hollow' уже существует в базе.
+2025/01/23 16:38:43 Книга 'As You Like It' уже существует в базе.
+2025/01/23 16:38:43 Книга 'The Adventures of Sherlock Holmes [12 stories]' уже существует в базе.
+2025/01/23 16:38:43 Книга 'David Copperfield' уже существует в базе.
+2025/01/23 16:38:43 Книга 'Othello' уже существует в базе.
+2025/01/23 16:38:43 Книга 'King Lear' уже существует в базе.
+2025/01/23 16:38:43 Книга 'Great Expectations' уже существует в базе.
+2025/01/23 16:38:43 Книга 'The Merchant of Venice' уже существует в базе.
+2025/01/23 16:38:43 Server starting on port :8080
+2025/01/23 16:38:43 http://localhost:8080
+2025/01/23 16:39:07 Server starting on port :8080
+2025/01/23 16:39:07 http://localhost:8080
+2025/01/23 16:39:15 Request Path: /
+2025/01/23 16:39:15 Request Path: /apple-touch-icon-precomposed.png
+2025/01/23 16:39:15 Request Path: /apple-touch-icon.png
+2025/01/23 16:41:41 Request Path: /
+2025/01/23 16:41:43 Request Path: /login
+2025/01/23 16:41:53 Request Path: /admin
+2025/01/23 17:36:14 GET/data/json
+2025/01/23 17:41:28 Request Path: /
+2025/01/23 17:41:31 Request Path: /
+2025/01/23 23:03:24 Request Path: /
+2025/01/24 11:15:59 Request Path: /userLogin
+2025/01/24 11:17:46 Request Path: /
+2025/01/24 11:17:49 Request Path: /user_login
+2025/01/24 11:18:12 Request Path: /user_login
+2025/01/24 11:18:30 Request Path: /
+2025/01/24 11:18:32 Request Path: /loginuser
+2025/01/24 11:19:13 Request Path: /
+2025/01/24 11:19:15 Request Path: /userLogin
+2025/01/24 11:19:23 Request Path: /
+2025/01/24 11:19:24 Request Path: /userLogin
+2025/01/24 11:20:04 Request Path: /
+2025/01/24 11:20:06 Request Path: /userLogin
+2025/01/24 11:33:19 Request Path: /
+2025/01/24 11:36:04 Request Path: /
+2025/01/24 11:36:08 Request Path: /register
+2025/01/24 11:37:36 Request Path: /register
+2025/01/24 11:37:38 Request Path: /userLogin
+2025/01/24 11:37:42 Request Path: /register
+2025/01/24 11:37:43 Request Path: /userLogin
+2025/01/24 11:37:44 Request Path: /register
+2025/01/24 11:37:45 Request Path: /userLogin
+2025/01/24 11:37:45 Request Path: /register
+2025/01/24 11:37:46 Request Path: /userLogin
+2025/01/24 11:37:47 Request Path: /register
+2025/01/24 11:37:48 Request Path: /userLogin
+2025/01/24 11:37:49 Request Path: /register
+2025/01/24 11:37:49 Request Path: /userLogin
+2025/01/24 11:37:50 Request Path: /register
+2025/01/24 11:41:17 Request Path: /userLogin
+2025/01/24 11:44:29 Request Path: /userLogin
+2025/01/24 11:54:57 Request Path: /
+2025/01/24 11:55:01 Request Path: /register
+2025/01/24 11:55:02 Request Path: /userLogin
+2025/01/24 12:09:32 Request Path: Redirecting to /login
+2025/01/24 12:09:32 Request Path: /login
+2025/01/24 12:09:34 Request Path: Redirecting to /login
+2025/01/24 12:09:34 Request Path: /login
+2025/01/24 12:09:55 Request Path: /userLogin
+2025/01/24 12:09:59 Request Path: Redirecting to /books
+2025/01/24 12:24:16 No session found. Showing main page.
+2025/01/24 12:24:23 No session found. Showing main page.
+2025/01/24 12:24:23 No session found. Showing main page.
+2025/01/24 12:24:24 No session found. Showing main page.
+2025/01/24 12:24:28 No session found. Showing main page.
+2025/01/24 12:24:28 No session found. Showing main page.
+2025/01/24 12:24:28 No session found. Showing main page.
+2025/01/24 12:24:28 No session found. Showing main page.
+2025/01/24 12:24:28 No session found. Showing main page.
+2025/01/24 12:24:28 No session found. Showing main page.
+2025/01/24 12:24:28 No session found. Showing main page.
+2025/01/24 12:24:28 No session found. Showing main page.
+2025/01/24 12:24:28 No session found. Showing main page.
+2025/01/24 12:24:28 No session found. Showing main page.
+2025/01/24 12:24:29 No session found. Showing main page.
+2025/01/24 12:24:29 No session found. Showing main page.
+2025/01/24 12:24:29 No session found. Showing main page.
+2025/01/24 12:24:29 No session found. Showing main page.
+2025/01/24 12:24:29 No session found. Showing main page.
+2025/01/24 12:24:29 No session found. Showing main page.
+2025/01/24 12:24:29 No session found. Showing main page.
+2025/01/24 12:24:29 No session found. Showing main page.
+2025/01/24 12:24:30 No session found. Showing main page.
+2025/01/24 12:25:48 Request Path: /
+2025/01/24 12:25:58 Request Path: /userLogin
+2025/01/24 12:26:00 Request Path: /
+2025/01/24 12:27:40 Request Path: /
+2025/01/24 12:28:29 Request Path: /
+2025/01/24 12:28:30 Request Path: /userLogin
+2025/01/24 12:29:32 Request Path: /
+2025/01/24 12:29:33 Request Path: /userLogin
+2025/01/24 12:29:35 Request Path: /register

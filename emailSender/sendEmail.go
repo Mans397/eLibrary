@@ -30,6 +30,7 @@ func SendEmailAll(text *string, imagePath string) error {
 
 func SendEmail(email string, text *string, imagePath string, wg *sync.WaitGroup) {
 	defer wg.Done()
+
 	m := gomail.NewMessage()
 	m.SetHeader("From", "elibrarysender@gmail.com")
 	m.SetHeader("To", email)
@@ -43,9 +44,31 @@ func SendEmail(email string, text *string, imagePath string, wg *sync.WaitGroup)
 	d := gomail.NewDialer("smtp.gmail.com", 587, "elibrarysender@gmail.com", "ocxwblzcockfwcud")
 
 	if err := d.DialAndSend(m); err != nil {
-		log.Printf("Failed to send email: %v, User: %v\n", err, email)
-
+		log.Printf("Ошибка отправки письма для пользователя %s: %v\n", email, err)
+		return
 	}
-	log.Println("Email sent successfully to user:", email)
 
+	log.Printf("Письмо успешно отправлено пользователю %s\n", email)
+}
+
+func SendEmailLogin(email string, text *string, imagePath string) {
+
+	m := gomail.NewMessage()
+	m.SetHeader("From", "elibrarysender@gmail.com")
+	m.SetHeader("To", email)
+	m.SetHeader("Subject", "Notification")
+	m.SetBody("text/plain", *text)
+
+	if imagePath != "" {
+		m.Attach(imagePath)
+	}
+
+	d := gomail.NewDialer("smtp.gmail.com", 587, "elibrarysender@gmail.com", "ocxwblzcockfwcud")
+
+	if err := d.DialAndSend(m); err != nil {
+		log.Printf("Ошибка отправки письма для пользователя %s: %v\n", email, err)
+		return
+	}
+
+	log.Printf("Письмо успешно отправлено пользователю %s\n", email)
 }
