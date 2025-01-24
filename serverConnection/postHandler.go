@@ -10,7 +10,10 @@ type Request struct {
 	Message *string `json:"message"`
 }
 
-var RequestHistory []Request
+var str = "message"
+var RequestHistory = []Request{
+	{Message: &str},
+}
 
 func PostHandler(w http.ResponseWriter, r *http.Request) {
 	request := Request{}
