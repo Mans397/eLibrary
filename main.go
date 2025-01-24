@@ -22,26 +22,28 @@ func main() {
 		log.Fatalf("Ошибка миграции EmailConfirmations: %v", err)
 	}
 
-	FetchQuestion()
+	db.FetchAndSaveBooks()
+
+	//FetchQuestion()
 	sc.ConnectToServer()
 }
 
-func FetchQuestion() {
-	fmt.Println("Do you want to fetch all Books? (y/n)")
-	var response string
-	fmt.Scan(&response)
-	if response == "y" {
-		fmt.Println("Working...")
-		db.FetchAndSaveBooks()
-		return
-	} else if response == "n" {
-		fmt.Println("Skipping fetch")
-		return
-	} else {
-		fmt.Println("Wrong answer")
-		return
-	}
-}
+//func FetchQuestion() {
+//	fmt.Println("Do you want to fetch all Books? (y/n)")
+//	var response string
+//	fmt.Scan(&response)
+//	if response == "y" {
+//		fmt.Println("Working...")
+//		db.FetchAndSaveBooks()
+//		return
+//	} else if response == "n" {
+//		fmt.Println("Skipping fetch")
+//		return
+//	} else {
+//		fmt.Println("Wrong answer")
+//		return
+//	}
+//}
 
 func CheckDBConnection(err error) bool {
 	if err != nil {
