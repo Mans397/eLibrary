@@ -15,6 +15,14 @@ type User struct {
 	Password string `json:"password"`
 }
 
+func MigrateUser() error {
+	if err := DB.AutoMigrate(&User{}); err != nil {
+		log.Println("Ошибка при миграции:", err)
+		return fmt.Errorf("ошибка миграции для User: %v", err)
+	}
+	return nil
+}
+
 func CreateUser(user User) error {
 	isExist := IsUserExistName(user.Email)
 	if isExist {
