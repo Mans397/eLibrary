@@ -2,21 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin</title>
-    <script src="../static/emailSender.js"></script>
+    <title>Admin Dashboard</title>
 </head>
 <body>
-
-<h1>Send Message to All Users</h1>
-<form id="emailForm">
-  <label for="message"></label><textarea id="message" placeholder="Enter your message here..." rows="40" cols="90" required></textarea>
-  <br>
-    <label for="attachment">Attach an image:</label>
-    <input type="file" id="attachment" name="attachment" accept="image/*">
-    <br><br><br>
-  <button type="submit">Send</button>
-</form>
-
-<div id="response"></div>
+<h1>Welcome, Admin!</h1>
+<button onclick="location.href='/login'">Go to login page</button>
+<button onclick="location.href='/sendEmail'">Go to sendEmail page</button>
+<button onclick="location.href='/books'">Go to books page</button>
+<button onclick="location.href='/logout'">Logout</button>
 </body>
 </html>
