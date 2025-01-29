@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/Mans397/eLibrary/Database"
 	es "github.com/Mans397/eLibrary/emailSender"
+	"golang.org/x/crypto/nacl/auth"
 	"html/template"
 	"io"
 	"log"
@@ -26,6 +27,15 @@ func ConnectToServer() {
 	http.HandleFunc("/db/deleteUser", DeleteUserHandler)
 	http.HandleFunc("/admin/sendEmail", SendEmailHandler)
 	http.HandleFunc("/books", BooksHandler)
+
+	// Новые маршруты для регистрации и аутентификации
+	http.HandleFunc("/register", RegisterHandler)
+	http.HandleFunc("/confirm", ConfirmEmailHandler)
+	http.HandleFunc("/login", LoginHandler)
+
+	// Защищенные маршруты (JWT Middleware)
+	http.HandleFunc("/books", auth.AuthMiddleware(BooksHandler))
+	http.HandleFunc("/admin/sendEmail", auth.AuthMiddleware(SendEmailHandler))
 
 	log.Println("Server starting on port", port)
 	log.Printf("http://localhost%s\n", port)
@@ -218,6 +228,94 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	SendResponse(w, Response{Status: "Success", Message: "Emails sent successfully"})
+}
+
+// 📌 Регистрация пользователя
+func RegisterHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var req struct {
+		Name     string `json:"name"`
+		Email    string `json:"email"`
+		Password string `json:"password"`
+	}
+
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		return
+	}
+
+	user := Database.User{Name: req.Name, Email: req.Email}
+	err := Database.CreateUser(user, req.Password)
+	if err != nil {
+		http.Error(w, "Error creating user: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(map[string]string{"message": "Registration successful. Check your email for confirmation code."})
+}
+
+// 📌 Подтверждение email
+func ConfirmEmailHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var req struct {
+		Email string `json:"email"`
+		Code  string `json:"code"`
+	}
+
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		return
+	}
+
+	if err := Database.ConfirmUser(req.Email, req.Code); err != nil {
+		http.Error(w, err.Error(), http.StatusUnauthorized)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]string{"message": "Email confirmed successfully. You can now log in."})
+}
+
+// 📌 Логин с JWT
+func LoginHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var req struct {
+		Email    string `json:"email"`
+		Password string `json:"password"`
+	}
+
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		return
+	}
+
+	user, err := Database.AuthenticateUser(req.Email, req.Password)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusUnauthorized)
+		return
+	}
+
+	token, err := auth.GenerateJWT(user.Email, user.Role)
+	if err != nil {
+		http.Error(w, "Error generating token", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]string{"token": token})
 }
 
 func BooksHandler(w http.ResponseWriter, r *http.Request) {
