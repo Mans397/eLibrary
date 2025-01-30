@@ -9,6 +9,7 @@ import (
 	"html/template"
 	"io"
 	"log"
+	"math/rand"
 	"net/http"
 	"os"
 	"strconv"
@@ -22,9 +23,11 @@ func ConnectToServer() {
 
 	// Общие маршруты
 	http.HandleFunc("/", MainHandler)
-	http.HandleFunc("/auth/userLogin", UserLoginHandler)   // Логин
+	http.HandleFunc("/auth/userLogin", UserLoginHandler) // Логин
+	http.HandleFunc("/auth/confirmEmail", ConfirmEmailHandler)
 	http.HandleFunc("/auth/register", UserRegisterHandler) // Регистрация
-	http.HandleFunc("/logout", LogoutHandler)              // Выход из системы
+	http.HandleFunc("/auth/verifyOTP", VerifyOTPHandler)
+	http.HandleFunc("/logout", LogoutHandler) // Выход из системы
 
 	// Админские маршруты (с проверкой доступа)
 	http.HandleFunc("/admin", AdminMiddleware(AdminPageHandler))           // Админская страница
@@ -70,7 +73,7 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, FilePath)
 }
 
-var jwtSecret = []byte("wqdLXn3w8SgFWYd7kwg1ZZ21YAPYIjqe52hjz++0lvo=")
+var jwtSecret = []byte("supersecretkey")
 
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
@@ -118,6 +121,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]string{"message": "User registered. Please confirm your email."})
 }
 
+// 📌 Подтверждение email
 func ConfirmEmailHandler(w http.ResponseWriter, r *http.Request) {
 	tokenString := r.URL.Query().Get("token")
 	if tokenString == "" {
@@ -134,7 +138,7 @@ func ConfirmEmailHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	claims, ok := token.Claims.(jwt.MapClaims)
-	if !ok || !token.Valid {
+	if !ok {
 		http.Error(w, "Invalid token claims", http.StatusBadRequest)
 		return
 	}
@@ -147,6 +151,7 @@ func ConfirmEmailHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Database.DB.Delete(&confirmation)
+
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]string{"message": "Email confirmed successfully."})
 }
@@ -259,6 +264,8 @@ func SendJsonHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("GET/post/json")
 	PostHandler(w, r)
 }
+
+// 📌 Логин с отправкой OTP
 func UserLoginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -275,22 +282,28 @@ func UserLoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Проверка логина админа
-	if creds.Email == "admin@gmail.com" && creds.Password == "admin2005" {
+	// Проверяем, является ли пользователь администратором
+	if creds.Email == "chatgpt15292005@gmail.com" && creds.Password == "admin2005" {
+		// Устанавливаем админскую сессию
 		http.SetCookie(w, &http.Cookie{
-			Name:  "session_token",
-			Value: "admin_session",
-			Path:  "/",
+			Name:     "session_token",
+			Value:    "admin_session",
+			Path:     "/",
+			HttpOnly: true,
+			Expires:  time.Now().Add(24 * time.Hour),
 		})
+
+		// Возвращаем JSON с редиректом на админку
 		json.NewEncoder(w).Encode(map[string]string{
 			"status":   "success",
-			"role":     "admin",
+			"message":  "Admin logged in successfully",
 			"redirect": "/admin",
 		})
+
 		return
 	}
 
-	// Проверка логина пользователя
+	// Обычный пользователь (проверка в БД)
 	var user Database.User
 	if err := Database.DB.Where("email = ?", creds.Email).First(&user).Error; err != nil {
 		http.Error(w, "User not found", http.StatusUnauthorized)
@@ -302,16 +315,80 @@ func UserLoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.SetCookie(w, &http.Cookie{
-		Name:  "session_token",
-		Value: "user_session",
-		Path:  "/",
-	})
+	// Генерация OTP для обычных пользователей
+	otpCode := strconv.Itoa(100000 + rand.Intn(900000)) // 6-значный код
+	err := Database.CreateOTP(user.ID, otpCode, 5*time.Minute)
+	if err != nil {
+		http.Error(w, "Failed to generate OTP", http.StatusInternalServerError)
+		return
+	}
+
+	// Отправка OTP на email
+	go es.SendOTPEmail(user.Email, otpCode)
+
 	json.NewEncoder(w).Encode(map[string]string{
-		"status":   "success",
-		"role":     "user",
-		"redirect": "/books",
+		"status":  "success",
+		"message": "OTP sent to your email",
 	})
+}
+
+// 📌 Проверка OTP и выдача JWT-токена
+func VerifyOTPHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var data struct {
+		Email string `json:"email"`
+		OTP   string `json:"otp"`
+	}
+
+	if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		return
+	}
+
+	var user Database.User
+	if err := Database.DB.Where("email = ?", data.Email).First(&user).Error; err != nil {
+		http.Error(w, "User not found", http.StatusUnauthorized)
+		return
+	}
+
+	if !Database.VerifyOTP(user.ID, data.OTP) {
+		http.Error(w, "Invalid or expired OTP", http.StatusUnauthorized)
+		return
+	}
+
+	// Генерация JWT-токена
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"userID": user.ID,
+		"exp":    time.Now().Add(24 * time.Hour).Unix(),
+	})
+
+	tokenString, err := token.SignedString(jwtSecret)
+	if err != nil {
+		http.Error(w, "Failed to generate token", http.StatusInternalServerError)
+		return
+	}
+
+	// Установка cookie с токеном
+	http.SetCookie(w, &http.Cookie{
+		Name:     "session_token",
+		Value:    "user_session",
+		Path:     "/",
+		HttpOnly: true,
+		Expires:  time.Now().Add(24 * time.Hour),
+	})
+
+	// JSON-ответ на случай использования fetch
+	json.NewEncoder(w).Encode(map[string]string{
+		"status": "success",
+		"token":  tokenString,
+	})
+
+	// Если вы хотите перенаправлять напрямую
+	http.Redirect(w, r, "/books", http.StatusSeeOther)
 }
 
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {
@@ -370,12 +447,38 @@ func UserRegisterHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(map[string]string{
-		"status":  "success",
-		"message": "User registered successfully",
+	// Генерация токена подтверждения email
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"userID": user.ID,
+		"exp":    time.Now().Add(24 * time.Hour).Unix(),
 	})
+
+	tokenString, err := token.SignedString(jwtSecret)
+	if err != nil {
+		http.Error(w, "Failed to generate token", http.StatusInternalServerError)
+		return
+	}
+
+	emailConfirmation := Database.EmailConfirmation{
+		UserID: user.ID,
+		Token:  tokenString,
+		Expiry: time.Now().Add(24 * time.Hour),
+	}
+	if err := Database.DB.Create(&emailConfirmation).Error; err != nil {
+		http.Error(w, "Failed to save email confirmation", http.StatusInternalServerError)
+		return
+	}
+
+	// Отправка email пользователю с подтверждением
+	go func() {
+		message := "Please confirm your email using the link: http://localhost:8080/auth/confirmEmail?token=" + tokenString
+		es.SendEmailLogin(user.Email, &message, "")
+	}()
+
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(map[string]string{"message": "User registered. Please confirm your email."})
 }
+
 func AdminPageHandler(w http.ResponseWriter, r *http.Request) {
 	// Проверяем, что запрос сделан с методом GET
 	if r.Method != http.MethodGet {

@@ -22,6 +22,10 @@ func main() {
 		log.Fatalf("Ошибка миграции: %v", err)
 	}
 
+	if err := db.MigrateOTP(); err != nil {
+		log.Fatalf("Ошибка миграции: %v", err)
+	}
+
 	if err := db.MigrateEmailConfirmations(); err != nil {
 		log.Fatalf("Ошибка миграции EmailConfirmations: %v", err)
 	}

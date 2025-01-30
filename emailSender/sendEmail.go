@@ -7,6 +7,25 @@ import (
 	"sync"
 )
 
+// Отправка OTP-кода пользователю
+func SendOTPEmail(email string, code string) error {
+	m := gomail.NewMessage()
+	m.SetHeader("From", "elibrarysender@gmail.com")
+	m.SetHeader("To", email)
+	m.SetHeader("Subject", "Your OTP Code")
+	m.SetBody("text/plain", "Your OTP code is: "+code+"\nIt expires in 5 minutes.")
+
+	d := gomail.NewDialer("smtp.gmail.com", 587, "elibrarysender@gmail.com", "ocxwblzcockfwcud")
+
+	err := d.DialAndSend(m)
+	if err != nil {
+		log.Println("Failed to send OTP email:", err)
+		return err
+	}
+	log.Println("OTP email sent to", email)
+	return nil
+}
+
 func SendEmailAll(text *string, imagePath string) error {
 	var users []db.User
 	wg := new(sync.WaitGroup)

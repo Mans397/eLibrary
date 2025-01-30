@@ -1,11 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('loginForm');
+    const loginForm = document.getElementById('loginForm');
+    const otpForm = document.getElementById('otpForm');
+    const responseDiv = document.getElementById('response');
+    const emailField = document.getElementById('email');
 
-    form.addEventListener('submit', function (event) {
+    loginForm.addEventListener('submit', function (event) {
         event.preventDefault();
 
-        const email = document.getElementById('email').value.trim();
+        const email = emailField.value.trim();
         const password = document.getElementById('password').value.trim();
+
+        console.log("Attempting login with email:", email);
 
         fetch('/auth/userLogin', {
             method: 'POST',
@@ -16,24 +21,65 @@ document.addEventListener('DOMContentLoaded', () => {
         })
             .then(response => response.json())
             .then(data => {
+                console.log("Server response for login:", data);
+
                 if (data.status === 'success') {
-                    if (data.role === 'admin') {
-                        // Показываем админские кнопки
-                        document.getElementById('adminActions').style.display = 'block';
-                        document.getElementById('response').innerText = 'Welcome, Admin!';
-                    } else if (data.role === 'user') {
-                        // Перенаправляем пользователя на страницу с книгами
-                        document.getElementById('response').innerText = 'Login successful! Redirecting...';
+                    if (data.redirect) {
+                        // ✅ Администратор: редиректим в /admin
+                        window.location.href = data.redirect;
+                    } else {
+                        // ✅ Обычный пользователь: показываем форму OTP
+                        responseDiv.innerText = 'OTP sent to your email. Please enter OTP.';
                         setTimeout(() => {
-                            window.location.href = data.redirect || '/books';
-                        }, 2000);
+                            loginForm.style.display = 'none';
+                            otpForm.removeAttribute('hidden');
+                            otpForm.style.display = 'block';
+                        }, 500);
                     }
                 } else {
-                    document.getElementById('response').innerText = data.message || 'Login failed!';
+                    responseDiv.innerText = data.message || 'Login failed!';
                 }
             })
             .catch(error => {
-                document.getElementById('response').innerText = 'Error: ' + error.message;
+                console.error("Error during login:", error);
+                responseDiv.innerText = 'Error: ' + error.message;
+            });
+    });
+
+    otpForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const email = emailField.value.trim();
+        const otp = document.getElementById('otp').value.trim();
+
+        console.log("Attempting OTP verification for email:", email, "with OTP:", otp);
+
+        fetch('/auth/verifyOTP', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, otp }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Server response for OTP verification:", data);
+
+                if (data.status === 'success') {
+                    responseDiv.innerText = 'Login successful! Redirecting...';
+
+                    // ✅ Сохраняем токен в localStorage
+                    localStorage.setItem('token', data.token);
+
+                    // ✅ Мгновенно редиректим
+                    window.location.href = '/books';
+                } else {
+                    responseDiv.innerText = 'Invalid OTP!';
+                }
+            })
+            .catch(error => {
+                console.error("Error during OTP verification:", error);
+                responseDiv.innerText = 'Error: ' + error.message;
             });
     });
 });

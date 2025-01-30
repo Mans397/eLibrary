@@ -12,7 +12,7 @@ import (
 
 const (
 	host     = "localhost"
-	port     = 5433
+	port     = "5433"
 	user     = "postgres"
 	password = "rootroot"
 	dbname   = "eLibrary"
@@ -27,7 +27,7 @@ func Init() error {
 	//password := os.Getenv("DB_PASSWORD")
 	//dbname := os.Getenv("DB_NAME")
 
-	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=%s", host, port, user, password, dbname, "disable")
+	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s", host, port, user, password, dbname, "disable")
 	var err error
 
 	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
