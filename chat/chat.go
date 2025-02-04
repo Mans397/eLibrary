@@ -18,6 +18,7 @@ var clients = make(map[*websocket.Conn]string)     // Клиенты с их cha
 var admins = make(map[*websocket.Conn]bool)        // Администраторы
 var clientRooms = make(map[string]*websocket.Conn) // Комнаты (chat_id -> клиент)
 var broadcast = make(chan Message)                 // Канал для сообщений
+var chatHistory = make(map[string][]Message)       // История сообщений для каждого чата
 var upgrader = websocket.Upgrader{
 	CheckOrigin: func(r *http.Request) bool { return true },
 }
@@ -50,6 +51,13 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 	}
 	mutex.Unlock()
 
+	// Отправляем историю сообщений при подключении
+	if history, ok := chatHistory[chatID]; ok {
+		for _, msg := range history {
+			_ = ws.WriteJSON(msg) // Отправляем все сообщения в чат
+		}
+	}
+
 	for {
 		var msg Message
 		err := ws.ReadJSON(&msg)
@@ -65,6 +73,11 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 		broadcast <- msg
+
+		// Сохраняем сообщение в истории
+		mutex.Lock()
+		chatHistory[chatID] = append(chatHistory[chatID], msg)
+		mutex.Unlock()
 	}
 }
 
@@ -85,9 +98,23 @@ func HandleMessages() {
 func GetActiveChats(w http.ResponseWriter, r *http.Request) {
 	mutex.Lock()
 	defer mutex.Unlock()
-	chatIDs := make([]string, 0, len(clientRooms))
+
+	// Собираем список активных чатов
+	activeChats := make([]map[string]interface{}, 0, len(clientRooms))
 	for chatID := range clientRooms {
-		chatIDs = append(chatIDs, chatID)
+		// Получаем историю сообщений для каждого чата
+		history := chatHistory[chatID]
+
+		// Формируем структуру для чата с историей сообщений
+		chatData := map[string]interface{}{
+			"chat_id":  chatID,
+			"messages": history,
+		}
+
+		activeChats = append(activeChats, chatData)
 	}
-	json.NewEncoder(w).Encode(chatIDs)
+
+	// Отправляем активные чаты с историей сообщений в формате JSON
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(activeChats)
 }

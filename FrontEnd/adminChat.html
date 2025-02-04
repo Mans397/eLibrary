@@ -49,20 +49,21 @@
   }
 
   function loadChats() {
-    // Получаем список активных чатов от сервера
     fetch('/chats')
             .then(response => response.json())
             .then(chats => {
               const chatList = document.getElementById("chatList");
               chatList.innerHTML = "";
-              chats.forEach(chatID => {
+              chats.forEach(chatData => {
+                const chatID = chatData.chat_id;
+                const messages = chatData.messages;
+
                 const li = document.createElement("li");
                 li.textContent = `Чат с клиентом ${chatID}`;
                 li.onclick = function() {
-                  // При клике на чат, устанавливаем его как текущий и отображаем сообщения
                   currentChatID = chatID;
                   document.getElementById("messages").innerHTML = ""; // Очистить старые сообщения
-                  loadMessagesForChat(chatID);
+                  loadMessagesForChat(messages);
                 };
                 chatList.appendChild(li);
               });
@@ -70,11 +71,15 @@
             .catch(error => console.error("Ошибка загрузки чатов:", error));
   }
 
-  function loadMessagesForChat(chatID) {
-    // Здесь можно добавить запрос для получения истории сообщений для выбранного чата
-    // Пока просто выводим начальное сообщение
+  function loadMessagesForChat(messages) {
     const messagesDiv = document.getElementById("messages");
-    messagesDiv.innerHTML = `<p><strong>Вы выбрали чат с клиентом ${chatID}</strong></p>`;
+
+    // Отображаем все сообщения для выбранного чата
+    messages.forEach(msg => {
+      messagesDiv.innerHTML += `<p><strong>${msg.sender}:</strong> ${msg.content}</p>`;
+    });
+
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
   }
 </script>
 </body>
