@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Chat</title>
+</head>
+<body>
+<h2>Чаты клиентов</h2>
+<ul id="chatList"></ul>
+
+<h2>Сообщения</h2>
+<div id="messages"></div>
+<input type="text" id="messageInput" placeholder="Введите сообщение">
+<button onclick="sendMessage()">Отправить</button>
+
+<script>
+  let currentChatID = null;
+
+  // Подключаем WebSocket как админ
+  const socket = new WebSocket('ws://localhost:8080/ws?admin=true&chat_id=1');
+
+  socket.onopen = function() {
+    console.log("Администратор подключился к WebSocket");
+    loadChats();
+  };
+
+  socket.onmessage = function(event) {
+    const msg = JSON.parse(event.data);
+    const messagesDiv = document.getElementById("messages");
+
+    // Если это сообщение от клиента, отображаем его
+    messagesDiv.innerHTML += `<p><strong>${msg.sender}:</strong> ${msg.content}</p>`;
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  };
+
+  function sendMessage() {
+    const input = document.getElementById("messageInput");
+    const message = input.value.trim();
+    if (message && currentChatID) {
+      // Отправляем сообщение в выбранный чат
+      socket.send(JSON.stringify({
+        chat_id: currentChatID,
+        sender: "admin",
+        content: message
+      }));
+      input.value = "";
+    }
+  }
+
+  function loadChats() {
+    // Получаем список активных чатов от сервера
+    fetch('/chats')
+            .then(response => response.json())
+            .then(chats => {
+              const chatList = document.getElementById("chatList");
+              chatList.innerHTML = "";
+              chats.forEach(chatID => {
+                const li = document.createElement("li");
+                li.textContent = `Чат с клиентом ${chatID}`;
+                li.onclick = function() {
+                  // При клике на чат, устанавливаем его как текущий и отображаем сообщения
+                  currentChatID = chatID;
+                  document.getElementById("messages").innerHTML = ""; // Очистить старые сообщения
+                  loadMessagesForChat(chatID);
+                };
+                chatList.appendChild(li);
+              });
+            })
+            .catch(error => console.error("Ошибка загрузки чатов:", error));
+  }
+
+  function loadMessagesForChat(chatID) {
+    // Здесь можно добавить запрос для получения истории сообщений для выбранного чата
+    // Пока просто выводим начальное сообщение
+    const messagesDiv = document.getElementById("messages");
+    messagesDiv.innerHTML = `<p><strong>Вы выбрали чат с клиентом ${chatID}</strong></p>`;
+  }
+</script>
+</body>
+</html>

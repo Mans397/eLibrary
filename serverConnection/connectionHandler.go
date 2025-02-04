@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/Mans397/eLibrary/Database"
+	"github.com/Mans397/eLibrary/chat"
 	es "github.com/Mans397/eLibrary/emailSender"
 	"github.com/golang-jwt/jwt/v4"
 	"html/template"
@@ -42,6 +43,10 @@ func ConnectToServer() {
 	http.HandleFunc("/db/updateUser", AdminMiddleware(UpdateUserHandler))
 	http.HandleFunc("/db/deleteUser", AdminMiddleware(DeleteUserHandler))
 
+	http.HandleFunc("/ws", chat.HandleConnections)
+	http.HandleFunc("/chats", chat.GetActiveChats)
+	go chat.HandleMessages()
+
 	fmt.Println("Server starting on port", port)
 	fmt.Printf("http://localhost%s\n", port)
 	err := http.ListenAndServe(port, nil)
@@ -60,10 +65,15 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 		FilePath = "./FrontEnd/login.html"
 	case "/userLogin":
 		FilePath = "./FrontEnd/loginuser.html"
-	case "/admin":
+		//замена admin на admmin. Может все сломать!
+	case "/admmin":
 		FilePath = "./FrontEnd/admin.html"
 	case "/register":
 		FilePath = "./FrontEnd/register.html"
+	case "/chat":
+		FilePath = "./FrontEnd/chat.html"
+	case "/adminChat":
+		FilePath = "./FrontEnd/adminChat.html"
 	default:
 		FilePath = "./FrontEnd/error.html"
 	}
