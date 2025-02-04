@@ -59,13 +59,20 @@ func FetchBooks() ([]Book, error) {
 	// Преобразуем в []Book
 	books := []Book{}
 	for _, doc := range data.Docs {
+		var date string
+		if len(doc.PublishDate) > 0 {
+			date = doc.PublishDate[0] // Берем первую дату, если она есть
+		} else {
+			date = "Unknown" // Если данных нет, подставляем "Unknown"
+		}
+
 		book := Book{
 			Title:       doc.Title,
-			Date:        doc.PublishDate[0],
+			Date:        date,
 			ImageURL:    fmt.Sprintf("https://covers.openlibrary.org/b/id/%d-L.jpg", doc.CoverID),
-			Price:       generateRandomPrice(),       // Генерация случайной цены
-			Attributes:  "Softcover, 200 pages",      // Можно добавить случайное количество страниц, например
-			Description: generateRandomDescription(), // Генерация случайного описания
+			Price:       generateRandomPrice(),
+			Attributes:  "Softcover, 200 pages",
+			Description: generateRandomDescription(),
 		}
 		books = append(books, book)
 		if len(books) >= 30 { // Ограничиваем до 30 записей

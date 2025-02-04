@@ -6,12 +6,58 @@ import (
 	"gorm.io/gorm"
 	"log"
 	"strings"
+	"time"
 )
 
 type User struct {
-	ID    uint   `gorm:"primaryKey"`
-	Name  string `json:"name"`
-	Email string `json:"email"`
+	ID       uint   `gorm:"primaryKey"`
+	Name     string `json:"name"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+type OTP struct {
+	ID        uint   `gorm:"primaryKey"`
+	UserID    uint   `gorm:"index"`
+	Code      string `gorm:"size:6"`
+	ExpiresAt time.Time
+}
+
+// Создание OTP-кода в базе данных
+func CreateOTP(userID uint, code string, expiresIn time.Duration) error {
+	otp := OTP{
+		UserID:    userID,
+		Code:      code,
+		ExpiresAt: time.Now().Add(expiresIn),
+	}
+	return DB.Create(&otp).Error
+}
+
+// Проверка OTP-кода
+func VerifyOTP(userID uint, code string) bool {
+	var otp OTP
+	err := DB.Where("user_id = ? AND code = ?", userID, code).First(&otp).Error
+	if err != nil || time.Now().After(otp.ExpiresAt) {
+		return false
+	}
+	DB.Delete(&otp) // Удаляем код после успешного использования
+	return true
+}
+
+func MigrateUser() error {
+	if err := DB.AutoMigrate(&User{}); err != nil {
+		log.Println("Ошибка при миграции:", err)
+		return fmt.Errorf("ошибка миграции для User: %v", err)
+	}
+	return nil
+}
+
+func MigrateOTP() error {
+	if err := DB.AutoMigrate(&OTP{}); err != nil {
+		log.Println("Ошибка при миграции:", err)
+		return fmt.Errorf("ошибка миграции для OTP: %v", err)
+	}
+	return nil
 }
 
 func CreateUser(user User) error {
