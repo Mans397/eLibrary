@@ -17,20 +17,20 @@
 <button onclick="sendMessage()">Отправить</button>
 
 <script>
-  // Функция для генерации случайного chat_id
   function generateChatID() {
-    // Генерируем 16 случайных байтов
     const array = new Uint8Array(16);
     crypto.getRandomValues(array);
-
-    // Преобразуем байты в строку в формате hex
     return Array.from(array).map(byte => byte.toString(16).padStart(2, '0')).join('');
   }
 
-  // Генерируем случайный chat_id
-  const chatID = generateChatID();
+  // Используем сохранённый chat_id или создаём новый
+  let chatID = localStorage.getItem('chat_id');
+  if (!chatID) {
+    chatID = generateChatID();
+    localStorage.setItem('chat_id', chatID);
+  }
 
-  // Подключаемся к WebSocket серверу, передавая chat_id в URL
+  // Подключаемся к серверу
   const socket = new WebSocket(`ws://localhost:8080/ws?chat_id=${chatID}`);
 
   socket.onmessage = function(event) {

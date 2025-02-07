@@ -60,9 +60,19 @@
 
                 const li = document.createElement("li");
                 li.textContent = `Чат с клиентом ${chatID}`;
+
+                // Добавляем кнопку удаления
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Удалить";
+                deleteButton.onclick = function(event) {
+                  event.stopPropagation(); // Чтобы не срабатывало нажатие на чат
+                  deleteChat(chatID);
+                };
+
+                li.appendChild(deleteButton);
                 li.onclick = function() {
                   currentChatID = chatID;
-                  document.getElementById("messages").innerHTML = ""; // Очистить старые сообщения
+                  document.getElementById("messages").innerHTML = "";
                   loadMessagesForChat(messages);
                 };
                 chatList.appendChild(li);
@@ -80,6 +90,25 @@
     });
 
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
+
+  function deleteChat(chatID) {
+    if (!confirm(`Удалить чат ${chatID}?`)) return;
+
+    fetch(`/delete_chat?chat_id=${chatID}`, { method: "DELETE" })
+            .then(response => {
+              if (response.ok) {
+                alert(`Чат ${chatID} удален.`);
+                loadChats(); // Перезагружаем список чатов
+                document.getElementById("messages").innerHTML = ""; // Очищаем сообщения
+                if (currentChatID === chatID) {
+                  currentChatID = null;
+                }
+              } else {
+                alert("Ошибка удаления чата.");
+              }
+            })
+            .catch(error => console.error("Ошибка удаления:", error));
   }
 </script>
 </body>

@@ -73,26 +73,50 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 		broadcast <- msg
-
-		// Сохраняем сообщение в истории
-		mutex.Lock()
-		chatHistory[chatID] = append(chatHistory[chatID], msg)
-		mutex.Unlock()
 	}
 }
 
 func HandleMessages() {
 	for {
 		msg := <-broadcast
+		fmt.Println("Отправляем сообщение:", msg) // Дебаг
+
 		mutex.Lock()
-		for admin := range admins {
-			_ = admin.WriteJSON(msg) // Отправляем сообщение всем админам
+		// Сохраняем сообщение в истории
+		if _, exists := chatHistory[msg.ChatID]; !exists {
+			chatHistory[msg.ChatID] = []Message{} // Создаём пустой массив, если истории ещё нет
 		}
+		chatHistory[msg.ChatID] = append(chatHistory[msg.ChatID], msg)
+
+		// Отправляем всем админам
+		for admin := range admins {
+			_ = admin.WriteJSON(msg)
+		}
+		// Отправляем клиенту, если он есть
 		if client, exists := clientRooms[msg.ChatID]; exists {
-			_ = client.WriteJSON(msg) // Отправляем клиенту
+			fmt.Println("Отправляем пользователю:", msg.ChatID) // Дебаг
+			_ = client.WriteJSON(msg)
 		}
 		mutex.Unlock()
 	}
+}
+
+func HandleDeleteChat(w http.ResponseWriter, r *http.Request) {
+	mutex.Lock()
+	defer mutex.Unlock()
+
+	chatID := r.URL.Query().Get("chat_id")
+	if chatID == "" {
+		http.Error(w, "Chat ID required", http.StatusBadRequest)
+		return
+	}
+
+	// Удаляем историю сообщений
+	delete(chatHistory, chatID)
+
+	// Отправляем ответ
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Chat deleted"))
 }
 
 func GetActiveChats(w http.ResponseWriter, r *http.Request) {
@@ -111,6 +135,7 @@ func GetActiveChats(w http.ResponseWriter, r *http.Request) {
 			"messages": history,
 		}
 
+		fmt.Println(chatData)
 		activeChats = append(activeChats, chatData)
 	}
 

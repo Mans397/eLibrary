@@ -43,6 +43,7 @@ func ConnectToServer() {
 	http.HandleFunc("/db/updateUser", AdminMiddleware(UpdateUserHandler))
 	http.HandleFunc("/db/deleteUser", AdminMiddleware(DeleteUserHandler))
 
+	http.HandleFunc("/delete_chat", chat.HandleDeleteChat)
 	http.HandleFunc("/ws", chat.HandleConnections)
 	http.HandleFunc("/chats", chat.GetActiveChats)
 	go chat.HandleMessages()
@@ -327,6 +328,7 @@ func UserLoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Генерация OTP для обычных пользователей
 	otpCode := strconv.Itoa(100000 + rand.Intn(900000)) // 6-значный код
+	fmt.Println("otpCode:", otpCode)
 	err := Database.CreateOTP(user.ID, otpCode, 5*time.Minute)
 	if err != nil {
 		http.Error(w, "Failed to generate OTP", http.StatusInternalServerError)
