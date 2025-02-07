@@ -132,7 +132,17 @@
         {{range .Books}}
         <div class="book">
             <img src="{{.ImageURL}}" alt="{{.Title}}">
+
+            <!-- СТАРАЯ СТРОКА: НЕ ТРОГАЕМ -->
             <h3>{{.Title}}</h3>
+
+            <!-- ДОБАВЛЯЕМ УСЛОВИЕ, ЧТОБЫ КНИГА "A Midsummer Night's Dream" БЫЛА КЛИКАБЕЛЬНА -->
+            {{if eq .Title "A Midsummer Night's Dream"}}
+            <p>
+                <a href="/bookDetail?title={{.Title}}">Подробнее / Оплатить</a>
+            </p>
+            {{end}}
+
             <p>{{.Description}}</p>
             <p class="price">{{.Price}}</p>
             <p>{{.Attributes}}</p>
@@ -144,14 +154,10 @@
     <div class="pagination">
         {{if gt .TotalPages 1}}
         {{range $i := .PaginationPages}}
-        <a href="/books?page={{$i}}&filter={{.Filter}}&sort={{.Sort}}">{{$i}}</a>
+        <a href="/books?page={{$i}}&filter={{$.Filter}}&sort={{$.Sort}}">{{$i}}</a>
         {{end}}
         {{end}}
     </div>
-
-
 </div>
-
-
 </body>
 </html>

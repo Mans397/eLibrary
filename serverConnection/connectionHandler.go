@@ -43,6 +43,9 @@ func ConnectToServer() {
 	http.HandleFunc("/db/updateUser", AdminMiddleware(UpdateUserHandler))
 	http.HandleFunc("/db/deleteUser", AdminMiddleware(DeleteUserHandler))
 
+	http.HandleFunc("/bookDetail", AuthMiddleware(BookDetailHandler))
+	http.HandleFunc("/processPayment", AuthMiddleware(ProcessPaymentHandler))
+
 	http.HandleFunc("/delete_chat", chat.HandleDeleteChat)
 	http.HandleFunc("/ws", chat.HandleConnections)
 	http.HandleFunc("/chats", chat.GetActiveChats)
@@ -565,6 +568,141 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 
 	SendResponse(w, Response{Status: "Success", Message: "Emails sent successfully"})
 }
+
+// BookDetailHandler обрабатывает /bookDetail?title=...
+func BookDetailHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	title := r.URL.Query().Get("title")
+	if title == "" {
+		http.Error(w, "Title is required", http.StatusBadRequest)
+		return
+	}
+
+	// Ищем книгу в БД (таблица books)
+	var book Database.Book
+	err := Database.DB.Where("title = ?", title).First(&book).Error
+	if err != nil {
+		log.Println("Книга не найдена:", err)
+		http.Error(w, "Book not found", http.StatusNotFound)
+		return
+	}
+
+	// Готовим данные для шаблона
+	data := struct {
+		Book Database.Book
+	}{
+		Book: book,
+	}
+
+	tmpl, err := template.ParseFiles("FrontEnd/singleBookDetail.html")
+	if err != nil {
+		http.Error(w, "Template error", http.StatusInternalServerError)
+		return
+	}
+
+	// Рендерим шаблон
+	if err := tmpl.Execute(w, data); err != nil {
+		log.Println("Ошибка при выполнении шаблона:", err)
+	}
+}
+
+func ProcessPaymentHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Читаем поля формы
+	title := r.FormValue("title")
+	priceStr := r.FormValue("price")
+	fullName := r.FormValue("fullName")
+	email := r.FormValue("email")
+	cardNumber := r.FormValue("cardNumber")
+	cardExp := r.FormValue("cardExp")
+	cardCVV := r.FormValue("cardCVV")
+	quantityStr := r.FormValue("quantity")
+
+	if cardExp == "" || cardCVV == "" {
+		http.Error(w, "Invalid card data", http.StatusBadRequest)
+		return
+	}
+
+	// Парсим price и quantity
+	price, _ := strconv.ParseFloat(priceStr, 64)
+	quantity, _ := strconv.Atoi(quantityStr)
+	if quantity <= 0 {
+		quantity = 1
+	}
+
+	// 1) Создаём «транзакцию» в нашей таблице (Database.Transaction).
+	//    Или можете пропустить, если не нужно. Пример:
+	tx := Database.Transaction{
+		CartID: 0,         // У нас нет корзины, а просто одна книга
+		Status: "pending", // сначала "pending"
+	}
+	if err := Database.DB.Create(&tx).Error; err != nil {
+		log.Println("Ошибка сохранения транзакции:", err)
+		http.Error(w, "Failed to create transaction", http.StatusInternalServerError)
+		return
+	}
+
+	// 2) Имитируем успех или отказ. Для примера — всегда успех.
+	//    Можно сделать проверку, если карта не подходит — отказ.
+	paymentSuccess := true
+
+	if paymentSuccess {
+		tx.Status = "paid"
+		Database.DB.Save(&tx)
+
+		// 3) Генерируем PDF
+		pdfPath, err := GenerateSingleBookPDFReceipt(
+			"eLibrary Project", // Название компании/проекта
+			tx.ID,              // Номер транзакции
+			title,              // Название книги
+			price,              // Цена
+			quantity,           // Количество
+			fullName,           // ФИО
+			cardNumber,         // Номер карты для маскировки
+			email,              // email
+		)
+		if err != nil {
+			log.Println("Ошибка генерации PDF:", err)
+			http.Error(w, "PDF generation failed", http.StatusInternalServerError)
+			return
+		}
+
+		// 4) Отправляем чек на почту (pdfPath) через пакет emailSender
+		go func() {
+			err := sendPDFByEmail(pdfPath, email)
+			if err != nil {
+				log.Println("Не удалось отправить PDF:", err)
+			} else {
+				log.Println("PDF отправлен на:", email)
+			}
+			// Удаляем временный файл после отправки
+			os.Remove(pdfPath)
+		}()
+
+		// 5) Выводим пользователю сообщение об успехе
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("Оплата прошла успешно! Чек отправлен на почту."))
+	} else {
+		tx.Status = "declined"
+		Database.DB.Save(&tx)
+		http.Error(w, "Оплата отклонена!", http.StatusForbidden)
+	}
+}
+
+// Дополнительная функция отправки PDF
+func sendPDFByEmail(pdfPath string, toEmail string) error {
+	message := "Спасибо за покупку! Во вложении ваш фискальный чек."
+	return es.SendEmail(toEmail, &message, pdfPath, nil)
+}
+
 func AdminMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Проверяем cookie

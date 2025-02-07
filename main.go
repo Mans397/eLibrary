@@ -6,9 +6,13 @@ import (
 	sc "github.com/Mans397/eLibrary/serverConnection"
 	"log"
 	"os"
+
+	// ➜ Добавляем импорт вашего "микросервиса"
+	"github.com/Mans397/eLibrary/paymentMicroservice"
 )
 
 func main() {
+
 	err := db.Init()
 	if !CheckDBConnection(err) {
 		return
@@ -30,29 +34,22 @@ func main() {
 		log.Fatalf("Ошибка миграции EmailConfirmations: %v", err)
 	}
 
+	if err := db.MigrateCartAndTransaction(); err != nil {
+		log.Fatalf("Ошибка миграции Transaction: %v", err)
+	}
+
 	db.FetchAndSaveBooks()
 
-	//FetchQuestion()
+	// -- СТАРЫЕ СТРОКИ НЕ ТРОГАЕМ, ТОЛЬКО ДОБАВЛЯЕМ НОВУЮ --
+
+	// ➜ Запуск "второго" сервера (микросервиса) в отдельной горутине на порту :8081
+	go paymentMicroservice.StartMicroservice()
+
+	// ➜ Основной сервер (как и прежде) стартует на :8080
 	sc.ConnectToServer()
 }
 
-//func FetchQuestion() {
-//	fmt.Println("Do you want to fetch all Books? (y/n)")
-//	var response string
-//	fmt.Scan(&response)
-//	if response == "y" {
-//		fmt.Println("Working...")
-//		db.FetchAndSaveBooks()
-//		return
-//	} else if response == "n" {
-//		fmt.Println("Skipping fetch")
-//		return
-//	} else {
-//		fmt.Println("Wrong answer")
-//		return
-//	}
-//}
-
+// Старую функцию не трогаем
 func CheckDBConnection(err error) bool {
 	if err != nil {
 		fmt.Println("Error:", err.Error())
