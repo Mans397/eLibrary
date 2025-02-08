@@ -104,6 +104,10 @@
     <!-- Контейнер для кнопки Log Out -->
     <div class="logout-container">
         <button id="logoutButton">Log Out</button>
+
+        <!-- ДОБАВИЛИ КНОПКУ "Корзина", ведущую на /cart -->
+        <button onclick="location.href='/cart'">Корзина</button>
+
         <a href="/chat">Help</a>
     </div>
 
@@ -133,20 +137,16 @@
         <div class="book">
             <img src="{{.ImageURL}}" alt="{{.Title}}">
 
-            <!-- СТАРАЯ СТРОКА: НЕ ТРОГАЕМ -->
             <h3>{{.Title}}</h3>
-
-            <!-- ДОБАВЛЯЕМ УСЛОВИЕ, ЧТОБЫ КНИГА "A Midsummer Night's Dream" БЫЛА КЛИКАБЕЛЬНА -->
-            {{if eq .Title "A Midsummer Night's Dream"}}
-            <p>
-                <a href="/bookDetail?title={{.Title}}">Подробнее / Оплатить</a>
-            </p>
-            {{end}}
-
             <p>{{.Description}}</p>
             <p class="price">{{.Price}}</p>
             <p>{{.Attributes}}</p>
             <p>Дата выпуска: {{.Date}}</p>
+
+            <!-- Кнопка "Добавить в корзину" -->
+            <button onclick="addToCart('{{.Title}}', '{{.Price}}')">
+                Добавить в корзину
+            </button>
         </div>
         {{end}}
     </div>
@@ -159,5 +159,32 @@
         {{end}}
     </div>
 </div>
+
+<!-- Функция addToCart -->
+<script>
+    function addToCart(title, price) {
+        // Удалим " USD" на случай, если price="10.99 USD"
+        price = price.replace(" USD", "");
+
+        fetch('/addToCart', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                product_id: title,
+                product_name: title,
+                price: parseFloat(price) || 0.0,
+                quantity: 1
+            })
+        })
+            .then(response => response.text())
+            .then(data => {
+                alert(data); // "Товар добавлен в корзину!"
+            })
+            .catch(err => {
+                alert('Ошибка при добавлении в корзину: ' + err);
+            });
+    }
+</script>
+
 </body>
 </html>

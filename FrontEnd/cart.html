@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Моя корзина</title>
+</head>
+<body>
+<h1>Моя корзина</h1>
+
+{{if .Items}}
+<table border="1" cellpadding="8">
+  <tr>
+    <th>Название</th>
+    <th>Цена</th>
+    <th>Количество</th>
+    <th>Действия</th>
+  </tr>
+  {{range .Items}}
+  <tr>
+    <td>{{.ProductName}}</td>
+    <td>{{.Price}}</td>
+    <td>
+      <!-- Кнопки для уменьшения/увеличения количества -->
+      <button onclick="updateQuantity({{.ID}}, {{sub .Quantity 1}})">-</button>
+      <span id="qty-{{.ID}}">{{.Quantity}}</span>
+      <button onclick="updateQuantity({{.ID}}, {{add .Quantity 1}})">+</button>
+    </td>
+    <td>
+      <!-- Кнопка "Удалить товар" -->
+      <button onclick="removeFromCart({{.ID}})">Удалить</button>
+    </td>
+  </tr>
+  {{end}}
+</table>
+
+<br>
+<!-- Кнопка "Перейти к оплате" -->
+<button onclick="location.href='/checkout'">Перейти к оплате</button>
+
+<!-- Кнопка "Вернуться к покупкам" -->
+<button onclick="location.href='/books'">Вернуться к покупкам</button>
+
+{{else}}
+<p>Ваша корзина пуста.</p>
+<button onclick="location.href='/books'">Вернуться к покупкам</button>
+{{end}}
+
+<script>
+  function removeFromCart(itemID) {
+    fetch('/removeItem?itemID=' + itemID, {
+      method: 'DELETE'
+    })
+            .then(res => res.text())
+            .then(msg => {
+              alert(msg);
+              window.location.reload();
+            })
+            .catch(err => alert("Ошибка удаления: " + err));
+  }
+
+  // Изменение количества
+  function updateQuantity(itemID, newQty) {
+    // Если новое количество <= 0, возможно, лучше сразу удалить.
+    if (newQty <= 0) {
+      removeFromCart(itemID);
+      return;
+    }
+    // Иначе делаем POST на /updateQuantity
+    fetch('/updateQuantity', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ item_id: itemID, quantity: newQty })
+    })
+            .then(res => res.text())
+            .then(msg => {
+              console.log(msg);
+              // Обновим отображение без перезагрузки
+              document.getElementById(`qty-${itemID}`).textContent = newQty;
+            })
+            .catch(err => alert("Ошибка изменения количества: " + err));
+  }
+</script>
+</body>
+</html>

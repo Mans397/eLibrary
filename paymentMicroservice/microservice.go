@@ -10,16 +10,12 @@ import (
 
 // StartMicroservice – точка входа «микросервиса», которую мы вызовем из main.go
 func StartMicroservice() {
-	// Инициализируем БД (см. microserviceDB.go)
 	initMicroserviceDB()
 
-	// Регистрируем обработчик /payment для оплаты
 	http.HandleFunc("/payment", handlePayment)
 
-	// Поднимаем сервер на другом порту, например :8081
 	log.Println("Microservice running on :8081")
-	err := http.ListenAndServe(":8081", nil)
-	if err != nil {
+	if err := http.ListenAndServe(":8081", nil); err != nil {
 		log.Println("Error starting microservice:", err)
 	}
 }

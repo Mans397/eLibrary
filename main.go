@@ -1,18 +1,20 @@
 package main
 
 import (
-	"fmt"
+	// ... ваш код ...
 	db "github.com/Mans397/eLibrary/Database"
 	sc "github.com/Mans397/eLibrary/serverConnection"
+
+	// ВАЖНО: импортируем пакет с микросервисом
+	"github.com/Mans397/eLibrary/paymentMicroservice"
+
+	"fmt"
 	"log"
 	"os"
-
-	// ➜ Добавляем импорт вашего "микросервиса"
-	"github.com/Mans397/eLibrary/paymentMicroservice"
 )
 
 func main() {
-
+	// Ваши старые строчки, не трогаем
 	err := db.Init()
 	if !CheckDBConnection(err) {
 		return
@@ -21,35 +23,28 @@ func main() {
 	if err := db.MigrateBooks(); err != nil {
 		log.Fatalf("Ошибка миграции: %v", err)
 	}
-
 	if err := db.MigrateUser(); err != nil {
 		log.Fatalf("Ошибка миграции: %v", err)
 	}
-
 	if err := db.MigrateOTP(); err != nil {
 		log.Fatalf("Ошибка миграции: %v", err)
 	}
-
 	if err := db.MigrateEmailConfirmations(); err != nil {
 		log.Fatalf("Ошибка миграции EmailConfirmations: %v", err)
 	}
 
-	if err := db.MigrateCartAndTransaction(); err != nil {
-		log.Fatalf("Ошибка миграции Transaction: %v", err)
-	}
+	// Если у вас есть миграция для корзины/транзакций
+	// db.DB.AutoMigrate(&db.Cart{}, &db.CartItem{}, &db.Transaction{})
 
 	db.FetchAndSaveBooks()
 
-	// -- СТАРЫЕ СТРОКИ НЕ ТРОГАЕМ, ТОЛЬКО ДОБАВЛЯЕМ НОВУЮ --
-
-	// ➜ Запуск "второго" сервера (микросервиса) в отдельной горутине на порту :8081
+	// ➜ Новая строка: запускаем микросервис на :8081 в отдельной горутине
 	go paymentMicroservice.StartMicroservice()
 
-	// ➜ Основной сервер (как и прежде) стартует на :8080
+	// ➜ Ваш основной сервер (на :8080)
 	sc.ConnectToServer()
 }
 
-// Старую функцию не трогаем
 func CheckDBConnection(err error) bool {
 	if err != nil {
 		fmt.Println("Error:", err.Error())
