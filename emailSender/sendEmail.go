@@ -47,27 +47,29 @@ func SendEmailAll(text *string, imagePath string) error {
 	return nil
 }
 
-func SendEmail(email string, text *string, imagePath string, wg *sync.WaitGroup) {
-	defer wg.Done()
-
+func SendEmail(email string, text *string, imagePath string, wg *sync.WaitGroup) error {
 	m := gomail.NewMessage()
 	m.SetHeader("From", "elibrarysender@gmail.com")
 	m.SetHeader("To", email)
-	m.SetHeader("Subject", "Notification")
-	m.SetBody("text/plain", *text)
+	m.SetHeader("Subject", "Your OTP Code")
+	if text != nil {
+		m.SetBody("text/plain", *text)
+	} else {
+		m.SetBody("text/plain", "No text")
+	}
 
 	if imagePath != "" {
 		m.Attach(imagePath)
 	}
 
 	d := gomail.NewDialer("smtp.gmail.com", 587, "elibrarysender@gmail.com", "ocxwblzcockfwcud")
-
 	if err := d.DialAndSend(m); err != nil {
-		log.Printf("Ошибка отправки письма для пользователя %s: %v\n", email, err)
-		return
+		log.Printf("Failed to send email to %s: %v\n", email, err)
+		return err
 	}
 
-	log.Printf("Письмо успешно отправлено пользователю %s\n", email)
+	log.Printf("Email sent to %s\n", email)
+	return nil
 }
 
 func SendEmailLogin(email string, text *string, imagePath string) {

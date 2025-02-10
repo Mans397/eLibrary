@@ -1,11 +1,14 @@
 package serverConnection
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/Mans397/eLibrary/Database"
+	"github.com/Mans397/eLibrary/chat"
 	es "github.com/Mans397/eLibrary/emailSender"
 	"github.com/golang-jwt/jwt/v4"
+	"github.com/jung-kurt/gofpdf"
 	"html/template"
 	"io"
 	"log"
@@ -42,6 +45,20 @@ func ConnectToServer() {
 	http.HandleFunc("/db/updateUser", AdminMiddleware(UpdateUserHandler))
 	http.HandleFunc("/db/deleteUser", AdminMiddleware(DeleteUserHandler))
 
+	http.HandleFunc("/bookDetail", AuthMiddleware(BookDetailHandler))
+	http.HandleFunc("/processPayment", AuthMiddleware(ProcessPaymentHandler))
+	http.HandleFunc("/cart", AuthMiddleware(CartHandler))
+	http.HandleFunc("/addToCart", AuthMiddleware(AddItemToCartHandler))
+	http.HandleFunc("/removeItem", AuthMiddleware(RemoveItemHandler))
+	http.HandleFunc("/updateQuantity", AuthMiddleware(UpdateQuantityHandler))
+	http.HandleFunc("/checkout", CheckoutHandler)
+	http.HandleFunc("/checkoutCart", CheckoutCartHandler)
+
+	http.HandleFunc("/delete_chat", chat.HandleDeleteChat)
+	http.HandleFunc("/ws", chat.HandleConnections)
+	http.HandleFunc("/chats", chat.GetActiveChats)
+	go chat.HandleMessages()
+
 	fmt.Println("Server starting on port", port)
 	fmt.Printf("http://localhost%s\n", port)
 	err := http.ListenAndServe(port, nil)
@@ -60,10 +77,15 @@ func MainHandler(w http.ResponseWriter, r *http.Request) {
 		FilePath = "./FrontEnd/login.html"
 	case "/userLogin":
 		FilePath = "./FrontEnd/loginuser.html"
-	case "/admin":
+		//замена admin на admmin. Может все сломать!
+	case "/admmin":
 		FilePath = "./FrontEnd/admin.html"
 	case "/register":
 		FilePath = "./FrontEnd/register.html"
+	case "/chat":
+		FilePath = "./FrontEnd/chat.html"
+	case "/adminChat":
+		FilePath = "./FrontEnd/adminChat.html"
 	default:
 		FilePath = "./FrontEnd/error.html"
 	}
@@ -317,6 +339,7 @@ func UserLoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Генерация OTP для обычных пользователей
 	otpCode := strconv.Itoa(100000 + rand.Intn(900000)) // 6-значный код
+	fmt.Println("otpCode:", otpCode)
 	err := Database.CreateOTP(user.ID, otpCode, 5*time.Minute)
 	if err != nil {
 		http.Error(w, "Failed to generate OTP", http.StatusInternalServerError)
@@ -553,6 +576,424 @@ func SendEmailHandler(w http.ResponseWriter, r *http.Request) {
 
 	SendResponse(w, Response{Status: "Success", Message: "Emails sent successfully"})
 }
+
+// BookDetailHandler обрабатывает /bookDetail?title=...
+func BookDetailHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	title := r.URL.Query().Get("title")
+	if title == "" {
+		http.Error(w, "Title is required", http.StatusBadRequest)
+		return
+	}
+
+	// Ищем книгу в БД (таблица books)
+	var book Database.Book
+	err := Database.DB.Where("title = ?", title).First(&book).Error
+	if err != nil {
+		log.Println("Книга не найдена:", err)
+		http.Error(w, "Book not found", http.StatusNotFound)
+		return
+	}
+
+	// Готовим данные для шаблона
+	data := struct {
+		Book Database.Book
+	}{
+		Book: book,
+	}
+
+	tmpl, err := template.ParseFiles("FrontEnd/singleBookDetail.html")
+	if err != nil {
+		http.Error(w, "Template error", http.StatusInternalServerError)
+		return
+	}
+
+	// Рендерим шаблон
+	if err := tmpl.Execute(w, data); err != nil {
+		log.Println("Ошибка при выполнении шаблона:", err)
+	}
+}
+
+func ProcessPaymentHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Читаем поля формы
+	fullName := r.FormValue("fullName")
+	email := r.FormValue("email")
+	cardNumber := r.FormValue("cardNumber")
+	cardExp := r.FormValue("cardExp")
+	cardCVV := r.FormValue("cardCVV")
+
+	// Простейшая проверка
+	if cardExp == "" || cardCVV == "" {
+		http.Error(w, "Invalid card data", http.StatusBadRequest)
+		return
+	}
+
+	// Допустим, пользователь — userID=1
+	userID := uint(1)
+
+	// Получаем или создаём корзину
+	cart, err := GetOrCreateCartForUser(userID)
+	if err != nil {
+		http.Error(w, "Failed to get cart", http.StatusInternalServerError)
+		return
+	}
+
+	// Создаём транзакцию
+	tx := Database.Transaction{
+		CartID: cart.ID,
+		Status: "pending",
+	}
+	if err := Database.DB.Create(&tx).Error; err != nil {
+		log.Println("Ошибка сохранения транзакции:", err)
+		http.Error(w, "Failed to create transaction", http.StatusInternalServerError)
+		return
+	}
+
+	// Имитируем успех оплаты
+	tx.Status = "paid"
+	Database.DB.Save(&tx)
+
+	// Меняем статус корзины
+	cart.Status = "paid"
+	Database.DB.Save(&cart)
+
+	// Генерируем PDF
+	pdfPath, err := GenerateCartPDFReceipt(
+		"eLibrary Project", // Название проекта/компании
+		tx.ID,              // Номер транзакции
+		cart,               // Передаём САМО указатель (сейчас cart — *Database.Cart)
+		fullName,
+		email,
+		cardNumber,
+	)
+	if err != nil {
+		log.Println("Ошибка генерации PDF:", err)
+		http.Error(w, "PDF generation failed", http.StatusInternalServerError)
+		return
+	}
+
+	// Отправка PDF (примерно)
+	go func() {
+		// Если используете свой emailSender:
+		// errSend := emailSender.SendEmail(email, &("Спасибо за покупку!"), pdfPath, nil)
+		errSend := sendPDFByEmail(pdfPath, email)
+		if errSend != nil {
+			log.Println("Не удалось отправить PDF:", errSend)
+		} else {
+			log.Println("PDF отправлен на:", email)
+		}
+		os.Remove(pdfPath) // Удаляем файл
+	}()
+
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Оплата прошла успешно! Чек отправлен на почту."))
+}
+
+func GenerateCartPDFReceipt(
+	projectName string,
+	transactionID uint,
+	cart *Database.Cart, // <-- указатель!
+	fullName, email, cardNumber string,
+) (string, error) {
+
+	pdf := gofpdf.New("P", "mm", "A4", "")
+	pdf.AddPage()
+
+	pdf.SetFont("Arial", "B", 16)
+	pdf.Cell(40, 10, "Fiscal Receipt")
+	pdf.Ln(12)
+
+	pdf.SetFont("Arial", "", 12)
+	pdf.Cell(0, 10, fmt.Sprintf("Project: %s", projectName))
+	pdf.Ln(8)
+	pdf.Cell(0, 10, fmt.Sprintf("Transaction ID: %d", transactionID))
+	pdf.Ln(8)
+	pdf.Cell(0, 10, fmt.Sprintf("Customer: %s", fullName))
+	pdf.Ln(8)
+	pdf.Cell(0, 10, fmt.Sprintf("Email: %s", email))
+	pdf.Ln(8)
+
+	// Маскируем последние 4 цифры карты
+	maskedCard := "****"
+	if len(cardNumber) >= 4 {
+		maskedCard = "****" + cardNumber[len(cardNumber)-4:]
+	}
+	pdf.Cell(0, 10, fmt.Sprintf("Payment method: %s", maskedCard))
+	pdf.Ln(12)
+
+	// Выводим товары из cart.Items
+	var total float64
+	if cart.Items != nil {
+		for _, item := range cart.Items {
+			line := fmt.Sprintf("%s x %d = %.2f", item.ProductName, item.Quantity, item.Price*float64(item.Quantity))
+			pdf.Cell(0, 10, line)
+			pdf.Ln(6)
+			total += item.Price * float64(item.Quantity)
+		}
+	}
+	pdf.Ln(8)
+	pdf.Cell(0, 10, fmt.Sprintf("Total sum: %.2f", total))
+
+	filename := fmt.Sprintf("receipt_cart_%d.pdf", transactionID)
+	err := pdf.OutputFileAndClose(filename)
+	if err != nil {
+		return "", err
+	}
+	return filename, nil
+}
+
+func sendPDFByEmail(pdfPath string, toEmail string) error {
+	message := "Спасибо за покупку! Во вложении ваш фискальный чек."
+	return es.SendEmail(toEmail, &message, pdfPath, nil)
+}
+
+// GetOrCreateCartForUser ищет корзину пользователя со статусом "open".
+// Если такой нет — создаёт новую.
+func GetOrCreateCartForUser(userID uint) (*Database.Cart, error) {
+	var cart Database.Cart
+	err := Database.DB.Where("user_id = ? AND status = ?", userID, "open").
+		Preload("Items").
+		First(&cart).Error
+	if err != nil {
+		// Если корзина не найдена — создаём
+		cart = Database.Cart{
+			UserID: userID,
+			Status: "open",
+		}
+		if createErr := Database.DB.Create(&cart).Error; createErr != nil {
+			return nil, createErr
+		}
+		return &cart, nil
+	}
+	return &cart, nil
+}
+
+func CartHandler(w http.ResponseWriter, r *http.Request) {
+	userID := uint(1)
+	cart, err := GetOrCreateCartForUser(userID)
+	if err != nil {
+		http.Error(w, "Failed to get cart", http.StatusInternalServerError)
+		return
+	}
+
+	// Регистрируем funcMap, чтобы использовать {{add x y}} или {{sub x y}}:
+	funcMap := template.FuncMap{
+		"add": func(a, b int) int { return a + b },
+		"sub": func(a, b int) int { return a - b },
+	}
+
+	tmpl := template.New("cart.html").Funcs(funcMap)
+	tmpl, err = tmpl.ParseFiles("FrontEnd/cart.html")
+	if err != nil {
+		http.Error(w, "Template parse error", http.StatusInternalServerError)
+		return
+	}
+
+	if err := tmpl.Execute(w, cart); err != nil {
+		http.Error(w, "Template execute error", http.StatusInternalServerError)
+	}
+}
+
+func RemoveItemHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodDelete {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	itemIDStr := r.URL.Query().Get("itemID")
+	if itemIDStr == "" {
+		http.Error(w, "itemID is required", http.StatusBadRequest)
+		return
+	}
+
+	itemID, err := strconv.Atoi(itemIDStr)
+	if err != nil {
+		http.Error(w, "invalid itemID", http.StatusBadRequest)
+		return
+	}
+
+	var cartItem Database.CartItem
+	if err := Database.DB.First(&cartItem, itemID).Error; err != nil {
+		http.Error(w, "item not found", http.StatusNotFound)
+		return
+	}
+
+	if err := Database.DB.Delete(&cartItem).Error; err != nil {
+		http.Error(w, "failed to remove item", http.StatusInternalServerError)
+		return
+	}
+
+	w.Write([]byte("Товар удалён из корзины"))
+}
+
+func CheckoutHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	tmpl, err := template.ParseFiles("FrontEnd/checkout.html")
+	if err != nil {
+		log.Println("Ошибка при загрузке шаблона checkout.html:", err)
+		http.Error(w, "Template parse error", http.StatusInternalServerError)
+		return
+	}
+
+	// Выполняем шаблон, передавая (например) nil или структуру, если нужно
+	err = tmpl.Execute(w, nil)
+	if err != nil {
+		log.Println("Ошибка при выполнении шаблона checkout.html:", err)
+		http.Error(w, "Template execution error", http.StatusInternalServerError)
+		return
+	}
+}
+
+func CheckoutCartHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Допустим userID=1
+	userID := uint(1)
+	// 1. Получаем корзину (Cart) со статусом "open"
+	cart, err := GetOrCreateCartForUser(userID)
+	if err != nil {
+		http.Error(w, "Failed to get/create cart", http.StatusInternalServerError)
+		return
+	}
+
+	// 2. Создаём транзакцию (pending) в локальной БД
+	tx := Database.Transaction{
+		CartID: cart.ID,
+		Status: "pending",
+	}
+	if err := Database.DB.Create(&tx).Error; err != nil {
+		http.Error(w, "Failed to create transaction", http.StatusInternalServerError)
+		return
+	}
+
+	// 3. Собираем JSON с данными корзины и клиента
+	//    (какие поля именно передавать — ваш выбор, ниже пример)
+	//    Собираем cartItems:
+	var cartItems []map[string]interface{}
+	for _, item := range cart.Items { // cart.Items = []CartItem
+		cartItems = append(cartItems, map[string]interface{}{
+			"id":    item.ID, // или item.ProductID
+			"name":  item.ProductName,
+			"price": item.Price,
+		})
+	}
+
+	// Предположим, мы достаём User из таблицы пользователей
+	var user Database.User
+	Database.DB.First(&user, userID) // если находим по ID=1
+
+	body := map[string]interface{}{
+		// (Если хотите передавать transaction_id, добавьте:
+		"transaction_id": tx.ID,
+		"cartItems":      cartItems,
+		"customer": map[string]interface{}{
+			"id":    user.ID,
+			"name":  user.Name,
+			"email": user.Email,
+		},
+	}
+
+	jsonBody, err := json.Marshal(body)
+	if err != nil {
+		http.Error(w, "Failed to marshal JSON", http.StatusInternalServerError)
+		return
+	}
+
+	// 4. POST-запрос на микросервис (http://localhost:8081/payment)
+	microserviceURL := "http://localhost:8081/payment"
+	req, err := http.NewRequest(http.MethodPost, microserviceURL, bytes.NewBuffer(jsonBody))
+	if err != nil {
+		http.Error(w, "Failed to create request to microservice", http.StatusInternalServerError)
+		return
+	}
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		http.Error(w, "Failed to contact microservice", http.StatusBadGateway)
+		return
+	}
+	defer resp.Body.Close()
+
+	// 5. Читаем ответ микросервиса
+	var result struct {
+		Success      bool   `json:"success"`
+		ErrorMessage string `json:"error_message"`
+	}
+	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+		http.Error(w, "Invalid response from microservice", http.StatusBadGateway)
+		return
+	}
+
+	// 6. Если success=true => meняем статус транзакции на "paid" и корзину на "paid".
+	//    Иначе => "declined"
+	if result.Success {
+		tx.Status = "paid"
+		cart.Status = "paid"
+		Database.DB.Save(&tx)
+		Database.DB.Save(&cart)
+
+		w.Write([]byte("Оплата прошла успешно (через микросервис)!"))
+	} else {
+		tx.Status = "declined"
+		Database.DB.Save(&tx)
+		w.WriteHeader(http.StatusPaymentRequired)
+		w.Write([]byte("Оплата отклонена: " + result.ErrorMessage))
+	}
+}
+
+func UpdateQuantityHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var input struct {
+		ItemID   int `json:"item_id"`
+		Quantity int `json:"quantity"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
+		http.Error(w, "Invalid JSON", http.StatusBadRequest)
+		return
+	}
+
+	if input.Quantity < 1 {
+		http.Error(w, "Quantity must be >= 1", http.StatusBadRequest)
+		return
+	}
+
+	var cartItem Database.CartItem
+	if err := Database.DB.First(&cartItem, input.ItemID).Error; err != nil {
+		http.Error(w, "Item not found", http.StatusNotFound)
+		return
+	}
+
+	cartItem.Quantity = input.Quantity
+	if err := Database.DB.Save(&cartItem).Error; err != nil {
+		http.Error(w, "Failed to update item quantity", http.StatusInternalServerError)
+		return
+	}
+
+	w.Write([]byte("Количество обновлено"))
+}
+
 func AdminMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Проверяем cookie
@@ -567,6 +1008,68 @@ func AdminMiddleware(next http.HandlerFunc) http.HandlerFunc {
 		next(w, r)
 	}
 }
+
+func AddItemToCartHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Предположим, что userID = 1 (демо), в реальном случае - берём из куки/JWT
+	userID := uint(1)
+
+	// Считываем JSON. Допустим, формат:
+	// {
+	//   "product_id": "42",
+	//   "product_name": "Some Book",
+	//   "price": 10.99,
+	//   "quantity": 1
+	// }
+	var input struct {
+		ProductID   string  `json:"product_id"`
+		ProductName string  `json:"product_name"`
+		Price       float64 `json:"price"`
+		Quantity    int     `json:"quantity"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
+		http.Error(w, "Invalid JSON", http.StatusBadRequest)
+		return
+	}
+
+	// Или, если хотите принимать обычную форму:
+	// productID := r.FormValue("product_id")
+	// ...
+
+	if input.Quantity < 1 {
+		input.Quantity = 1
+	}
+
+	// Получаем (или создаём) корзину пользователя
+	cart, err := GetOrCreateCartForUser(userID)
+	if err != nil {
+		http.Error(w, "Failed to get/create cart", http.StatusInternalServerError)
+		return
+	}
+
+	// Создаём новую запись в cart_items
+	item := Database.CartItem{
+		CartID:      cart.ID,
+		ProductID:   input.ProductID,
+		ProductName: input.ProductName,
+		Price:       input.Price,
+		Quantity:    input.Quantity,
+	}
+	if err := Database.DB.Create(&item).Error; err != nil {
+		log.Println("Ошибка добавления в корзину:", err)
+		http.Error(w, "Failed to add item to cart", http.StatusInternalServerError)
+		return
+	}
+
+	// Успешный ответ
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "Товар добавлен в корзину! (CartID=%d)", cart.ID)
+}
+
 func AuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Проверяем cookie

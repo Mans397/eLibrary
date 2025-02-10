@@ -62,15 +62,15 @@ func SaveBooks(books []Api.Book) error {
 }
 
 func FetchAndSaveBooks() {
-	fmt.Println("start")
+
 	books, err := Api.FetchBooks()
-	fmt.Println("start2")
+
 	if err != nil {
 		log.Fatalf("Ошибка при получении данных из API: %v", err)
 	}
-	fmt.Println("start3")
-	for i, apiBook := range books {
-		fmt.Println(i)
+
+	for _, apiBook := range books {
+
 		var count int64
 		if err := DB.Model(&Book{}).Where("title = ?", apiBook.Title).Count(&count).Error; err != nil {
 			log.Fatalf("Ошибка при проверке наличия книги в базе: %v", err)

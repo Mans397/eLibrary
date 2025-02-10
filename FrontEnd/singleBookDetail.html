@@ -1,0 +1,45 @@
+<!-- FrontEnd/singleBookDetail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Book Detail</title>
+</head>
+<body>
+<h1>Книга: {{.Book.Title}}</h1>
+
+<img src="{{.Book.ImageURL}}" alt="Cover" style="width:200px;height:auto;" /><br>
+<p><strong>Описание:</strong> {{.Book.Description}}</p>
+<p><strong>Цена:</strong> {{.Book.Price}}</p>
+<p><strong>Дата выпуска:</strong> {{.Book.Date}}</p>
+
+<!-- Допустим, выводим форму с данными для оплаты -->
+<h2>Оплатить книгу</h2>
+<form action="/processPayment" method="post">
+  <!-- Скрытый input, чтобы знать, какую книгу оплачать -->
+  <input type="hidden" name="title" value="{{.Book.Title}}"/>
+  <input type="hidden" name="price" value="{{.Book.Price}}"/>
+
+  <label for="fullName">Ваше ФИО:</label><br>
+  <input type="text" id="fullName" name="fullName" required/><br><br>
+
+  <label for="email">Ваша почта (получите чек):</label><br>
+  <input type="email" id="email" name="email" required/><br><br>
+
+  <label for="cardNumber">Номер карты:</label><br>
+  <input type="text" id="cardNumber" name="cardNumber" required/><br><br>
+
+  <label for="cardExp">Срок действия (MM/YY):</label><br>
+  <input type="text" id="cardExp" name="cardExp" required/><br><br>
+
+  <label for="cardCVV">CVV:</label><br>
+  <input type="password" id="cardCVV" name="cardCVV" required/><br><br>
+
+  <!-- Для примера Quantity = 1 -->
+  <input type="hidden" name="quantity" value="1"/>
+
+  <button type="submit">Оплатить</button>
+</form>
+
+</body>
+</html>

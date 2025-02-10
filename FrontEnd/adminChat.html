@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Chat</title>
+</head>
+<body>
+<h2>Чаты клиентов</h2>
+<ul id="chatList"></ul>
+
+<h2>Сообщения</h2>
+<div id="messages"></div>
+<input type="text" id="messageInput" placeholder="Введите сообщение">
+<button onclick="sendMessage()">Отправить</button>
+
+<script>
+  let currentChatID = null;
+
+  // Подключаем WebSocket как админ
+  const socket = new WebSocket('ws://localhost:8080/ws?admin=true&chat_id=1');
+
+  socket.onopen = function() {
+    console.log("Администратор подключился к WebSocket");
+    loadChats();
+  };
+
+  socket.onmessage = function(event) {
+    const msg = JSON.parse(event.data);
+    const messagesDiv = document.getElementById("messages");
+
+    // Если это сообщение от клиента, отображаем его
+    messagesDiv.innerHTML += `<p><strong>${msg.sender}:</strong> ${msg.content}</p>`;
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  };
+
+  function sendMessage() {
+    const input = document.getElementById("messageInput");
+    const message = input.value.trim();
+    if (message && currentChatID) {
+      // Отправляем сообщение в выбранный чат
+      socket.send(JSON.stringify({
+        chat_id: currentChatID,
+        sender: "admin",
+        content: message
+      }));
+      input.value = "";
+    }
+  }
+
+  function loadChats() {
+    fetch('/chats')
+            .then(response => response.json())
+            .then(chats => {
+              const chatList = document.getElementById("chatList");
+              chatList.innerHTML = "";
+              chats.forEach(chatData => {
+                const chatID = chatData.chat_id;
+                const messages = chatData.messages;
+
+                const li = document.createElement("li");
+                li.textContent = `Чат с клиентом ${chatID}`;
+
+                // Добавляем кнопку удаления
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Удалить";
+                deleteButton.onclick = function(event) {
+                  event.stopPropagation(); // Чтобы не срабатывало нажатие на чат
+                  deleteChat(chatID);
+                };
+
+                li.appendChild(deleteButton);
+                li.onclick = function() {
+                  currentChatID = chatID;
+                  document.getElementById("messages").innerHTML = "";
+                  loadMessagesForChat(messages);
+                };
+                chatList.appendChild(li);
+              });
+            })
+            .catch(error => console.error("Ошибка загрузки чатов:", error));
+  }
+
+  function loadMessagesForChat(messages) {
+    const messagesDiv = document.getElementById("messages");
+
+    // Отображаем все сообщения для выбранного чата
+    messages.forEach(msg => {
+      messagesDiv.innerHTML += `<p><strong>${msg.sender}:</strong> ${msg.content}</p>`;
+    });
+
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
+
+  function deleteChat(chatID) {
+    if (!confirm(`Удалить чат ${chatID}?`)) return;
+
+    fetch(`/delete_chat?chat_id=${chatID}`, { method: "DELETE" })
+            .then(response => {
+              if (response.ok) {
+                alert(`Чат ${chatID} удален.`);
+                loadChats(); // Перезагружаем список чатов
+                document.getElementById("messages").innerHTML = ""; // Очищаем сообщения
+                if (currentChatID === chatID) {
+                  currentChatID = null;
+                }
+              } else {
+                alert("Ошибка удаления чата.");
+              }
+            })
+            .catch(error => console.error("Ошибка удаления:", error));
+  }
+</script>
+</body>
+</html>

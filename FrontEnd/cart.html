@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Моя корзина</title>
+  <style>
+    /* при желании стили */
+  </style>
+</head>
+<body>
+<h1>Моя корзина</h1>
+
+{{if .Items}}
+<table border="1" cellpadding="8">
+  <tr>
+    <th>Название</th>
+    <th>Цена</th>
+    <th>Количество</th>
+    <th>Действия</th>
+  </tr>
+  {{range .Items}}
+  <tr>
+    <td>{{.ProductName}}</td>
+    <td>{{.Price}}</td>
+    <td>
+      <!-- Отображаем текущее количество и кнопки +/- -->
+      <button onclick="updateQty({{.ID}}, 'minus')">–</button>
+      <span id="qty-{{.ID}}">{{.Quantity}}</span>
+      <button onclick="updateQty({{.ID}}, 'plus')">+</button>
+    </td>
+    <td>
+      <!-- Удалить товар -->
+      <button onclick="removeFromCart({{.ID}})">Удалить</button>
+    </td>
+  </tr>
+  {{end}}
+</table>
+
+<br>
+<button onclick="location.href='/checkout'">Перейти к оплате</button>
+<button onclick="location.href='/books'">Вернуться к покупкам</button>
+
+{{else}}
+<p>Ваша корзина пуста.</p>
+<button onclick="location.href='/books'">Вернуться к покупкам</button>
+{{end}}
+
+<!-- Добавляем JS-функции внизу, чтобы HTML уже был загружен -->
+<script>
+  function updateQty(itemID, operation) {
+    const qtySpan = document.getElementById(`qty-${itemID}`);
+    let currentQty = parseInt(qtySpan.innerText, 10);
+
+    if (operation === 'plus') {
+      currentQty++;
+    } else if (operation === 'minus') {
+      currentQty--;
+    }
+
+    if (currentQty <= 0) {
+      removeFromCart(itemID);
+      return;
+    }
+
+    // Шлём POST на /updateQuantity
+    fetch('/updateQuantity', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ item_id: itemID, quantity: currentQty })
+    })
+            .then(res => res.text())
+            .then(msg => {
+              console.log(msg);
+              // Локально обновляем текст
+              qtySpan.innerText = currentQty;
+            })
+            .catch(err => alert("Ошибка при обновлении количества: " + err));
+  }
+
+  function removeFromCart(itemID) {
+    // Удаление тоже через fetch, DELETE или POST
+    fetch('/removeItem?itemID=' + itemID, {
+      method: 'DELETE'
+    })
+            .then(res => res.text())
+            .then(msg => {
+              alert(msg);
+              window.location.reload();
+            })
+            .catch(err => alert('Ошибка удаления: ' + err));
+  }
+</script>
+</body>
+</html>
