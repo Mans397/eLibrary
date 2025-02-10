@@ -104,6 +104,10 @@
     <!-- Контейнер для кнопки Log Out -->
     <div class="logout-container">
         <button id="logoutButton">Log Out</button>
+
+        <!-- ДОБАВИЛИ КНОПКУ "Корзина", ведущую на /cart -->
+        <button onclick="location.href='/cart'">Корзина</button>
+
         <a href="/chat">Help</a>
     </div>
 
@@ -132,11 +136,17 @@
         {{range .Books}}
         <div class="book">
             <img src="{{.ImageURL}}" alt="{{.Title}}">
+
             <h3>{{.Title}}</h3>
             <p>{{.Description}}</p>
             <p class="price">{{.Price}}</p>
             <p>{{.Attributes}}</p>
             <p>Дата выпуска: {{.Date}}</p>
+
+            <!-- Кнопка "Добавить в корзину" -->
+            <button onclick="addToCart('{{.Title}}', '{{.Price}}')">
+                Добавить в корзину
+            </button>
         </div>
         {{end}}
     </div>
@@ -144,14 +154,37 @@
     <div class="pagination">
         {{if gt .TotalPages 1}}
         {{range $i := .PaginationPages}}
-        <a href="/books?page={{$i}}&filter={{.Filter}}&sort={{.Sort}}">{{$i}}</a>
+        <a href="/books?page={{$i}}&filter={{$.Filter}}&sort={{$.Sort}}">{{$i}}</a>
         {{end}}
         {{end}}
     </div>
-
-
 </div>
 
+<!-- Функция addToCart -->
+<script>
+    function addToCart(title, price) {
+        // Удалим " USD" на случай, если price="10.99 USD"
+        price = price.replace(" USD", "");
+
+        fetch('/addToCart', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                product_id: title,
+                product_name: title,
+                price: parseFloat(price) || 0.0,
+                quantity: 1
+            })
+        })
+            .then(response => response.text())
+            .then(data => {
+                alert(data); // "Товар добавлен в корзину!"
+            })
+            .catch(err => {
+                alert('Ошибка при добавлении в корзину: ' + err);
+            });
+    }
+</script>
 
 </body>
 </html>

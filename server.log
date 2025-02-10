@@ -2308,3 +2308,606 @@
 2025/01/29 20:25:16 Письмо успешно отправлено пользователю x.nartai05@gmail.com
 2025/01/29 20:25:24 OTP email sent to x.nartai05@gmail.com
 2025/01/29 20:25:40 http: superfluous response.WriteHeader call from github.com/Mans397/eLibrary/serverConnection.VerifyOTPHandler (connectionHandler.go:391)
+2025/02/05 19:21:24 Книга 'The Good Earth' уже существует в базе.
+2025/02/05 19:21:24 Книга 'The Voyage of the Dawn Treader' уже существует в базе.
+2025/02/05 19:21:24 Книга 'Arsène Lupin, gentleman-cambrioleur' уже существует в базе.
+2025/02/05 19:21:24 Книга 'Идіотъ' уже существует в базе.
+2025/02/05 19:21:24 Книга 'The Story of Philosophy' уже существует в базе.
+2025/02/05 19:21:24 Книга 'Guess How Much I Love You' уже существует в базе.
+2025/02/05 19:21:24 Книга 'The Thirty-Nine Steps' уже существует в базе.
+2025/02/05 19:21:24 Книга 'The Hunger Games' уже существует в базе.
+2025/02/05 19:21:24 Книга 'Three Men in a Boat (to say nothing of the dog)' уже существует в базе.
+2025/02/05 19:21:24 Книга 'Le Comte de Monte Cristo' уже существует в базе.
+2025/02/05 19:21:24 Книга 'Uncle Tom's Cabin' уже существует в базе.
+2025/02/05 19:21:24 Книга 'NASA/DoD aerospace knowledge diffusion research project' уже существует в базе.
+2025/02/05 19:21:24 Книга 'Gulliver's Travels' уже существует в базе.
+2025/02/05 19:21:24 Книга 'Hamlet' уже существует в базе.
+2025/02/05 19:21:24 Книга 'Principles of Anatomy and Physiology' уже существует в базе.
+2025/02/05 19:21:24 Книга 'Autobiography of a Yogi' уже существует в базе.
+2025/02/05 19:21:24 Книга 'The Alchemist, 1612' уже существует в базе.
+2025/02/05 19:21:24 Книга 'The Ugly Duckling' уже существует в базе.
+2025/02/05 19:21:24 Книга 'A Midsummer Night's Dream' уже существует в базе.
+2025/02/05 19:21:24 Книга 'Преступление и наказание' уже существует в базе.
+2025/02/05 19:21:24 Книга 'Much Ado About Nothing' уже существует в базе.
+2025/02/05 19:21:24 Книга 'The Lost World' уже существует в базе.
+2025/02/05 19:21:24 Книга 'The Legend of Sleepy Hollow' уже существует в базе.
+2025/02/05 19:21:24 Книга 'As You Like It' уже существует в базе.
+2025/02/05 19:21:24 Книга 'David Copperfield' уже существует в базе.
+2025/02/05 19:21:24 Книга 'The Adventures of Sherlock Holmes [12 stories]' уже существует в базе.
+2025/02/05 19:21:24 Книга 'Othello' уже существует в базе.
+2025/02/05 19:21:24 Книга 'Great Expectations' уже существует в базе.
+2025/02/05 19:21:24 Книга 'King Lear' уже существует в базе.
+2025/02/05 19:21:24 Книга 'The Merchant of Venice' уже существует в базе.
+2025/02/05 19:21:26 Request Path: /
+2025/02/05 19:21:26 Request Path: /favicon.ico
+2025/02/05 19:21:33 Request Path: /register
+2025/02/05 19:21:34 Request Path: /userLogin
+2025/02/05 19:21:42 Request Path: /userLogin
+2025/02/05 19:22:25 Письмо успешно отправлено пользователю matthewakirov16@gmal.com
+2025/02/05 19:22:46 Request Path: /chat
+2025/02/05 19:23:44 Request Path: /chat
+2025/02/05 19:27:25 Request Path: /chat
+2025/02/05 19:27:28 Request Path: /chat
+2025/02/05 19:31:03 Request Path: /chat
+2025/02/05 19:31:49 Request Path: /chat
+2025/02/07 12:42:22 Книга 'The Good Earth' уже существует в базе.
+2025/02/07 12:42:22 Книга 'The Voyage of the Dawn Treader' уже существует в базе.
+2025/02/07 12:42:22 Книга 'Arsène Lupin, gentleman-cambrioleur' уже существует в базе.
+2025/02/07 12:42:22 Книга 'Идіотъ' уже существует в базе.
+2025/02/07 12:42:22 Книга 'The Story of Philosophy' уже существует в базе.
+2025/02/07 12:42:22 Книга 'Guess How Much I Love You' уже существует в базе.
+2025/02/07 12:42:22 Книга 'The Thirty-Nine Steps' уже существует в базе.
+2025/02/07 12:42:22 Книга 'The Hunger Games' уже существует в базе.
+2025/02/07 12:42:22 Книга 'Three Men in a Boat (to say nothing of the dog)' уже существует в базе.
+2025/02/07 12:42:22 Книга 'Le Comte de Monte Cristo' уже существует в базе.
+2025/02/07 12:42:22 Книга 'Uncle Tom's Cabin' уже существует в базе.
+2025/02/07 12:42:22 Книга 'NASA/DoD aerospace knowledge diffusion research project' уже существует в базе.
+2025/02/07 12:42:22 Книга 'Gulliver's Travels' уже существует в базе.
+2025/02/07 12:42:22 Книга 'Hamlet' уже существует в базе.
+2025/02/07 12:42:22 Книга 'Principles of Anatomy and Physiology' уже существует в базе.
+2025/02/07 12:42:22 Книга 'Autobiography of a Yogi' уже существует в базе.
+2025/02/07 12:42:22 Книга 'The Alchemist, 1612' уже существует в базе.
+2025/02/07 12:42:22 Книга 'The Ugly Duckling' уже существует в базе.
+2025/02/07 12:42:22 Книга 'A Midsummer Night's Dream' уже существует в базе.
+2025/02/07 12:42:22 Книга 'Преступление и наказание' уже существует в базе.
+2025/02/07 12:42:22 Книга 'Much Ado About Nothing' уже существует в базе.
+2025/02/07 12:42:22 Книга 'The Lost World' уже существует в базе.
+2025/02/07 12:42:22 Книга 'The Legend of Sleepy Hollow' уже существует в базе.
+2025/02/07 12:42:22 Книга 'As You Like It' уже существует в базе.
+2025/02/07 12:42:22 Книга 'David Copperfield' уже существует в базе.
+2025/02/07 12:42:22 Книга 'The Adventures of Sherlock Holmes [12 stories]' уже существует в базе.
+2025/02/07 12:42:22 Книга 'Othello' уже существует в базе.
+2025/02/07 12:42:22 Книга 'King Lear' уже существует в базе.
+2025/02/07 12:42:22 Книга 'Great Expectations' уже существует в базе.
+2025/02/07 12:42:22 Книга 'The Merchant of Venice' уже существует в базе.
+2025/02/07 12:42:22 Microservice running on :8081
+2025/02/07 12:42:23 Request Path: /
+2025/02/07 12:42:28 Request Path: /
+2025/02/07 12:42:28 Request Path: /favicon.ico
+2025/02/07 12:42:33 Request Path: /userLogin
+2025/02/07 12:51:36 Failed to send PDF email to : gomail: could not send email 1: gomail: invalid address "": mail: no address
+2025/02/07 12:51:36 Failed to send receipt: gomail: could not send email 1: gomail: invalid address "": mail: no address
+2025/02/07 12:52:35 PDF receipt emailed to john.doe@example.com
+2025/02/07 13:39:32 Книга 'The Good Earth' уже существует в базе.
+2025/02/07 13:39:32 Книга 'The Voyage of the Dawn Treader' уже существует в базе.
+2025/02/07 13:39:32 Книга 'Arsène Lupin, gentleman-cambrioleur' уже существует в базе.
+2025/02/07 13:39:32 Книга 'Идіотъ' уже существует в базе.
+2025/02/07 13:39:32 Книга 'The Story of Philosophy' уже существует в базе.
+2025/02/07 13:39:32 Книга 'Guess How Much I Love You' уже существует в базе.
+2025/02/07 13:39:32 Книга 'The Thirty-Nine Steps' уже существует в базе.
+2025/02/07 13:39:32 Книга 'The Hunger Games' уже существует в базе.
+2025/02/07 13:39:32 Книга 'Three Men in a Boat (to say nothing of the dog)' уже существует в базе.
+2025/02/07 13:39:32 Книга 'Le Comte de Monte Cristo' уже существует в базе.
+2025/02/07 13:39:32 Книга 'Uncle Tom's Cabin' уже существует в базе.
+2025/02/07 13:39:32 Книга 'NASA/DoD aerospace knowledge diffusion research project' уже существует в базе.
+2025/02/07 13:39:32 Книга 'Gulliver's Travels' уже существует в базе.
+2025/02/07 13:39:32 Книга 'Hamlet' уже существует в базе.
+2025/02/07 13:39:32 Книга 'Principles of Anatomy and Physiology' уже существует в базе.
+2025/02/07 13:39:32 Книга 'Autobiography of a Yogi' уже существует в базе.
+2025/02/07 13:39:32 Книга 'The Alchemist, 1612' уже существует в базе.
+2025/02/07 13:39:32 Книга 'The Ugly Duckling' уже существует в базе.
+2025/02/07 13:39:32 Книга 'A Midsummer Night's Dream' уже существует в базе.
+2025/02/07 13:39:32 Книга 'Преступление и наказание' уже существует в базе.
+2025/02/07 13:39:32 Книга 'Much Ado About Nothing' уже существует в базе.
+2025/02/07 13:39:32 Книга 'The Lost World' уже существует в базе.
+2025/02/07 13:39:32 Книга 'The Legend of Sleepy Hollow' уже существует в базе.
+2025/02/07 13:39:32 Книга 'As You Like It' уже существует в базе.
+2025/02/07 13:39:32 Книга 'David Copperfield' уже существует в базе.
+2025/02/07 13:39:32 Книга 'The Adventures of Sherlock Holmes [12 stories]' уже существует в базе.
+2025/02/07 13:39:32 Книга 'Othello' уже существует в базе.
+2025/02/07 13:39:32 Книга 'King Lear' уже существует в базе.
+2025/02/07 13:39:32 Книга 'Great Expectations' уже существует в базе.
+2025/02/07 13:39:32 Книга 'The Merchant of Venice' уже существует в базе.
+2025/02/07 13:39:32 Microservice running on :8081
+2025/02/07 13:41:05 Email sent to matthewakirov16@gmail.com
+2025/02/07 13:41:05 PDF отправлен на: matthewakirov16@gmail.com
+2025/02/07 14:27:12 Книга 'The Good Earth' уже существует в базе.
+2025/02/07 14:27:12 Книга 'The Voyage of the Dawn Treader' уже существует в базе.
+2025/02/07 14:27:12 Книга 'Arsène Lupin, gentleman-cambrioleur' уже существует в базе.
+2025/02/07 14:27:12 Книга 'Идіотъ' уже существует в базе.
+2025/02/07 14:27:12 Книга 'The Story of Philosophy' уже существует в базе.
+2025/02/07 14:27:12 Книга 'Guess How Much I Love You' уже существует в базе.
+2025/02/07 14:27:12 Книга 'The Thirty-Nine Steps' уже существует в базе.
+2025/02/07 14:27:12 Книга 'The Hunger Games' уже существует в базе.
+2025/02/07 14:27:12 Книга 'Three Men in a Boat (to say nothing of the dog)' уже существует в базе.
+2025/02/07 14:27:12 Книга 'Le Comte de Monte Cristo' уже существует в базе.
+2025/02/07 14:27:12 Книга 'Uncle Tom's Cabin' уже существует в базе.
+2025/02/07 14:27:12 Книга 'NASA/DoD aerospace knowledge diffusion research project' уже существует в базе.
+2025/02/07 14:27:12 Книга 'Gulliver's Travels' уже существует в базе.
+2025/02/07 14:27:12 Книга 'Hamlet' уже существует в базе.
+2025/02/07 14:27:12 Книга 'Principles of Anatomy and Physiology' уже существует в базе.
+2025/02/07 14:27:12 Книга 'Autobiography of a Yogi' уже существует в базе.
+2025/02/07 14:27:12 Книга 'The Alchemist, 1612' уже существует в базе.
+2025/02/07 14:27:12 Книга 'The Ugly Duckling' уже существует в базе.
+2025/02/07 14:27:12 Книга 'A Midsummer Night's Dream' уже существует в базе.
+2025/02/07 14:27:12 Книга 'Преступление и наказание' уже существует в базе.
+2025/02/07 14:27:12 Книга 'Much Ado About Nothing' уже существует в базе.
+2025/02/07 14:27:12 Книга 'The Lost World' уже существует в базе.
+2025/02/07 14:27:12 Книга 'The Legend of Sleepy Hollow' уже существует в базе.
+2025/02/07 14:27:12 Книга 'As You Like It' уже существует в базе.
+2025/02/07 14:27:12 Книга 'David Copperfield' уже существует в базе.
+2025/02/07 14:27:12 Книга 'The Adventures of Sherlock Holmes [12 stories]' уже существует в базе.
+2025/02/07 14:27:12 Книга 'Othello' уже существует в базе.
+2025/02/07 14:27:12 Книга 'King Lear' уже существует в базе.
+2025/02/07 14:27:12 Книга 'Great Expectations' уже существует в базе.
+2025/02/07 14:27:12 Книга 'The Merchant of Venice' уже существует в базе.
+2025/02/07 14:27:12 Microservice running on :8081
+2025/02/07 14:28:07 Email sent to matthewakirov16@gmail.com
+2025/02/07 14:28:07 PDF отправлен на: matthewakirov16@gmail.com
+2025/02/08 16:30:57 Книга 'The Good Earth' уже существует в базе.
+2025/02/08 16:30:57 Книга 'The Voyage of the Dawn Treader' уже существует в базе.
+2025/02/08 16:30:57 Книга 'Arsène Lupin, gentleman-cambrioleur' уже существует в базе.
+2025/02/08 16:30:57 Книга 'Идіотъ' уже существует в базе.
+2025/02/08 16:30:57 Книга 'The Story of Philosophy' уже существует в базе.
+2025/02/08 16:30:57 Книга 'Guess How Much I Love You' уже существует в базе.
+2025/02/08 16:30:57 Книга 'The Thirty-Nine Steps' уже существует в базе.
+2025/02/08 16:30:57 Книга 'The Hunger Games' уже существует в базе.
+2025/02/08 16:30:57 Книга 'Three Men in a Boat (to say nothing of the dog)' уже существует в базе.
+2025/02/08 16:30:57 Книга 'Le Comte de Monte Cristo' уже существует в базе.
+2025/02/08 16:30:57 Книга 'Uncle Tom's Cabin' уже существует в базе.
+2025/02/08 16:30:57 Книга 'NASA/DoD aerospace knowledge diffusion research project' уже существует в базе.
+2025/02/08 16:30:57 Книга 'Gulliver's Travels' уже существует в базе.
+2025/02/08 16:30:57 Книга 'Hamlet' уже существует в базе.
+2025/02/08 16:30:57 Книга 'Principles of Anatomy and Physiology' уже существует в базе.
+2025/02/08 16:30:57 Книга 'Autobiography of a Yogi' уже существует в базе.
+2025/02/08 16:30:57 Книга 'The Alchemist, 1612' уже существует в базе.
+2025/02/08 16:30:57 Книга 'The Ugly Duckling' уже существует в базе.
+2025/02/08 16:30:57 Книга 'A Midsummer Night's Dream' уже существует в базе.
+2025/02/08 16:30:57 Книга 'Преступление и наказание' уже существует в базе.
+2025/02/08 16:30:57 Книга 'Much Ado About Nothing' уже существует в базе.
+2025/02/08 16:30:57 Книга 'The Lost World' уже существует в базе.
+2025/02/08 16:30:57 Книга 'The Legend of Sleepy Hollow' уже существует в базе.
+2025/02/08 16:30:57 Книга 'As You Like It' уже существует в базе.
+2025/02/08 16:30:57 Книга 'The Adventures of Sherlock Holmes [12 stories]' уже существует в базе.
+2025/02/08 16:30:57 Книга 'David Copperfield' уже существует в базе.
+2025/02/08 16:30:57 Книга 'Othello' уже существует в базе.
+2025/02/08 16:30:57 Книга 'King Lear' уже существует в базе.
+2025/02/08 16:30:57 Книга 'Great Expectations' уже существует в базе.
+2025/02/08 16:30:57 Книга 'The Merchant of Venice' уже существует в базе.
+2025/02/08 16:30:57 Microservice running on :8081
+2025/02/08 16:30:58 Request Path: /
+2025/02/08 16:40:20 Книга 'The Good Earth' уже существует в базе.
+2025/02/08 16:40:20 Книга 'The Voyage of the Dawn Treader' уже существует в базе.
+2025/02/08 16:40:20 Книга 'Arsène Lupin, gentleman-cambrioleur' уже существует в базе.
+2025/02/08 16:40:20 Книга 'Идіотъ' уже существует в базе.
+2025/02/08 16:40:20 Книга 'The Story of Philosophy' уже существует в базе.
+2025/02/08 16:40:20 Книга 'Guess How Much I Love You' уже существует в базе.
+2025/02/08 16:40:20 Книга 'The Thirty-Nine Steps' уже существует в базе.
+2025/02/08 16:40:20 Книга 'The Hunger Games' уже существует в базе.
+2025/02/08 16:40:20 Книга 'Three Men in a Boat (to say nothing of the dog)' уже существует в базе.
+2025/02/08 16:40:20 Книга 'Le Comte de Monte Cristo' уже существует в базе.
+2025/02/08 16:40:20 Книга 'Uncle Tom's Cabin' уже существует в базе.
+2025/02/08 16:40:20 Книга 'NASA/DoD aerospace knowledge diffusion research project' уже существует в базе.
+2025/02/08 16:40:20 Книга 'Gulliver's Travels' уже существует в базе.
+2025/02/08 16:40:20 Книга 'Hamlet' уже существует в базе.
+2025/02/08 16:40:20 Книга 'Principles of Anatomy and Physiology' уже существует в базе.
+2025/02/08 16:40:20 Книга 'Autobiography of a Yogi' уже существует в базе.
+2025/02/08 16:40:20 Книга 'The Alchemist, 1612' уже существует в базе.
+2025/02/08 16:40:20 Книга 'The Ugly Duckling' уже существует в базе.
+2025/02/08 16:40:20 Книга 'A Midsummer Night's Dream' уже существует в базе.
+2025/02/08 16:40:20 Книга 'Преступление и наказание' уже существует в базе.
+2025/02/08 16:40:20 Книга 'Much Ado About Nothing' уже существует в базе.
+2025/02/08 16:40:20 Книга 'The Lost World' уже существует в базе.
+2025/02/08 16:40:20 Книга 'The Legend of Sleepy Hollow' уже существует в базе.
+2025/02/08 16:40:20 Книга 'As You Like It' уже существует в базе.
+2025/02/08 16:40:20 Книга 'The Adventures of Sherlock Holmes [12 stories]' уже существует в базе.
+2025/02/08 16:40:20 Книга 'David Copperfield' уже существует в базе.
+2025/02/08 16:40:20 Книга 'Othello' уже существует в базе.
+2025/02/08 16:40:20 Книга 'King Lear' уже существует в базе.
+2025/02/08 16:40:20 Книга 'Great Expectations' уже существует в базе.
+2025/02/08 16:40:20 Книга 'The Merchant of Venice' уже существует в базе.
+2025/02/08 16:40:20 Microservice running on :8081
+2025/02/08 16:41:25 Email sent to matthewakirov16@gmail.com
+2025/02/08 16:41:25 PDF отправлен на: matthewakirov16@gmail.com
+2025/02/08 16:55:06 Книга 'The Good Earth' уже существует в базе.
+2025/02/08 16:55:06 Книга 'The Voyage of the Dawn Treader' уже существует в базе.
+2025/02/08 16:55:06 Книга 'Arsène Lupin, gentleman-cambrioleur' уже существует в базе.
+2025/02/08 16:55:06 Книга 'Идіотъ' уже существует в базе.
+2025/02/08 16:55:06 Книга 'The Story of Philosophy' уже существует в базе.
+2025/02/08 16:55:06 Книга 'Guess How Much I Love You' уже существует в базе.
+2025/02/08 16:55:06 Книга 'The Thirty-Nine Steps' уже существует в базе.
+2025/02/08 16:55:06 Книга 'The Hunger Games' уже существует в базе.
+2025/02/08 16:55:06 Книга 'Three Men in a Boat (to say nothing of the dog)' уже существует в базе.
+2025/02/08 16:55:06 Книга 'Le Comte de Monte Cristo' уже существует в базе.
+2025/02/08 16:55:06 Книга 'Uncle Tom's Cabin' уже существует в базе.
+2025/02/08 16:55:06 Книга 'NASA/DoD aerospace knowledge diffusion research project' уже существует в базе.
+2025/02/08 16:55:06 Книга 'Gulliver's Travels' уже существует в базе.
+2025/02/08 16:55:06 Книга 'Hamlet' уже существует в базе.
+2025/02/08 16:55:06 Книга 'Principles of Anatomy and Physiology' уже существует в базе.
+2025/02/08 16:55:06 Книга 'Autobiography of a Yogi' уже существует в базе.
+2025/02/08 16:55:06 Книга 'The Alchemist, 1612' уже существует в базе.
+2025/02/08 16:55:06 Книга 'The Ugly Duckling' уже существует в базе.
+2025/02/08 16:55:06 Книга 'A Midsummer Night's Dream' уже существует в базе.
+2025/02/08 16:55:06 Книга 'Преступление и наказание' уже существует в базе.
+2025/02/08 16:55:06 Книга 'Much Ado About Nothing' уже существует в базе.
+2025/02/08 16:55:06 Книга 'The Lost World' уже существует в базе.
+2025/02/08 16:55:06 Книга 'The Legend of Sleepy Hollow' уже существует в базе.
+2025/02/08 16:55:06 Книга 'As You Like It' уже существует в базе.
+2025/02/08 16:55:06 Книга 'The Adventures of Sherlock Holmes [12 stories]' уже существует в базе.
+2025/02/08 16:55:06 Книга 'David Copperfield' уже существует в базе.
+2025/02/08 16:55:06 Книга 'Othello' уже существует в базе.
+2025/02/08 16:55:06 Книга 'King Lear' уже существует в базе.
+2025/02/08 16:55:06 Книга 'Great Expectations' уже существует в базе.
+2025/02/08 16:55:06 Книга 'The Merchant of Venice' уже существует в базе.
+2025/02/08 16:55:06 Microservice running on :8081
+2025/02/08 17:08:57 Книга 'The Good Earth' уже существует в базе.
+2025/02/08 17:08:57 Книга 'The Voyage of the Dawn Treader' уже существует в базе.
+2025/02/08 17:08:57 Книга 'Arsène Lupin, gentleman-cambrioleur' уже существует в базе.
+2025/02/08 17:08:57 Книга 'Идіотъ' уже существует в базе.
+2025/02/08 17:08:57 Книга 'The Story of Philosophy' уже существует в базе.
+2025/02/08 17:08:57 Книга 'Guess How Much I Love You' уже существует в базе.
+2025/02/08 17:08:57 Книга 'The Thirty-Nine Steps' уже существует в базе.
+2025/02/08 17:08:57 Книга 'The Hunger Games' уже существует в базе.
+2025/02/08 17:08:57 Книга 'Three Men in a Boat (to say nothing of the dog)' уже существует в базе.
+2025/02/08 17:08:57 Книга 'Le Comte de Monte Cristo' уже существует в базе.
+2025/02/08 17:08:57 Книга 'Uncle Tom's Cabin' уже существует в базе.
+2025/02/08 17:08:57 Книга 'NASA/DoD aerospace knowledge diffusion research project' уже существует в базе.
+2025/02/08 17:08:57 Книга 'Gulliver's Travels' уже существует в базе.
+2025/02/08 17:08:57 Книга 'Hamlet' уже существует в базе.
+2025/02/08 17:08:57 Книга 'Principles of Anatomy and Physiology' уже существует в базе.
+2025/02/08 17:08:57 Книга 'Autobiography of a Yogi' уже существует в базе.
+2025/02/08 17:08:57 Книга 'The Alchemist, 1612' уже существует в базе.
+2025/02/08 17:08:57 Книга 'The Ugly Duckling' уже существует в базе.
+2025/02/08 17:08:57 Книга 'A Midsummer Night's Dream' уже существует в базе.
+2025/02/08 17:08:57 Книга 'Преступление и наказание' уже существует в базе.
+2025/02/08 17:08:57 Книга 'Much Ado About Nothing' уже существует в базе.
+2025/02/08 17:08:57 Книга 'The Lost World' уже существует в базе.
+2025/02/08 17:08:57 Книга 'The Legend of Sleepy Hollow' уже существует в базе.
+2025/02/08 17:08:57 Книга 'As You Like It' уже существует в базе.
+2025/02/08 17:08:57 Книга 'The Adventures of Sherlock Holmes [12 stories]' уже существует в базе.
+2025/02/08 17:08:57 Книга 'David Copperfield' уже существует в базе.
+2025/02/08 17:08:57 Книга 'Othello' уже существует в базе.
+2025/02/08 17:08:57 Книга 'King Lear' уже существует в базе.
+2025/02/08 17:08:57 Книга 'Great Expectations' уже существует в базе.
+2025/02/08 17:08:57 Книга 'The Merchant of Venice' уже существует в базе.
+2025/02/08 17:16:09 Книга 'The Good Earth' уже существует в базе.
+2025/02/08 17:16:09 Книга 'The Voyage of the Dawn Treader' уже существует в базе.
+2025/02/08 17:16:09 Книга 'Arsène Lupin, gentleman-cambrioleur' уже существует в базе.
+2025/02/08 17:16:09 Книга 'Идіотъ' уже существует в базе.
+2025/02/08 17:16:09 Книга 'The Story of Philosophy' уже существует в базе.
+2025/02/08 17:16:09 Книга 'Guess How Much I Love You' уже существует в базе.
+2025/02/08 17:16:09 Книга 'The Thirty-Nine Steps' уже существует в базе.
+2025/02/08 17:16:09 Книга 'The Hunger Games' уже существует в базе.
+2025/02/08 17:16:09 Книга 'Three Men in a Boat (to say nothing of the dog)' уже существует в базе.
+2025/02/08 17:16:09 Книга 'Le Comte de Monte Cristo' уже существует в базе.
+2025/02/08 17:16:09 Книга 'Uncle Tom's Cabin' уже существует в базе.
+2025/02/08 17:16:09 Книга 'NASA/DoD aerospace knowledge diffusion research project' уже существует в базе.
+2025/02/08 17:16:09 Книга 'Gulliver's Travels' уже существует в базе.
+2025/02/08 17:16:09 Книга 'Hamlet' уже существует в базе.
+2025/02/08 17:16:09 Книга 'Principles of Anatomy and Physiology' уже существует в базе.
+2025/02/08 17:16:09 Книга 'Autobiography of a Yogi' уже существует в базе.
+2025/02/08 17:16:09 Книга 'The Alchemist, 1612' уже существует в базе.
+2025/02/08 17:16:09 Книга 'The Ugly Duckling' уже существует в базе.
+2025/02/08 17:16:09 Книга 'A Midsummer Night's Dream' уже существует в базе.
+2025/02/08 17:16:09 Книга 'Преступление и наказание' уже существует в базе.
+2025/02/08 17:16:09 Книга 'Much Ado About Nothing' уже существует в базе.
+2025/02/08 17:16:09 Книга 'The Lost World' уже существует в базе.
+2025/02/08 17:16:09 Книга 'The Legend of Sleepy Hollow' уже существует в базе.
+2025/02/08 17:16:09 Книга 'As You Like It' уже существует в базе.
+2025/02/08 17:16:09 Книга 'The Adventures of Sherlock Holmes [12 stories]' уже существует в базе.
+2025/02/08 17:16:09 Книга 'David Copperfield' уже существует в базе.
+2025/02/08 17:16:09 Книга 'Othello' уже существует в базе.
+2025/02/08 17:16:09 Книга 'King Lear' уже существует в базе.
+2025/02/08 17:16:09 Книга 'Great Expectations' уже существует в базе.
+2025/02/08 17:16:09 Книга 'The Merchant of Venice' уже существует в базе.
+2025/02/08 17:17:25 Request Path: /apple-touch-icon-precomposed.png
+2025/02/08 17:17:25 Request Path: /favicon.ico
+2025/02/08 17:17:25 Request Path: /apple-touch-icon.png
+2025/02/08 17:17:42 Request Path: /
+2025/02/08 17:17:50 Request Path: /
+2025/02/08 17:17:55 Request Path: /userLogin
+2025/02/08 17:41:48 Книга 'The Good Earth' уже существует в базе.
+2025/02/08 17:41:48 Книга 'The Voyage of the Dawn Treader' уже существует в базе.
+2025/02/08 17:41:48 Книга 'Arsène Lupin, gentleman-cambrioleur' уже существует в базе.
+2025/02/08 17:41:48 Книга 'Идіотъ' уже существует в базе.
+2025/02/08 17:41:48 Книга 'The Story of Philosophy' уже существует в базе.
+2025/02/08 17:41:48 Книга 'Guess How Much I Love You' уже существует в базе.
+2025/02/08 17:41:48 Книга 'The Thirty-Nine Steps' уже существует в базе.
+2025/02/08 17:41:48 Книга 'The Hunger Games' уже существует в базе.
+2025/02/08 17:41:48 Книга 'Three Men in a Boat (to say nothing of the dog)' уже существует в базе.
+2025/02/08 17:41:48 Книга 'Le Comte de Monte Cristo' уже существует в базе.
+2025/02/08 17:41:48 Книга 'Uncle Tom's Cabin' уже существует в базе.
+2025/02/08 17:41:48 Книга 'NASA/DoD aerospace knowledge diffusion research project' уже существует в базе.
+2025/02/08 17:41:48 Книга 'Gulliver's Travels' уже существует в базе.
+2025/02/08 17:41:48 Книга 'Hamlet' уже существует в базе.
+2025/02/08 17:41:48 Книга 'Principles of Anatomy and Physiology' уже существует в базе.
+2025/02/08 17:41:48 Книга 'Autobiography of a Yogi' уже существует в базе.
+2025/02/08 17:41:48 Книга 'The Alchemist, 1612' уже существует в базе.
+2025/02/08 17:41:48 Книга 'The Ugly Duckling' уже существует в базе.
+2025/02/08 17:41:48 Книга 'A Midsummer Night's Dream' уже существует в базе.
+2025/02/08 17:41:48 Книга 'Преступление и наказание' уже существует в базе.
+2025/02/08 17:41:48 Книга 'Much Ado About Nothing' уже существует в базе.
+2025/02/08 17:41:48 Книга 'The Lost World' уже существует в базе.
+2025/02/08 17:41:48 Книга 'The Legend of Sleepy Hollow' уже существует в базе.
+2025/02/08 17:41:48 Книга 'As You Like It' уже существует в базе.
+2025/02/08 17:41:48 Книга 'The Adventures of Sherlock Holmes [12 stories]' уже существует в базе.
+2025/02/08 17:41:48 Книга 'David Copperfield' уже существует в базе.
+2025/02/08 17:41:48 Книга 'Othello' уже существует в базе.
+2025/02/08 17:41:48 Книга 'King Lear' уже существует в базе.
+2025/02/08 17:41:48 Книга 'Great Expectations' уже существует в базе.
+2025/02/08 17:41:48 Книга 'The Merchant of Venice' уже существует в базе.
+2025/02/08 17:42:00 Книга 'The Good Earth' уже существует в базе.
+2025/02/08 17:42:00 Книга 'The Voyage of the Dawn Treader' уже существует в базе.
+2025/02/08 17:42:00 Книга 'Arsène Lupin, gentleman-cambrioleur' уже существует в базе.
+2025/02/08 17:42:00 Книга 'Идіотъ' уже существует в базе.
+2025/02/08 17:42:00 Книга 'The Story of Philosophy' уже существует в базе.
+2025/02/08 17:42:00 Книга 'Guess How Much I Love You' уже существует в базе.
+2025/02/08 17:42:00 Книга 'The Thirty-Nine Steps' уже существует в базе.
+2025/02/08 17:42:00 Книга 'The Hunger Games' уже существует в базе.
+2025/02/08 17:42:00 Книга 'Three Men in a Boat (to say nothing of the dog)' уже существует в базе.
+2025/02/08 17:42:00 Книга 'Le Comte de Monte Cristo' уже существует в базе.
+2025/02/08 17:42:00 Книга 'Uncle Tom's Cabin' уже существует в базе.
+2025/02/08 17:42:00 Книга 'NASA/DoD aerospace knowledge diffusion research project' уже существует в базе.
+2025/02/08 17:42:00 Книга 'Gulliver's Travels' уже существует в базе.
+2025/02/08 17:42:00 Книга 'Hamlet' уже существует в базе.
+2025/02/08 17:42:00 Книга 'Principles of Anatomy and Physiology' уже существует в базе.
+2025/02/08 17:42:00 Книга 'Autobiography of a Yogi' уже существует в базе.
+2025/02/08 17:42:00 Книга 'The Alchemist, 1612' уже существует в базе.
+2025/02/08 17:42:00 Книга 'The Ugly Duckling' уже существует в базе.
+2025/02/08 17:42:00 Книга 'A Midsummer Night's Dream' уже существует в базе.
+2025/02/08 17:42:00 Книга 'Преступление и наказание' уже существует в базе.
+2025/02/08 17:42:00 Книга 'Much Ado About Nothing' уже существует в базе.
+2025/02/08 17:42:00 Книга 'The Lost World' уже существует в базе.
+2025/02/08 17:42:00 Книга 'The Legend of Sleepy Hollow' уже существует в базе.
+2025/02/08 17:42:00 Книга 'As You Like It' уже существует в базе.
+2025/02/08 17:42:00 Книга 'The Adventures of Sherlock Holmes [12 stories]' уже существует в базе.
+2025/02/08 17:42:00 Книга 'David Copperfield' уже существует в базе.
+2025/02/08 17:42:00 Книга 'Othello' уже существует в базе.
+2025/02/08 17:42:00 Книга 'King Lear' уже существует в базе.
+2025/02/08 17:42:00 Книга 'Great Expectations' уже существует в базе.
+2025/02/08 17:42:00 Книга 'The Merchant of Venice' уже существует в базе.
+2025/02/08 17:45:52 Книга 'The Good Earth' уже существует в базе.
+2025/02/08 17:45:52 Книга 'The Voyage of the Dawn Treader' уже существует в базе.
+2025/02/08 17:45:52 Книга 'Arsène Lupin, gentleman-cambrioleur' уже существует в базе.
+2025/02/08 17:45:52 Книга 'Идіотъ' уже существует в базе.
+2025/02/08 17:45:52 Книга 'The Story of Philosophy' уже существует в базе.
+2025/02/08 17:45:52 Книга 'Guess How Much I Love You' уже существует в базе.
+2025/02/08 17:45:52 Книга 'The Thirty-Nine Steps' уже существует в базе.
+2025/02/08 17:45:52 Книга 'The Hunger Games' уже существует в базе.
+2025/02/08 17:45:52 Книга 'Three Men in a Boat (to say nothing of the dog)' уже существует в базе.
+2025/02/08 17:45:52 Книга 'Le Comte de Monte Cristo' уже существует в базе.
+2025/02/08 17:45:52 Книга 'Uncle Tom's Cabin' уже существует в базе.
+2025/02/08 17:45:52 Книга 'NASA/DoD aerospace knowledge diffusion research project' уже существует в базе.
+2025/02/08 17:45:52 Книга 'Gulliver's Travels' уже существует в базе.
+2025/02/08 17:45:52 Книга 'Hamlet' уже существует в базе.
+2025/02/08 17:45:52 Книга 'Principles of Anatomy and Physiology' уже существует в базе.
+2025/02/08 17:45:52 Книга 'Autobiography of a Yogi' уже существует в базе.
+2025/02/08 17:45:52 Книга 'The Alchemist, 1612' уже существует в базе.
+2025/02/08 17:45:52 Книга 'The Ugly Duckling' уже существует в базе.
+2025/02/08 17:45:52 Книга 'A Midsummer Night's Dream' уже существует в базе.
+2025/02/08 17:45:52 Книга 'Преступление и наказание' уже существует в базе.
+2025/02/08 17:45:52 Книга 'Much Ado About Nothing' уже существует в базе.
+2025/02/08 17:45:52 Книга 'The Lost World' уже существует в базе.
+2025/02/08 17:45:52 Книга 'The Legend of Sleepy Hollow' уже существует в базе.
+2025/02/08 17:45:52 Книга 'As You Like It' уже существует в базе.
+2025/02/08 17:45:52 Книга 'The Adventures of Sherlock Holmes [12 stories]' уже существует в базе.
+2025/02/08 17:45:52 Книга 'David Copperfield' уже существует в базе.
+2025/02/08 17:45:52 Книга 'Othello' уже существует в базе.
+2025/02/08 17:45:52 Книга 'King Lear' уже существует в базе.
+2025/02/08 17:45:52 Книга 'Great Expectations' уже существует в базе.
+2025/02/08 17:45:52 Книга 'The Merchant of Venice' уже существует в базе.
+2025/02/08 17:47:52 Книга 'The Good Earth' уже существует в базе.
+2025/02/08 17:47:52 Книга 'The Voyage of the Dawn Treader' уже существует в базе.
+2025/02/08 17:47:52 Книга 'Arsène Lupin, gentleman-cambrioleur' уже существует в базе.
+2025/02/08 17:47:52 Книга 'Идіотъ' уже существует в базе.
+2025/02/08 17:47:52 Книга 'The Story of Philosophy' уже существует в базе.
+2025/02/08 17:47:52 Книга 'Guess How Much I Love You' уже существует в базе.
+2025/02/08 17:47:52 Книга 'The Thirty-Nine Steps' уже существует в базе.
+2025/02/08 17:47:52 Книга 'The Hunger Games' уже существует в базе.
+2025/02/08 17:47:52 Книга 'Three Men in a Boat (to say nothing of the dog)' уже существует в базе.
+2025/02/08 17:47:52 Книга 'Le Comte de Monte Cristo' уже существует в базе.
+2025/02/08 17:47:52 Книга 'Uncle Tom's Cabin' уже существует в базе.
+2025/02/08 17:47:52 Книга 'NASA/DoD aerospace knowledge diffusion research project' уже существует в базе.
+2025/02/08 17:47:52 Книга 'Gulliver's Travels' уже существует в базе.
+2025/02/08 17:47:52 Книга 'Hamlet' уже существует в базе.
+2025/02/08 17:47:52 Книга 'Principles of Anatomy and Physiology' уже существует в базе.
+2025/02/08 17:47:52 Книга 'Autobiography of a Yogi' уже существует в базе.
+2025/02/08 17:47:52 Книга 'The Alchemist, 1612' уже существует в базе.
+2025/02/08 17:47:52 Книга 'The Ugly Duckling' уже существует в базе.
+2025/02/08 17:47:52 Книга 'A Midsummer Night's Dream' уже существует в базе.
+2025/02/08 17:47:52 Книга 'Преступление и наказание' уже существует в базе.
+2025/02/08 17:47:52 Книга 'Much Ado About Nothing' уже существует в базе.
+2025/02/08 17:47:52 Книга 'The Lost World' уже существует в базе.
+2025/02/08 17:47:52 Книга 'The Legend of Sleepy Hollow' уже существует в базе.
+2025/02/08 17:47:52 Книга 'As You Like It' уже существует в базе.
+2025/02/08 17:47:52 Книга 'The Adventures of Sherlock Holmes [12 stories]' уже существует в базе.
+2025/02/08 17:47:52 Книга 'David Copperfield' уже существует в базе.
+2025/02/08 17:47:52 Книга 'Othello' уже существует в базе.
+2025/02/08 17:47:52 Книга 'King Lear' уже существует в базе.
+2025/02/08 17:47:52 Книга 'Great Expectations' уже существует в базе.
+2025/02/08 17:47:52 Книга 'The Merchant of Venice' уже существует в базе.
+2025/02/08 17:48:01 Request Path: /bools
+2025/02/08 17:50:27 Книга 'The Good Earth' уже существует в базе.
+2025/02/08 17:50:27 Книга 'The Voyage of the Dawn Treader' уже существует в базе.
+2025/02/08 17:50:27 Книга 'Arsène Lupin, gentleman-cambrioleur' уже существует в базе.
+2025/02/08 17:50:27 Книга 'Идіотъ' уже существует в базе.
+2025/02/08 17:50:27 Книга 'The Story of Philosophy' уже существует в базе.
+2025/02/08 17:50:27 Книга 'Guess How Much I Love You' уже существует в базе.
+2025/02/08 17:50:27 Книга 'The Thirty-Nine Steps' уже существует в базе.
+2025/02/08 17:50:27 Книга 'The Hunger Games' уже существует в базе.
+2025/02/08 17:50:27 Книга 'Three Men in a Boat (to say nothing of the dog)' уже существует в базе.
+2025/02/08 17:50:27 Книга 'Le Comte de Monte Cristo' уже существует в базе.
+2025/02/08 17:50:27 Книга 'Uncle Tom's Cabin' уже существует в базе.
+2025/02/08 17:50:27 Книга 'NASA/DoD aerospace knowledge diffusion research project' уже существует в базе.
+2025/02/08 17:50:27 Книга 'Gulliver's Travels' уже существует в базе.
+2025/02/08 17:50:27 Книга 'Hamlet' уже существует в базе.
+2025/02/08 17:50:27 Книга 'Principles of Anatomy and Physiology' уже существует в базе.
+2025/02/08 17:50:27 Книга 'Autobiography of a Yogi' уже существует в базе.
+2025/02/08 17:50:27 Книга 'The Alchemist, 1612' уже существует в базе.
+2025/02/08 17:50:27 Книга 'The Ugly Duckling' уже существует в базе.
+2025/02/08 17:50:27 Книга 'A Midsummer Night's Dream' уже существует в базе.
+2025/02/08 17:50:27 Книга 'Преступление и наказание' уже существует в базе.
+2025/02/08 17:50:27 Книга 'Much Ado About Nothing' уже существует в базе.
+2025/02/08 17:50:27 Книга 'The Lost World' уже существует в базе.
+2025/02/08 17:50:27 Книга 'The Legend of Sleepy Hollow' уже существует в базе.
+2025/02/08 17:50:27 Книга 'As You Like It' уже существует в базе.
+2025/02/08 17:50:27 Книга 'The Adventures of Sherlock Holmes [12 stories]' уже существует в базе.
+2025/02/08 17:50:27 Книга 'David Copperfield' уже существует в базе.
+2025/02/08 17:50:27 Книга 'Othello' уже существует в базе.
+2025/02/08 17:50:27 Книга 'King Lear' уже существует в базе.
+2025/02/08 17:50:27 Книга 'Great Expectations' уже существует в базе.
+2025/02/08 17:50:27 Книга 'The Merchant of Venice' уже существует в базе.
+2025/02/08 17:51:14 Email sent to matthewakirov16@gmail.com
+2025/02/08 17:51:14 PDF отправлен на: matthewakirov16@gmail.com
+2025/02/08 18:09:42 Книга 'The Good Earth' уже существует в базе.
+2025/02/08 18:09:42 Книга 'The Voyage of the Dawn Treader' уже существует в базе.
+2025/02/08 18:09:42 Книга 'Arsène Lupin, gentleman-cambrioleur' уже существует в базе.
+2025/02/08 18:09:42 Книга 'Идіотъ' уже существует в базе.
+2025/02/08 18:09:42 Книга 'The Story of Philosophy' уже существует в базе.
+2025/02/08 18:09:42 Книга 'Guess How Much I Love You' уже существует в базе.
+2025/02/08 18:09:42 Книга 'The Thirty-Nine Steps' уже существует в базе.
+2025/02/08 18:09:42 Книга 'The Hunger Games' уже существует в базе.
+2025/02/08 18:09:42 Книга 'Three Men in a Boat (to say nothing of the dog)' уже существует в базе.
+2025/02/08 18:09:42 Книга 'Le Comte de Monte Cristo' уже существует в базе.
+2025/02/08 18:09:42 Книга 'Uncle Tom's Cabin' уже существует в базе.
+2025/02/08 18:09:42 Книга 'NASA/DoD aerospace knowledge diffusion research project' уже существует в базе.
+2025/02/08 18:09:42 Книга 'Gulliver's Travels' уже существует в базе.
+2025/02/08 18:09:42 Книга 'Hamlet' уже существует в базе.
+2025/02/08 18:09:42 Книга 'Principles of Anatomy and Physiology' уже существует в базе.
+2025/02/08 18:09:42 Книга 'Autobiography of a Yogi' уже существует в базе.
+2025/02/08 18:09:42 Книга 'The Alchemist, 1612' уже существует в базе.
+2025/02/08 18:09:42 Книга 'The Ugly Duckling' уже существует в базе.
+2025/02/08 18:09:42 Книга 'A Midsummer Night's Dream' уже существует в базе.
+2025/02/08 18:09:42 Книга 'Преступление и наказание' уже существует в базе.
+2025/02/08 18:09:42 Книга 'Much Ado About Nothing' уже существует в базе.
+2025/02/08 18:09:42 Книга 'The Lost World' уже существует в базе.
+2025/02/08 18:09:42 Книга 'The Legend of Sleepy Hollow' уже существует в базе.
+2025/02/08 18:09:42 Книга 'As You Like It' уже существует в базе.
+2025/02/08 18:09:42 Книга 'The Adventures of Sherlock Holmes [12 stories]' уже существует в базе.
+2025/02/08 18:09:42 Книга 'David Copperfield' уже существует в базе.
+2025/02/08 18:09:42 Книга 'Othello' уже существует в базе.
+2025/02/08 18:09:42 Книга 'King Lear' уже существует в базе.
+2025/02/08 18:09:42 Книга 'Great Expectations' уже существует в базе.
+2025/02/08 18:09:42 Книга 'The Merchant of Venice' уже существует в базе.
+2025/02/08 18:09:42 Microservice running on :8081
+2025/02/08 18:09:48 PDF receipt emailed to john.doe@example.com
+2025/02/08 18:10:06 PDF receipt emailed to john.doe@example.com
+2025/02/08 19:14:13 Книга 'The Good Earth' уже существует в базе.
+2025/02/08 19:14:13 Книга 'The Voyage of the Dawn Treader' уже существует в базе.
+2025/02/08 19:14:13 Книга 'Arsène Lupin, gentleman-cambrioleur' уже существует в базе.
+2025/02/08 19:14:13 Книга 'Идіотъ' уже существует в базе.
+2025/02/08 19:14:13 Книга 'The Story of Philosophy' уже существует в базе.
+2025/02/08 19:14:13 Книга 'Guess How Much I Love You' уже существует в базе.
+2025/02/08 19:14:13 Книга 'The Thirty-Nine Steps' уже существует в базе.
+2025/02/08 19:14:13 Книга 'The Hunger Games' уже существует в базе.
+2025/02/08 19:14:13 Книга 'Three Men in a Boat (to say nothing of the dog)' уже существует в базе.
+2025/02/08 19:14:13 Книга 'Le Comte de Monte Cristo' уже существует в базе.
+2025/02/08 19:14:13 Книга 'Uncle Tom's Cabin' уже существует в базе.
+2025/02/08 19:14:13 Книга 'NASA/DoD aerospace knowledge diffusion research project' уже существует в базе.
+2025/02/08 19:14:13 Книга 'Gulliver's Travels' уже существует в базе.
+2025/02/08 19:14:13 Книга 'Hamlet' уже существует в базе.
+2025/02/08 19:14:13 Книга 'Principles of Anatomy and Physiology' уже существует в базе.
+2025/02/08 19:14:13 Книга 'Autobiography of a Yogi' уже существует в базе.
+2025/02/08 19:14:13 Книга 'The Alchemist, 1612' уже существует в базе.
+2025/02/08 19:14:13 Книга 'The Ugly Duckling' уже существует в базе.
+2025/02/08 19:14:13 Книга 'A Midsummer Night's Dream' уже существует в базе.
+2025/02/08 19:14:13 Книга 'Преступление и наказание' уже существует в базе.
+2025/02/08 19:14:13 Книга 'Much Ado About Nothing' уже существует в базе.
+2025/02/08 19:14:13 Книга 'The Lost World' уже существует в базе.
+2025/02/08 19:14:13 Книга 'The Legend of Sleepy Hollow' уже существует в базе.
+2025/02/08 19:14:13 Книга 'As You Like It' уже существует в базе.
+2025/02/08 19:14:13 Книга 'The Adventures of Sherlock Holmes [12 stories]' уже существует в базе.
+2025/02/08 19:14:13 Книга 'David Copperfield' уже существует в базе.
+2025/02/08 19:14:13 Книга 'Othello' уже существует в базе.
+2025/02/08 19:14:13 Книга 'King Lear' уже существует в базе.
+2025/02/08 19:14:13 Книга 'Great Expectations' уже существует в базе.
+2025/02/08 19:14:13 Книга 'The Merchant of Venice' уже существует в базе.
+2025/02/08 19:14:13 Microservice running on :8081
+2025/02/08 19:14:29 Request Path: /userLogin
+2025/02/08 19:14:39 Request Path: /admins
+2025/02/08 19:15:04 OTP email sent to matthew12@gmail.com
+2025/02/08 19:15:32 OTP email sent to matthew12@gmail.com
+2025/02/08 19:16:09 OTP email sent to matthew12@gmail.com
+2025/02/08 19:16:20 http: superfluous response.WriteHeader call from github.com/Mans397/eLibrary/serverConnection.VerifyOTPHandler (connectionHandler.go:414)
+2025/02/08 19:17:10 Email sent to matthewakirov16@gmail.com
+2025/02/08 19:17:10 PDF отправлен на: matthewakirov16@gmail.com
+2025/02/09 20:12:11 !!!CHECK IF DOCKER CONTAINER IS STARTED!!!
+2025/02/09 20:12:29 Книга 'The Good Earth' уже существует в базе.
+2025/02/09 20:12:29 Книга 'The Voyage of the Dawn Treader' уже существует в базе.
+2025/02/09 20:12:29 Книга 'Arsène Lupin, gentleman-cambrioleur' уже существует в базе.
+2025/02/09 20:12:29 Книга 'Идіотъ' уже существует в базе.
+2025/02/09 20:12:29 Книга 'The Story of Philosophy' уже существует в базе.
+2025/02/09 20:12:29 Книга 'Guess How Much I Love You' уже существует в базе.
+2025/02/09 20:12:29 Книга 'The Thirty-Nine Steps' уже существует в базе.
+2025/02/09 20:12:29 Книга 'The Hunger Games' уже существует в базе.
+2025/02/09 20:12:29 Книга 'Three Men in a Boat (to say nothing of the dog)' уже существует в базе.
+2025/02/09 20:12:29 Книга 'Le Comte de Monte Cristo' уже существует в базе.
+2025/02/09 20:12:29 Книга 'Uncle Tom's Cabin' уже существует в базе.
+2025/02/09 20:12:29 Книга 'NASA/DoD aerospace knowledge diffusion research project' уже существует в базе.
+2025/02/09 20:12:29 Книга 'Gulliver's Travels' уже существует в базе.
+2025/02/09 20:12:29 Книга 'Hamlet' уже существует в базе.
+2025/02/09 20:12:29 Книга 'Principles of Anatomy and Physiology' уже существует в базе.
+2025/02/09 20:12:29 Книга 'Autobiography of a Yogi' уже существует в базе.
+2025/02/09 20:12:29 Книга 'The Alchemist, 1612' уже существует в базе.
+2025/02/09 20:12:29 Книга 'The Ugly Duckling' уже существует в базе.
+2025/02/09 20:12:29 Книга 'A Midsummer Night's Dream' уже существует в базе.
+2025/02/09 20:12:29 Книга 'Преступление и наказание' уже существует в базе.
+2025/02/09 20:12:29 Книга 'Much Ado About Nothing' уже существует в базе.
+2025/02/09 20:12:29 Книга 'The Lost World' уже существует в базе.
+2025/02/09 20:12:29 Книга 'The Legend of Sleepy Hollow' уже существует в базе.
+2025/02/09 20:12:29 Книга 'As You Like It' уже существует в базе.
+2025/02/09 20:12:29 Книга 'The Adventures of Sherlock Holmes [12 stories]' уже существует в базе.
+2025/02/09 20:12:29 Книга 'David Copperfield' уже существует в базе.
+2025/02/09 20:12:29 Книга 'Othello' уже существует в базе.
+2025/02/09 20:12:29 Книга 'King Lear' уже существует в базе.
+2025/02/09 20:12:29 Книга 'Great Expectations' уже существует в базе.
+2025/02/09 20:12:29 Книга 'The Merchant of Venice' уже существует в базе.
+2025/02/09 20:12:29 Microservice running on :8081
+2025/02/09 20:12:29 Request Path: /
+2025/02/09 20:13:13 Request Path: /userLogin
+2025/02/09 20:13:17 OTP email sent to matthew12@gmail.com
+2025/02/09 20:13:29 http: superfluous response.WriteHeader call from github.com/Mans397/eLibrary/serverConnection.VerifyOTPHandler (connectionHandler.go:414)
+2025/02/09 20:17:46 PDF receipt emailed to john.doe@example.com
+2025/02/09 20:34:55 Книга 'The Good Earth' уже существует в базе.
+2025/02/09 20:34:55 Книга 'The Voyage of the Dawn Treader' уже существует в базе.
+2025/02/09 20:34:55 Книга 'Arsène Lupin, gentleman-cambrioleur' уже существует в базе.
+2025/02/09 20:34:55 Книга 'Идіотъ' уже существует в базе.
+2025/02/09 20:34:55 Книга 'The Story of Philosophy' уже существует в базе.
+2025/02/09 20:34:55 Книга 'Guess How Much I Love You' уже существует в базе.
+2025/02/09 20:34:55 Книга 'The Thirty-Nine Steps' уже существует в базе.
+2025/02/09 20:34:55 Книга 'The Hunger Games' уже существует в базе.
+2025/02/09 20:34:55 Книга 'Three Men in a Boat (to say nothing of the dog)' уже существует в базе.
+2025/02/09 20:34:55 Книга 'Le Comte de Monte Cristo' уже существует в базе.
+2025/02/09 20:34:55 Книга 'Uncle Tom's Cabin' уже существует в базе.
+2025/02/09 20:34:55 Книга 'NASA/DoD aerospace knowledge diffusion research project' уже существует в базе.
+2025/02/09 20:34:55 Книга 'Gulliver's Travels' уже существует в базе.
+2025/02/09 20:34:55 Книга 'Hamlet' уже существует в базе.
+2025/02/09 20:34:55 Книга 'Principles of Anatomy and Physiology' уже существует в базе.
+2025/02/09 20:34:55 Книга 'Autobiography of a Yogi' уже существует в базе.
+2025/02/09 20:34:55 Книга 'The Alchemist, 1612' уже существует в базе.
+2025/02/09 20:34:55 Книга 'The Ugly Duckling' уже существует в базе.
+2025/02/09 20:34:55 Книга 'A Midsummer Night's Dream' уже существует в базе.
+2025/02/09 20:34:55 Книга 'Преступление и наказание' уже существует в базе.
+2025/02/09 20:34:55 Книга 'Much Ado About Nothing' уже существует в базе.
+2025/02/09 20:34:55 Книга 'The Lost World' уже существует в базе.
+2025/02/09 20:34:55 Книга 'The Legend of Sleepy Hollow' уже существует в базе.
+2025/02/09 20:34:55 Книга 'As You Like It' уже существует в базе.
+2025/02/09 20:34:55 Книга 'The Adventures of Sherlock Holmes [12 stories]' уже существует в базе.
+2025/02/09 20:34:55 Книга 'David Copperfield' уже существует в базе.
+2025/02/09 20:34:55 Книга 'Othello' уже существует в базе.
+2025/02/09 20:34:55 Книга 'King Lear' уже существует в базе.
+2025/02/09 20:34:55 Книга 'Great Expectations' уже существует в базе.
+2025/02/09 20:34:55 Книга 'The Merchant of Venice' уже существует в базе.
+2025/02/09 20:34:55 Microservice running on :8081
+2025/02/09 20:35:49 Email sent to matthewakirov16@gmail.com
+2025/02/09 20:35:49 PDF отправлен на: matthewakirov16@gmail.com

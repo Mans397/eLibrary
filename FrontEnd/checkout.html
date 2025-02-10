@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Оформление оплаты</title>
+</head>
+<body>
+<h1>Форма оплаты</h1>
+<form action="/processPayment" method="POST">
+    <label>Ваше ФИО:</label><br>
+    <input type="text" name="fullName" required><br><br>
+
+    <label>Email для чека:</label><br>
+    <input type="email" name="email" required><br><br>
+
+    <label>Номер карты:</label><br>
+    <input type="text" name="cardNumber" required><br><br>
+
+    <label>Срок действия (MM/YY):</label><br>
+    <input type="text" name="cardExp" required><br><br>
+
+    <label>CVV:</label><br>
+    <input type="password" name="cardCVV" required><br><br>
+
+    <button type="submit">Оплатить</button>
+</form>
+<button onclick="location.href='/cart'">Вернуться в корзину</button>
+</body>
+</html>

@@ -1,14 +1,20 @@
 package main
 
 import (
-	"fmt"
+	// ... ваш код ...
 	db "github.com/Mans397/eLibrary/Database"
 	sc "github.com/Mans397/eLibrary/serverConnection"
+
+	// ВАЖНО: импортируем пакет с микросервисом
+	"github.com/Mans397/eLibrary/paymentMicroservice"
+
+	"fmt"
 	"log"
 	"os"
 )
 
 func main() {
+	// Ваши старые строчки, не трогаем
 	err := db.Init()
 	if !CheckDBConnection(err) {
 		return
@@ -17,41 +23,27 @@ func main() {
 	if err := db.MigrateBooks(); err != nil {
 		log.Fatalf("Ошибка миграции: %v", err)
 	}
-
 	if err := db.MigrateUser(); err != nil {
 		log.Fatalf("Ошибка миграции: %v", err)
 	}
-
 	if err := db.MigrateOTP(); err != nil {
 		log.Fatalf("Ошибка миграции: %v", err)
 	}
-
 	if err := db.MigrateEmailConfirmations(); err != nil {
 		log.Fatalf("Ошибка миграции EmailConfirmations: %v", err)
 	}
 
+	// Если у вас есть миграция для корзины/транзакций
+	// db.DB.AutoMigrate(&db.Cart{}, &db.CartItem{}, &db.Transaction{})
+
 	db.FetchAndSaveBooks()
 
-	//FetchQuestion()
+	// ➜ Новая строка: запускаем микросервис на :8081 в отдельной горутине
+	go paymentMicroservice.StartMicroservice()
+
+	// ➜ Ваш основной сервер (на :8080)
 	sc.ConnectToServer()
 }
-
-//func FetchQuestion() {
-//	fmt.Println("Do you want to fetch all Books? (y/n)")
-//	var response string
-//	fmt.Scan(&response)
-//	if response == "y" {
-//		fmt.Println("Working...")
-//		db.FetchAndSaveBooks()
-//		return
-//	} else if response == "n" {
-//		fmt.Println("Skipping fetch")
-//		return
-//	} else {
-//		fmt.Println("Wrong answer")
-//		return
-//	}
-//}
 
 func CheckDBConnection(err error) bool {
 	if err != nil {
